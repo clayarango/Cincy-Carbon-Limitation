@@ -1,0 +1,725 @@
+index,stream,season,reach.original,reach,carbon,cr.area,cr.afdm,nrr
+395,Amberly,Fall,Buried Down,buried,Arabinose,9.53896852,6.799786364,3.269942708
+396,Amberly,Fall,Buried Down,buried,Arabinose,10.36223836,20.860928,3.552158255
+397,Amberly,Fall,Buried Down,buried,Arabinose,9.531100646,10.63650838,3.267245613
+398,Amberly,Fall,Buried Down,buried,Arabinose,8.815049523,19.22918049,3.021784467
+399,Amberly,Fall,Buried Down,buried,Arabinose,7.333716342,14.96416,2.513985891
+400,Amberly,Fall,Buried Down,buried,Arabinose,9.963145613,10.1208096,3.415349917
+401,Amberly,Fall,Buried Down,buried,Arabinose,4.201602063,1.358281731,1.440302271
+402,Amberly,Fall,Buried Down,buried,Arabinose,4.463037178,13.30295094,1.529921798
+403,Amberly,Fall,Buried Down,buried,Cellobiose,10.95124123,38.88381738,3.754067468
+404,Amberly,Fall,Buried Down,buried,Cellobiose,11.01737046,14.02407469,3.776736458
+405,Amberly,Fall,Buried Down,buried,Cellobiose,12.906069,14.42350183,4.424179209
+406,Amberly,Fall,Buried Down,buried,Cellobiose,3.053627464,6.26282013,1.046778468
+407,Amberly,Fall,Buried Down,buried,Cellobiose,6.330376147,21.47693803,2.170042523
+408,Amberly,Fall,Buried Down,buried,Cellobiose,4.962676092,3.355358152,1.701197196
+409,Amberly,Fall,Buried Down,buried,Cellobiose,11.04329359,21.07479213,3.785622865
+410,Amberly,Fall,Buried Down,buried,Cellobiose,11.28573572,19.90536026,3.868731629
+379,Amberly,Fall,Buried Down,buried,Control,2.709577503,16.04570132,
+380,Amberly,Fall,Buried Down,buried,Control,3.731829507,6.95520715,
+381,Amberly,Fall,Buried Down,buried,Control,4.32267575,15.11682255,
+382,Amberly,Fall,Buried Down,buried,Control,2.200529051,22.76571,
+383,Amberly,Fall,Buried Down,buried,Control,1.199131692,83.02119418,
+384,Amberly,Fall,Buried Down,buried,Control,3.508333351,51.12547699,
+385,Amberly,Fall,Buried Down,buried,Control,4.248202054,11.37321748,
+386,Amberly,Fall,Buried Down,buried,Control,1.417056021,19.38852414,
+387,Amberly,Fall,Buried Down,buried,Glucose,4.077204759,18.51310884,1.39765908
+388,Amberly,Fall,Buried Down,buried,Glucose,6.697660386,17.24348463,2.295946956
+389,Amberly,Fall,Buried Down,buried,Glucose,11.19000217,12.58263918,3.835914324
+390,Amberly,Fall,Buried Down,buried,Glucose,8.590686648,11.31990552,2.944873243
+391,Amberly,Fall,Buried Down,buried,Glucose,3.559511753,,1.22019477
+392,Amberly,Fall,Buried Down,buried,Glucose,11.78983759,9.157247841,4.041536918
+393,Amberly,Fall,Buried Down,buried,Glucose,4.440727047,3.890658718,1.522273922
+394,Amberly,Fall,Buried Down,buried,Glucose,11.3745789,28.03983699,3.899186924
+360,Amberly,Fall,Buried Up,buried,Arabinose,10.58552616,13.20438204,6.553588415
+361,Amberly,Fall,Buried Up,buried,Arabinose,7.287555811,13.65975391,4.511787193
+362,Amberly,Fall,Buried Up,buried,Arabinose,3.35984688,8.527813953,2.080109507
+363,Amberly,Fall,Buried Up,buried,Arabinose,7.001338338,13.02479234,4.334587544
+364,Amberly,Fall,Buried Up,buried,Arabinose,9.79767563,12.08725928,6.065823518
+365,Amberly,Fall,Buried Up,buried,Arabinose,8.529619784,14.18140653,5.280759462
+366,Amberly,Fall,Buried Up,buried,Arabinose,4.731259352,9.331103571,2.929162521
+367,Amberly,Fall,Buried Up,buried,Arabinose,4.314933146,11.53566778,2.67141146
+368,Amberly,Fall,Buried Up,buried,Cellobiose,1.050913328,11.54672519,0.650629295
+369,Amberly,Fall,Buried Up,buried,Cellobiose,0,0,0
+370,Amberly,Fall,Buried Up,buried,Cellobiose,1.071420304,6.175932632,0.663325336
+371,Amberly,Fall,Buried Up,buried,Cellobiose,0.975636064,7.834315394,0.604024506
+372,Amberly,Fall,Buried Up,buried,Cellobiose,9.171364964,28.19774436,5.678069308
+373,Amberly,Fall,Buried Up,buried,Cellobiose,5.047739153,10.28993878,3.125097832
+374,Amberly,Fall,Buried Up,buried,Cellobiose,2.21493291,8.263571831,1.371283623
+375,Amberly,Fall,Buried Up,buried,Cellobiose,14.11912232,14.79433672,8.741267567
+344,Amberly,Fall,Buried Up,buried,Control,2.131690055,14.50226874,
+345,Amberly,Fall,Buried Up,buried,Control,0,0,
+346,Amberly,Fall,Buried Up,buried,Control,2.59796723,14.65821904,
+347,Amberly,Fall,Buried Up,buried,Control,0.496032382,15.97468213,
+348,Amberly,Fall,Buried Up,buried,Control,1.637981744,4.760263512,
+349,Amberly,Fall,Buried Up,buried,Control,1.765789974,12.1941958,
+350,Amberly,Fall,Buried Up,buried,Control,2.235155118,19.00375398,
+351,Amberly,Fall,Buried Up,buried,Control,2.057191197,19.75998403,
+352,Amberly,Fall,Buried Up,buried,Glucose,1.977838654,11.59560293,1.224496572
+353,Amberly,Fall,Buried Up,buried,Glucose,10.99622687,11.23640285,6.807856686
+354,Amberly,Fall,Buried Up,buried,Glucose,0.520060265,7.125751965,0.321973691
+355,Amberly,Fall,Buried Up,buried,Glucose,12.06570964,12.35856367,7.469982477
+356,Amberly,Fall,Buried Up,buried,Glucose,7.197519886,12.88944309,4.456045193
+357,Amberly,Fall,Buried Up,buried,Glucose,5.904669076,12.92838462,3.655630366
+358,Amberly,Fall,Buried Up,buried,Glucose,3.074497545,9.35857716,1.90344733
+359,Amberly,Fall,Buried Up,buried,Glucose,5.49840639,15.50555069,3.404109714
+430,Amberly,Fall,Daylight,daylight,Arabinose,3.875132375,17.851428,1.677430965
+431,Amberly,Fall,Daylight,daylight,Arabinose,7.655449896,11.37577573,3.313819365
+432,Amberly,Fall,Daylight,daylight,Arabinose,3.644689864,13.17537518,1.577679171
+433,Amberly,Fall,Daylight,daylight,Arabinose,2.735148261,4.827948042,1.183965331
+434,Amberly,Fall,Daylight,daylight,Arabinose,1.404626805,8.626368174,0.60802168
+435,Amberly,Fall,Daylight,daylight,Arabinose,4.026972266,9.109795153,1.743157993
+436,Amberly,Fall,Daylight,daylight,Arabinose,5.6406547,11.06612245,2.441673713
+437,Amberly,Fall,Daylight,daylight,Arabinose,7.6772099,9.215396859,3.323238631
+438,Amberly,Fall,Daylight,daylight,Cellobiose,3.565787755,17.101368,1.543524766
+439,Amberly,Fall,Daylight,daylight,Cellobiose,4.448343339,11.84078645,1.925557152
+440,Amberly,Fall,Daylight,daylight,Cellobiose,10.39586397,8.415519842,4.500064112
+441,Amberly,Fall,Daylight,daylight,Cellobiose,2.309381447,6.814541436,0.999663385
+442,Amberly,Fall,Daylight,daylight,Cellobiose,6.038038056,7.245731817,2.613689294
+443,Amberly,Fall,Daylight,daylight,Cellobiose,5.784723392,13.32240863,2.504036817
+444,Amberly,Fall,Daylight,daylight,Cellobiose,10.93556858,12.71661358,4.733686381
+445,Amberly,Fall,Daylight,daylight,Cellobiose,4.941947167,6.673667455,2.139223748
+414,Amberly,Fall,Daylight,daylight,Control,3.181963298,10.78047909,
+415,Amberly,Fall,Daylight,daylight,Control,2.371448526,11.96251299,
+416,Amberly,Fall,Daylight,daylight,Control,2.469088699,7.454054095,
+417,Amberly,Fall,Daylight,daylight,Control,2.605963115,12.44135218,
+418,Amberly,Fall,Daylight,daylight,Control,2.037123114,15.30840444,
+419,Amberly,Fall,Daylight,daylight,Control,2.044508113,15.32886869,
+420,Amberly,Fall,Daylight,daylight,Control,1.696193137,13.40609032,
+421,Amberly,Fall,Daylight,daylight,Control,2.074984643,10.78932462,
+422,Amberly,Fall,Daylight,daylight,Glucose,2.76520825,6.219578799,1.196977418
+423,Amberly,Fall,Daylight,daylight,Glucose,8.913746262,12.33576468,3.858498896
+424,Amberly,Fall,Daylight,daylight,Glucose,4.450578723,10.26490563,1.926524784
+425,Amberly,Fall,Daylight,daylight,Glucose,11.71420144,7.46503667,5.070733673
+426,Amberly,Fall,Daylight,daylight,Glucose,0.887747186,7.071994286,0.384279677
+427,Amberly,Fall,Daylight,daylight,Glucose,4.421446648,4.383099946,1.913914364
+428,Amberly,Fall,Daylight,daylight,Glucose,3.114726283,5.449426645,1.348273506
+429,Amberly,Fall,Daylight,daylight,Glucose,8.963439283,9.857605162,3.880009545
+533,Eastgate,Fall,Buried Down,buried,Arabinose,13.87868509,15.85229488,2.180540997
+534,Eastgate,Fall,Buried Down,buried,Arabinose,10.27314095,39.9101693,1.614058165
+535,Eastgate,Fall,Buried Down,buried,Arabinose,11.48059867,17.15172168,1.803767137
+536,Eastgate,Fall,Buried Down,buried,Arabinose,12.69566277,18.26233043,1.994671178
+537,Eastgate,Fall,Buried Down,buried,Arabinose,12.8322024,26.23052359,2.016123518
+538,Eastgate,Fall,Buried Down,buried,Arabinose,9.752903762,13.53282857,1.532321423
+539,Eastgate,Fall,Buried Down,buried,Arabinose,13.20808878,9.160042536,2.075180674
+540,Eastgate,Fall,Buried Down,buried,Cellobiose,18.51869096,11.23415759,2.90955264
+541,Eastgate,Fall,Buried Down,buried,Cellobiose,16.47768749,6.151978669,2.588881645
+542,Eastgate,Fall,Buried Down,buried,Cellobiose,16.29530659,16.2238552,2.560226985
+543,Eastgate,Fall,Buried Down,buried,Cellobiose,16.67239649,13.48665577,2.61947323
+544,Eastgate,Fall,Buried Down,buried,Cellobiose,15.25375308,8.584398572,2.39658395
+545,Eastgate,Fall,Buried Down,buried,Cellobiose,16.77445053,22.45926352,2.635507387
+546,Eastgate,Fall,Buried Down,buried,Cellobiose,16.80733985,21.75315254,2.640674772
+547,Eastgate,Fall,Buried Down,buried,Cellobiose,15.88847255,6.108389218,2.496307506
+516,Eastgate,Fall,Buried Down,buried,Control,6.003532393,12.97017333,
+517,Eastgate,Fall,Buried Down,buried,Control,6.784517047,10.55045027,
+518,Eastgate,Fall,Buried Down,buried,Control,6.983308484,5.122138284,
+519,Eastgate,Fall,Buried Down,buried,Control,6.674587543,12.35697926,
+520,Eastgate,Fall,Buried Down,buried,Control,6.600206406,10.69212349,
+521,Eastgate,Fall,Buried Down,buried,Control,6.396688982,7.315163171,
+522,Eastgate,Fall,Buried Down,buried,Control,5.200638901,11.23972414,
+523,Eastgate,Fall,Buried Down,buried,Control,6.274838636,20.33236576,
+524,Eastgate,Fall,Buried Down,buried,Glucose,11.49693362,63.79692491,1.806333591
+525,Eastgate,Fall,Buried Down,buried,Glucose,15.02845909,20.84225958,2.361187025
+526,Eastgate,Fall,Buried Down,buried,Glucose,12.38563426,7.288718644,1.945961242
+527,Eastgate,Fall,Buried Down,buried,Glucose,15.96648255,3.899205614,2.508563998
+528,Eastgate,Fall,Buried Down,buried,Glucose,12.08974946,27.62215537,1.899473485
+529,Eastgate,Fall,Buried Down,buried,Glucose,15.61473119,5.720071435,2.453298802
+530,Eastgate,Fall,Buried Down,buried,Glucose,15.05142523,20.87407983,2.364795337
+531,Eastgate,Fall,Buried Down,buried,Glucose,14.12446645,5.713677734,2.219156782
+532,Eastgate,Fall,Buried Down,buried,Glucose,17.26647347,8.706578824,2.712811266
+498,Eastgate,Fall,Buried Up,buried,Arabinose,14.03178145,24.17635256,2.954479665
+499,Eastgate,Fall,Buried Up,buried,Arabinose,11.50433759,7.23607768,2.422310495
+500,Eastgate,Fall,Buried Up,buried,Arabinose,12.10683971,10.56596769,2.549171099
+501,Eastgate,Fall,Buried Up,buried,Arabinose,10.25451406,7.071994286,2.159152306
+502,Eastgate,Fall,Buried Up,buried,Arabinose,9.097295118,6.47340672,1.915492593
+503,Eastgate,Fall,Buried Up,buried,Arabinose,9.865410473,13.56064155,2.077224103
+504,Eastgate,Fall,Buried Up,buried,Arabinose,13.33593315,16.24856455,2.807964438
+505,Eastgate,Fall,Buried Up,buried,Arabinose,10.84756127,14.95693823,2.28402212
+506,Eastgate,Fall,Buried Up,buried,Cellobiose,9.521105241,9.65282941,2.004728475
+507,Eastgate,Fall,Buried Up,buried,Cellobiose,12.03562754,12.7552659,2.534176929
+508,Eastgate,Fall,Buried Up,buried,Cellobiose,12.39235679,3.036320467,2.609288513
+509,Eastgate,Fall,Buried Up,buried,Cellobiose,12.58888061,14.11274624,2.650667836
+510,Eastgate,Fall,Buried Up,buried,Cellobiose,11.48419883,16.51728387,2.418070153
+511,Eastgate,Fall,Buried Up,buried,Cellobiose,13.63486048,7.875469112,2.870905463
+512,Eastgate,Fall,Buried Up,buried,Cellobiose,14.07632688,9.980382391,2.963858987
+482,Eastgate,Fall,Buried Up,buried,Control,2.67959684,26.28135981,
+483,Eastgate,Fall,Buried Up,buried,Control,1.912259022,3.976221687,
+484,Eastgate,Fall,Buried Up,buried,Control,1.4495591,8.991103846,
+485,Eastgate,Fall,Buried Up,buried,Control,5.129690955,14.41665775,
+486,Eastgate,Fall,Buried Up,buried,Control,3.77484907,6.065702609,
+487,Eastgate,Fall,Buried Up,buried,Control,15.42881274,14.06029633,
+488,Eastgate,Fall,Buried Up,buried,Control,4.296540421,4.987687119,
+489,Eastgate,Fall,Buried Up,buried,Control,3.323284571,1.294574106,
+490,Eastgate,Fall,Buried Up,buried,Glucose,10.1367654,40.44857976,2.134359587
+491,Eastgate,Fall,Buried Up,buried,Glucose,11.80987255,5.848904747,2.486642799
+492,Eastgate,Fall,Buried Up,buried,Glucose,13.51590591,4.626229491,2.845858832
+493,Eastgate,Fall,Buried Up,buried,Glucose,5.688646596,2.968636099,1.19778025
+494,Eastgate,Fall,Buried Up,buried,Glucose,18.75342508,13.03201593,3.948651371
+495,Eastgate,Fall,Buried Up,buried,Glucose,16.75680005,19.08913171,3.528249439
+496,Eastgate,Fall,Buried Up,buried,Glucose,16.07926368,18.44803701,3.385589901
+497,Eastgate,Fall,Buried Up,buried,Glucose,12.0003489,1.689629576,2.526748791
+464,Eastgate,Fall,Daylight,daylight,Arabinose,8.04957895,11.7266325,2.547096877
+465,Eastgate,Fall,Daylight,daylight,Arabinose,8.298951778,23.36403606,2.626004948
+466,Eastgate,Fall,Daylight,daylight,Arabinose,6.053695404,23.69834614,1.91554723
+467,Eastgate,Fall,Daylight,daylight,Arabinose,8.487069563,13.96591845,2.685530325
+468,Eastgate,Fall,Daylight,daylight,Arabinose,19.66438765,9.497985853,6.222325501
+469,Eastgate,Fall,Daylight,daylight,Arabinose,7.391735822,13.57236691,2.338938141
+470,Eastgate,Fall,Daylight,daylight,Arabinose,9.313004678,36.04455,2.946877753
+471,Eastgate,Fall,Daylight,daylight,Cellobiose,9.251626777,11.26140504,2.927456183
+472,Eastgate,Fall,Daylight,daylight,Cellobiose,6.436384656,14.09439171,2.036640097
+473,Eastgate,Fall,Daylight,daylight,Cellobiose,6.918238225,11.25135663,2.189111143
+474,Eastgate,Fall,Daylight,daylight,Cellobiose,8.980029566,13.11151395,2.841515737
+475,Eastgate,Fall,Daylight,daylight,Cellobiose,8.102632473,8.277447857,2.563884396
+476,Eastgate,Fall,Daylight,daylight,Cellobiose,12.06425743,8.13627472,3.817445932
+477,Eastgate,Fall,Daylight,daylight,Cellobiose,10.73813816,6.72341017,3.397827182
+478,Eastgate,Fall,Daylight,daylight,Cellobiose,15.63212772,6.322014309,4.946413216
+449,Eastgate,Fall,Daylight,daylight,Control,9.966465212,18.24435349,
+450,Eastgate,Fall,Daylight,daylight,Control,2.798774154,26.99954883,
+451,Eastgate,Fall,Daylight,daylight,Control,1.89639172,10.70321658,
+452,Eastgate,Fall,Daylight,daylight,Control,1.561424156,3.136271033,
+453,Eastgate,Fall,Daylight,daylight,Control,1.278316029,,
+454,Eastgate,Fall,Daylight,daylight,Control,2.722053786,3.732770177,
+455,Eastgate,Fall,Daylight,daylight,Control,1.898643861,11.56296876,
+456,Eastgate,Fall,Daylight,daylight,Glucose,10.04708437,16.81086857,3.179159728
+457,Eastgate,Fall,Daylight,daylight,Glucose,6.941899646,7.818165726,2.196598234
+458,Eastgate,Fall,Daylight,daylight,Glucose,10.21739122,30.58991436,3.23304926
+459,Eastgate,Fall,Daylight,daylight,Glucose,12.72637138,,4.026956069
+460,Eastgate,Fall,Daylight,daylight,Glucose,13.77176818,6.353301695,4.357746902
+461,Eastgate,Fall,Daylight,daylight,Glucose,8.242375024,7.331204739,2.608102587
+462,Eastgate,Fall,Daylight,daylight,Glucose,12.74765213,7.888435902,4.033689852
+463,Eastgate,Fall,Daylight,daylight,Glucose,10.0951473,3.993788552,3.194368093
+267,Este,Fall,Buried Down,buried,Arabinose,10.5370407,20.764161,8.873048206
+268,Este,Fall,Buried Down,buried,Arabinose,9.982856687,17.77159186,8.406380043
+269,Este,Fall,Buried Down,buried,Arabinose,9.434385916,3.285012158,7.944522893
+270,Este,Fall,Buried Down,buried,Arabinose,11.80012575,14.95013543,9.936668906
+271,Este,Fall,Buried Down,buried,Arabinose,2.645998812,16.3825155,2.228146943
+272,Este,Fall,Buried Down,buried,Arabinose,5.663251758,1.896703448,4.768920165
+273,Este,Fall,Buried Down,buried,Arabinose,11.18241248,7.159751168,9.416503919
+274,Este,Fall,Buried Down,buried,Arabinose,12.1252824,13.19817115,10.21047734
+275,Este,Fall,Buried Down,buried,Cellobiose,0.723716694,2.471395853,0.60942852
+276,Este,Fall,Buried Down,buried,Cellobiose,17.28030644,21.10020575,14.55142829
+277,Este,Fall,Buried Down,buried,Cellobiose,22.44974659,8.683672254,18.90451878
+278,Este,Fall,Buried Down,buried,Cellobiose,22.04370758,18.56736088,18.56260079
+279,Este,Fall,Buried Down,buried,Cellobiose,9.112026239,6.184278486,7.673069737
+280,Este,Fall,Buried Down,buried,Cellobiose,2.5243137,6.125057439,2.125678148
+281,Este,Fall,Buried Down,buried,Cellobiose,9.511646139,14.52497143,8.009582306
+282,Este,Fall,Buried Down,buried,Cellobiose,14.05041223,10.24069595,11.83159377
+251,Este,Fall,Buried Down,buried,Control,2.495760301,5.754006383,
+252,Este,Fall,Buried Down,buried,Control,2.126140246,24.10061211,
+253,Este,Fall,Buried Down,buried,Control,1.096348286,8.991431331,
+254,Este,Fall,Buried Down,buried,Control,1.10281045,11.77731007,
+255,Este,Fall,Buried Down,buried,Control,0.995320759,,
+256,Este,Fall,Buried Down,buried,Control,0,0,
+257,Este,Fall,Buried Down,buried,Control,0.697456539,12.48903732,
+258,Este,Fall,Buried Down,buried,Control,0.986430249,14.85900853,
+259,Este,Fall,Buried Down,buried,Glucose,0.568163896,4.011016043,0.478440369
+260,Este,Fall,Buried Down,buried,Glucose,3.898506518,6.227701824,3.28286065
+261,Este,Fall,Buried Down,buried,Glucose,11.63994846,20.81078154,9.801786552
+262,Este,Fall,Buried Down,buried,Glucose,9.376957477,7.772112108,7.89616346
+263,Este,Fall,Buried Down,buried,Glucose,5.06174833,11.79581538,4.262405189
+264,Este,Fall,Buried Down,buried,Glucose,7.843431807,59.22943288,6.604809693
+265,Este,Fall,Buried Down,buried,Glucose,5.284228028,0.642204182,4.449751251
+266,Este,Fall,Buried Down,buried,Glucose,6.429282867,8.993610427,5.413980876
+328,Este,Fall,Buried Up,buried,Arabinose,17.11370756,2.716647172,7.406791809
+329,Este,Fall,Buried Up,buried,Arabinose,13.62449821,18.25375129,5.896666246
+330,Este,Fall,Buried Up,buried,Arabinose,12.79914094,6.596323172,5.539452622
+331,Este,Fall,Buried Up,buried,Arabinose,16.79013117,21.15809348,7.266748338
+332,Este,Fall,Buried Up,buried,Arabinose,16.04360643,15.590002,6.943653341
+333,Este,Fall,Buried Up,buried,Arabinose,15.25622588,18.00471358,6.602875998
+334,Este,Fall,Buried Up,buried,Cellobiose,18.08148263,25.36840862,7.82564368
+335,Este,Fall,Buried Up,buried,Cellobiose,18.31050662,30.39533384,7.924764983
+336,Este,Fall,Buried Up,buried,Cellobiose,15.67699966,27.63491002,6.784986375
+337,Este,Fall,Buried Up,buried,Cellobiose,15.84723146,17.68565287,6.858662491
+315,Este,Fall,Buried Up,buried,Control,1.589029031,19.10753103,
+316,Este,Fall,Buried Up,buried,Control,3.52854216,11.23685393,
+317,Este,Fall,Buried Up,buried,Control,0.287095255,30.36488253,
+318,Este,Fall,Buried Up,buried,Control,2.173209889,5.724439819,
+319,Este,Fall,Buried Up,buried,Control,1.409763231,13.7511,
+320,Este,Fall,Buried Up,buried,Control,3.315448055,4.778876903,
+321,Este,Fall,Buried Up,buried,Control,3.870710164,26.04851229,
+322,Este,Fall,Buried Up,buried,Glucose,12.29803695,5.063978512,5.322575428
+323,Este,Fall,Buried Up,buried,Glucose,17.43230272,12.29069182,7.544679405
+324,Este,Fall,Buried Up,buried,Glucose,14.48765333,24.01311493,6.270238732
+325,Este,Fall,Buried Up,buried,Glucose,20.88300707,21.40636353,9.038140048
+326,Este,Fall,Buried Up,buried,Glucose,22.03459249,20.53508826,9.536544818
+327,Este,Fall,Buried Up,buried,Glucose,17.53063612,10.40025132,7.58723798
+299,Este,Fall,Daylight,daylight,Arabinose,11.43721808,8.794066968,15.57679401
+300,Este,Fall,Daylight,daylight,Arabinose,12.37139666,11.80534964,16.8490883
+301,Este,Fall,Daylight,daylight,Arabinose,9.298391733,26.16949427,12.66384287
+302,Este,Fall,Daylight,daylight,Arabinose,10.51372113,37.0142391,14.31904744
+303,Este,Fall,Daylight,daylight,Arabinose,9.118050299,14.96950286,12.41822883
+304,Este,Fall,Daylight,daylight,Arabinose,12.49791708,31.32504291,17.02140141
+305,Este,Fall,Daylight,daylight,Arabinose,8.381248576,6.804226867,11.41474978
+306,Este,Fall,Daylight,daylight,Arabinose,10.79556023,15.56274225,14.70289512
+307,Este,Fall,Daylight,daylight,Cellobiose,11.33456979,27.5022,15.4369933
+308,Este,Fall,Daylight,daylight,Cellobiose,17.36515685,14.51850679,23.65028534
+309,Este,Fall,Daylight,daylight,Cellobiose,16.67674884,34.42239643,22.71271558
+310,Este,Fall,Daylight,daylight,Cellobiose,13.60309701,53.17092,18.52658911
+311,Este,Fall,Daylight,daylight,Cellobiose,11.16563692,41.80694494,15.20691701
+312,Este,Fall,Daylight,daylight,Cellobiose,11.67021923,24.48110651,15.89412737
+313,Este,Fall,Daylight,daylight,Cellobiose,11.22823258,8.949486393,15.29216849
+314,Este,Fall,Daylight,daylight,Cellobiose,7.398007863,44.14732235,10.07563585
+283,Este,Fall,Daylight,daylight,Control,2.12788467,12.85817143,
+284,Este,Fall,Daylight,daylight,Control,0.905112049,3.094369419,
+285,Este,Fall,Daylight,daylight,Control,0.314983483,122.5414481,
+286,Este,Fall,Daylight,daylight,Control,0.867137122,6.543733333,
+287,Este,Fall,Daylight,daylight,Control,0.902145258,6.920012698,
+288,Este,Fall,Daylight,daylight,Control,0.083776929,2.98873258,
+289,Este,Fall,Daylight,daylight,Control,0.672938446,45.47607874,
+290,Este,Fall,Daylight,daylight,Control,0,,
+291,Este,Fall,Daylight,daylight,Glucose,13.67430638,22.88619974,18.62357194
+292,Este,Fall,Daylight,daylight,Glucose,13.8373471,46.22419453,18.84562346
+293,Este,Fall,Daylight,daylight,Glucose,11.43193148,6.439780537,15.56959397
+294,Este,Fall,Daylight,daylight,Glucose,12.85077931,10.49767296,17.50197825
+295,Este,Fall,Daylight,daylight,Glucose,9.796196076,16.90907285,13.34182204
+296,Este,Fall,Daylight,daylight,Glucose,12.29869386,34.55570541,16.75007152
+297,Este,Fall,Daylight,daylight,Glucose,9.496435095,11.67643775,12.93356586
+298,Este,Fall,Daylight,daylight,Glucose,10.93889644,15.27696957,14.8981103
+677,Amberly,Spring,Buried Down,buried,Arabinose,4.906919545,3.345296842,0.876921092
+678,Amberly,Spring,Buried Down,buried,Arabinose,3.271003039,3.028973344,0.584564619
+679,Amberly,Spring,Buried Down,buried,Arabinose,10.62549856,5.221936709,1.898894758
+680,Amberly,Spring,Buried Down,buried,Arabinose,8.498754301,7.5006,1.518821907
+681,Amberly,Spring,Buried Down,buried,Arabinose,11.86415182,6.487130909,2.120255869
+682,Amberly,Spring,Buried Down,buried,Arabinose,8.963616435,10.5472918,1.60189794
+683,Amberly,Spring,Buried Down,buried,Arabinose,16.73708997,4.88444296,2.991104109
+684,Amberly,Spring,Buried Down,buried,Cellobiose,3.698728142,3.68744581,0.661003852
+685,Amberly,Spring,Buried Down,buried,Cellobiose,9.113147088,12.63791571,1.62862073
+686,Amberly,Spring,Buried Down,buried,Cellobiose,10.6137486,9.157270276,1.896794908
+687,Amberly,Spring,Buried Down,buried,Cellobiose,11.60074593,15.52991442,2.073182308
+688,Amberly,Spring,Buried Down,buried,Cellobiose,6.195760513,1.458680221,1.107251306
+689,Amberly,Spring,Buried Down,buried,Cellobiose,14.24797506,9.535624479,2.546271592
+690,Amberly,Spring,Buried Down,buried,Cellobiose,13.10088943,11.05576679,2.341274633
+663,Amberly,Spring,Buried Down,buried,Control,3.413061497,5.530333696,
+664,Amberly,Spring,Buried Down,buried,Control,5.525885976,12.62909374,
+665,Amberly,Spring,Buried Down,buried,Control,6.133177794,5.672722689,
+666,Amberly,Spring,Buried Down,buried,Control,6.145760648,13.26347234,
+667,Amberly,Spring,Buried Down,buried,Control,7.058419562,12.46131429,
+668,Amberly,Spring,Buried Down,buried,Control,3.997708241,3.378462112,
+669,Amberly,Spring,Buried Down,buried,Control,6.895345013,1.022223173,
+670,Amberly,Spring,Buried Down,buried,Glucose,5.384178002,2.050951591,0.962212485
+671,Amberly,Spring,Buried Down,buried,Glucose,7.666550024,4.962353478,1.370097748
+672,Amberly,Spring,Buried Down,buried,Glucose,11.11982291,11.66784351,1.987236015
+673,Amberly,Spring,Buried Down,buried,Glucose,8.407281429,6.278417866,1.502474687
+674,Amberly,Spring,Buried Down,buried,Glucose,15.64097568,20.23691294,2.795216294
+675,Amberly,Spring,Buried Down,buried,Glucose,12.03586581,8.343712556,2.150943069
+676,Amberly,Spring,Buried Down,buried,Glucose,13.4425996,10.03503552,2.402342042
+646,Amberly,Spring,Buried Up,buried,Arabinose,16.78468175,11.63398024,3.232054357
+647,Amberly,Spring,Buried Up,buried,Arabinose,12.66388043,16.95300917,2.438553828
+648,Amberly,Spring,Buried Up,buried,Arabinose,1.438178753,5.103501031,0.276935361
+649,Amberly,Spring,Buried Up,buried,Arabinose,9.937734971,9.646925538,1.913607901
+650,Amberly,Spring,Buried Up,buried,Arabinose,8.454467177,8.008145291,1.627990205
+651,Amberly,Spring,Buried Up,buried,Arabinose,2.521396,2.516966627,0.485519419
+652,Amberly,Spring,Buried Up,buried,Arabinose,11.92692529,6.431211735,2.29664592
+653,Amberly,Spring,Buried Up,buried,Cellobiose,14.64449497,13.53511414,2.819940496
+654,Amberly,Spring,Buried Up,buried,Cellobiose,1.852016876,,0.356623933
+655,Amberly,Spring,Buried Up,buried,Cellobiose,7.124570363,,1.371905588
+656,Amberly,Spring,Buried Up,buried,Cellobiose,9.996731145,5.245483322,1.924968191
+657,Amberly,Spring,Buried Up,buried,Cellobiose,8.4980927,7.675032558,1.636390725
+658,Amberly,Spring,Buried Up,buried,Cellobiose,11.1322328,12.34906616,2.143620122
+659,Amberly,Spring,Buried Up,buried,Cellobiose,13.40262539,10.0057062,2.580806383
+632,Amberly,Spring,Buried Up,buried,Control,4.717214009,2.696294118,
+633,Amberly,Spring,Buried Up,buried,Control,2.697881072,6.563025,
+634,Amberly,Spring,Buried Up,buried,Control,4.821710657,23.4252407,
+635,Amberly,Spring,Buried Up,buried,Control,4.815968304,8.913292964,
+636,Amberly,Spring,Buried Up,buried,Control,6.39240531,15.52104356,
+637,Amberly,Spring,Buried Up,buried,Control,7.693950591,4.819836688,
+638,Amberly,Spring,Buried Up,buried,Control,5.213220372,7.791940899,
+639,Amberly,Spring,Buried Up,buried,Glucose,8.800371073,10.67978832,1.694597377
+640,Amberly,Spring,Buried Up,buried,Glucose,10.17370939,8.40492766,1.95904708
+641,Amberly,Spring,Buried Up,buried,Glucose,12.5592124,14.34049093,2.418398977
+642,Amberly,Spring,Buried Up,buried,Glucose,9.737802924,10.21947836,1.875109034
+643,Amberly,Spring,Buried Up,buried,Glucose,13.00679054,6.916991671,2.504584517
+644,Amberly,Spring,Buried Up,buried,Glucose,5.775860043,3.252434087,1.112198247
+645,Amberly,Spring,Buried Up,buried,Glucose,4.139838446,3.498887728,0.797166314
+706,Amberly,Spring,Daylight,daylight,Arabinose,5.451904253,,1.999868717
+707,Amberly,Spring,Daylight,daylight,Arabinose,2.744459844,4.64231509,1.006723363
+708,Amberly,Spring,Daylight,daylight,Arabinose,4.930398998,9.122680976,1.808570044
+709,Amberly,Spring,Daylight,daylight,Arabinose,4.017455119,5.384787351,1.47368377
+710,Amberly,Spring,Daylight,daylight,Arabinose,5.386870937,7.474465505,1.976013181
+711,Amberly,Spring,Daylight,daylight,Arabinose,1.685338771,2.985675728,0.618216339
+712,Amberly,Spring,Daylight,daylight,Cellobiose,3.394993383,7.33392,1.245352219
+713,Amberly,Spring,Daylight,daylight,Cellobiose,2.855937411,18.51633267,1.047615589
+714,Amberly,Spring,Daylight,daylight,Cellobiose,4.224529454,14.92656716,1.549642823
+715,Amberly,Spring,Daylight,daylight,Cellobiose,4.498373575,6.723690937,1.650094384
+716,Amberly,Spring,Daylight,daylight,Cellobiose,3.009455507,39.01789951,1.103929131
+717,Amberly,Spring,Daylight,daylight,Cellobiose,2.924218925,7.109185194,1.072662629
+694,Amberly,Spring,Daylight,daylight,Control,3.419770986,2.144706483,
+695,Amberly,Spring,Daylight,daylight,Control,3.877600735,10.04888077,
+696,Amberly,Spring,Daylight,daylight,Control,2.568835035,4.759996154,
+697,Amberly,Spring,Daylight,daylight,Control,2.55650665,7.652434008,
+698,Amberly,Spring,Daylight,daylight,Control,1.815126216,2.946664286,
+699,Amberly,Spring,Daylight,daylight,Control,2.118946825,3.7503,
+700,Amberly,Spring,Daylight,daylight,Glucose,2.416896505,1.741953623,0.886566507
+701,Amberly,Spring,Daylight,daylight,Glucose,3.018723244,7.338327404,1.107328724
+702,Amberly,Spring,Daylight,daylight,Glucose,3.111427481,4.654218462,1.141334513
+703,Amberly,Spring,Daylight,daylight,Glucose,2.935374718,1.282918537,1.076754799
+704,Amberly,Spring,Daylight,daylight,Glucose,4.727218092,0.414659006,1.73403918
+705,Amberly,Spring,Daylight,daylight,Glucose,7.817016362,7.40395168,2.86743966
+617,Eastgate,Spring,Buried Down,buried,Arabinose,14.73820129,10.03943177,1.777238303
+618,Eastgate,Spring,Buried Down,buried,Arabinose,16.73803502,20.96228204,2.018392636
+619,Eastgate,Spring,Buried Down,buried,Arabinose,15.35982814,10.84297263,1.852198538
+620,Eastgate,Spring,Buried Down,buried,Arabinose,12.45214208,,1.501568843
+621,Eastgate,Spring,Buried Down,buried,Arabinose,16.85485345,20.44883405,2.032479442
+622,Eastgate,Spring,Buried Down,buried,Arabinose,24.73832353,24.00500667,2.983124958
+623,Eastgate,Spring,Buried Down,buried,Cellobiose,16.0734916,12.00096,1.938257211
+624,Eastgate,Spring,Buried Down,buried,Cellobiose,13.77202492,14.45310811,1.660729807
+625,Eastgate,Spring,Buried Down,buried,Cellobiose,15.88522531,,1.915554707
+626,Eastgate,Spring,Buried Down,buried,Cellobiose,27.30322342,12.04210253,3.292419033
+627,Eastgate,Spring,Buried Down,buried,Cellobiose,19.20835633,15.21768047,2.316281745
+628,Eastgate,Spring,Buried Down,buried,Cellobiose,18.73764323,31.62630985,2.259519774
+605,Eastgate,Spring,Buried Down,buried,Control,7.924884768,27.99331071,
+606,Eastgate,Spring,Buried Down,buried,Control,9.185285863,71.36468308,
+607,Eastgate,Spring,Buried Down,buried,Control,7.413153022,18.00461822,
+608,Eastgate,Spring,Buried Down,buried,Control,10.36537739,4.970429876,
+609,Eastgate,Spring,Buried Down,buried,Control,9.162451567,14.23750255,
+610,Eastgate,Spring,Buried Down,buried,Control,5.705375605,13.04829547,
+611,Eastgate,Spring,Buried Down,buried,Glucose,13.63009677,17.07286862,1.64361509
+612,Eastgate,Spring,Buried Down,buried,Glucose,18.99415072,13.40647784,2.290451292
+613,Eastgate,Spring,Buried Down,buried,Glucose,20.35853883,7.455541822,2.454979022
+614,Eastgate,Spring,Buried Down,buried,Glucose,15.61492568,35.66235004,1.882960034
+615,Eastgate,Spring,Buried Down,buried,Glucose,18.0326742,12.72829091,2.174509538
+616,Eastgate,Spring,Buried Down,buried,Glucose,19.72812067,25.52768308,2.378958667
+590,Eastgate,Spring,Buried Up,buried,Arabinose,17.04748107,12.03270857,2.605918087
+591,Eastgate,Spring,Buried Up,buried,Arabinose,18.2873786,22.1843918,2.795451742
+592,Eastgate,Spring,Buried Up,buried,Arabinose,16.76395723,10.01230344,2.562577966
+593,Eastgate,Spring,Buried Up,buried,Arabinose,25.35263703,17.89083207,3.875463777
+594,Eastgate,Spring,Buried Up,buried,Arabinose,23.91681726,11.18425826,3.655980987
+595,Eastgate,Spring,Buried Up,buried,Arabinose,20.08191932,12.17999016,3.06976946
+596,Eastgate,Spring,Buried Up,buried,Cellobiose,17.90224703,11.0311022,2.736579623
+597,Eastgate,Spring,Buried Up,buried,Cellobiose,29.45766189,9.219752801,4.502967541
+598,Eastgate,Spring,Buried Up,buried,Cellobiose,19.74405563,29.47738534,3.018122822
+599,Eastgate,Spring,Buried Up,buried,Cellobiose,23.05627288,9.94343107,3.524436148
+600,Eastgate,Spring,Buried Up,buried,Cellobiose,20.13458489,12.81250033,3.077820043
+601,Eastgate,Spring,Buried Up,buried,Cellobiose,26.15506646,9.487157443,3.998125029
+578,Eastgate,Spring,Buried Up,buried,Control,5.28275222,10.26943851,
+579,Eastgate,Spring,Buried Up,buried,Control,4.263817789,3.317188431,
+580,Eastgate,Spring,Buried Up,buried,Control,6.476160617,5.355038298,
+581,Eastgate,Spring,Buried Up,buried,Control,7.238304827,7.03135064,
+582,Eastgate,Spring,Buried Up,buried,Control,7.452971856,5.463811099,
+583,Eastgate,Spring,Buried Up,buried,Control,8.536991003,5.264068014,
+584,Eastgate,Spring,Buried Up,buried,Glucose,28.93968035,5.42586648,4.423787663
+585,Eastgate,Spring,Buried Up,buried,Glucose,23.47320316,6.283334615,3.588169091
+586,Eastgate,Spring,Buried Up,buried,Glucose,21.23392033,6.150828428,3.245867048
+587,Eastgate,Spring,Buried Up,buried,Glucose,22.83212493,3.632020588,3.490172365
+588,Eastgate,Spring,Buried Up,buried,Glucose,19.26814791,9.467712385,2.945374448
+589,Eastgate,Spring,Buried Up,buried,Glucose,19.79580636,9.040231501,3.02603356
+563,Eastgate,Spring,Daylight,daylight,Arabinose,11.32434753,11.57987368,1.598696934
+564,Eastgate,Spring,Daylight,daylight,Arabinose,11.42112771,9.861994812,1.612359723
+565,Eastgate,Spring,Daylight,daylight,Arabinose,11.4776264,15.92791506,1.620335837
+566,Eastgate,Spring,Daylight,daylight,Arabinose,10.85486757,12.05205207,1.532418839
+567,Eastgate,Spring,Daylight,daylight,Arabinose,12.41930498,16.63840847,1.753275827
+568,Eastgate,Spring,Daylight,daylight,Arabinose,13.39763265,8.821489214,1.891389697
+569,Eastgate,Spring,Daylight,daylight,Cellobiose,11.73516739,13.0277963,1.656693781
+570,Eastgate,Spring,Daylight,daylight,Cellobiose,9.737964867,16.45616589,1.374741859
+571,Eastgate,Spring,Daylight,daylight,Cellobiose,13.16899769,18.94807474,1.859112516
+572,Eastgate,Spring,Daylight,daylight,Cellobiose,11.85663848,17.06241911,1.67384227
+573,Eastgate,Spring,Daylight,daylight,Cellobiose,12.51380182,19.44719323,1.76661627
+574,Eastgate,Spring,Daylight,daylight,Cellobiose,10.99520854,8.061628706,1.552231255
+551,Eastgate,Spring,Daylight,daylight,Control,5.110030963,14.21086322,
+552,Eastgate,Spring,Daylight,daylight,Control,6.79914952,9.795595819,
+553,Eastgate,Spring,Daylight,daylight,Control,9.345095603,6.726861745,
+554,Eastgate,Spring,Daylight,daylight,Control,6.673866745,16.226298,
+555,Eastgate,Spring,Daylight,daylight,Control,6.830779251,9.841042812,
+556,Eastgate,Spring,Daylight,daylight,Control,7.741994606,30.10585655,
+557,Eastgate,Spring,Daylight,daylight,Glucose,14.91679015,7.829773807,2.105854364
+558,Eastgate,Spring,Daylight,daylight,Glucose,7.757196859,10.05494446,1.095110054
+559,Eastgate,Spring,Daylight,daylight,Glucose,15.07821995,12.20137286,2.128643962
+560,Eastgate,Spring,Daylight,daylight,Glucose,14.03437609,13.62925481,1.981280949
+561,Eastgate,Spring,Daylight,daylight,Glucose,15.95235706,12.90787217,2.252048893
+562,Eastgate,Spring,Daylight,daylight,Glucose,14.63831048,14.96315003,2.066540436
+766,Este,Spring,Buried Down,buried,Arabinose,13.80698064,22.3629,2.457208566
+767,Este,Spring,Buried Down,buried,Arabinose,13.38642607,11.07221858,2.382363071
+768,Este,Spring,Buried Down,buried,Arabinose,15.0818088,27.9126806,2.684087908
+769,Este,Spring,Buried Down,buried,Arabinose,13.43120131,26.10656597,2.390331657
+770,Este,Spring,Buried Down,buried,Arabinose,12.12522616,5.238514286,2.15790913
+771,Este,Spring,Buried Down,buried,Arabinose,21.26039268,16.85435031,3.78368163
+772,Este,Spring,Buried Down,buried,Arabinose,20.74905729,14.14080729,3.692680003
+773,Este,Spring,Buried Down,buried,Cellobiose,13.39547112,16.27328668,2.383972805
+774,Este,Spring,Buried Down,buried,Cellobiose,16.26506608,17.0829868,2.89467051
+775,Este,Spring,Buried Down,buried,Cellobiose,17.19640472,18.0595027,3.060419514
+776,Este,Spring,Buried Down,buried,Cellobiose,16.27569934,22.58867954,2.896562897
+777,Este,Spring,Buried Down,buried,Cellobiose,18.97338704,13.16320104,3.376666512
+778,Este,Spring,Buried Down,buried,Cellobiose,21.90058051,9.891850214,3.897614941
+779,Este,Spring,Buried Down,buried,Cellobiose,16.33039623,5.566710361,2.906297223
+752,Este,Spring,Buried Down,buried,Control,1.761048251,2.668852544,
+753,Este,Spring,Buried Down,buried,Control,6.005411031,4.979773079,
+754,Este,Spring,Buried Down,buried,Control,6.390323723,19.1524571,
+755,Este,Spring,Buried Down,buried,Control,5.230483088,8.159446673,
+756,Este,Spring,Buried Down,buried,Control,6.570496192,31.99646195,
+757,Este,Spring,Buried Down,buried,Control,7.007017435,9.410567109,
+758,Este,Spring,Buried Down,buried,Control,6.368008639,7.753632289,
+759,Este,Spring,Buried Down,buried,Glucose,14.55579103,14.50665495,2.590473278
+760,Este,Spring,Buried Down,buried,Glucose,15.25465574,21.17399477,2.714849229
+761,Este,Spring,Buried Down,buried,Glucose,16.18020845,9.526946633,2.87956852
+762,Este,Spring,Buried Down,buried,Glucose,17.1552289,31.74305679,3.053091512
+763,Este,Spring,Buried Down,buried,Glucose,17.66184788,29.83732044,3.143253766
+764,Este,Spring,Buried Down,buried,Glucose,18.03143908,9.467521402,3.209029383
+765,Este,Spring,Buried Down,buried,Glucose,14.66249876,18.99664156,2.6094639
+735,Este,Spring,Buried Up,buried,Arabinose,14.88685483,17.01989492,2.282029394
+736,Este,Spring,Buried Up,buried,Arabinose,22.1444353,12.83929474,3.39455532
+737,Este,Spring,Buried Up,buried,Arabinose,19.1680747,13.54119016,2.938304321
+738,Este,Spring,Buried Up,buried,Arabinose,21.69809406,18.7314896,3.326134969
+739,Este,Spring,Buried Up,buried,Arabinose,23.76380465,15.6450143,3.642790995
+740,Este,Spring,Buried Up,buried,Arabinose,22.98939059,15.94665378,3.524079845
+741,Este,Spring,Buried Up,buried,Arabinose,23.37549406,15.13319025,3.583266253
+742,Este,Spring,Buried Up,buried,Cellobiose,20.98504401,11.98903536,3.216830405
+743,Este,Spring,Buried Up,buried,Cellobiose,19.52042083,14.3100878,2.992316014
+744,Este,Spring,Buried Up,buried,Cellobiose,21.68568978,46.80198947,3.324233496
+745,Este,Spring,Buried Up,buried,Cellobiose,26.51584305,29.42344568,4.064655289
+746,Este,Spring,Buried Up,buried,Cellobiose,21.54490692,26.99916674,3.302652671
+747,Este,Spring,Buried Up,buried,Cellobiose,22.54004247,10.42357434,3.455198564
+748,Este,Spring,Buried Up,buried,Cellobiose,16.15980968,19.03213469,2.477162644
+721,Este,Spring,Buried Up,buried,Control,5.548088748,12.02116364,
+722,Este,Spring,Buried Up,buried,Control,6.187148583,15.07332115,
+723,Este,Spring,Buried Up,buried,Control,6.803984877,33.13789672,
+724,Este,Spring,Buried Up,buried,Control,8.176151498,,
+725,Este,Spring,Buried Up,buried,Control,5.233494643,,
+726,Este,Spring,Buried Up,buried,Control,5.943495395,38.62011064,
+727,Este,Spring,Buried Up,buried,Control,7.772246939,9.171718135,
+728,Este,Spring,Buried Up,buried,Glucose,17.45576628,13.30072179,2.675821871
+729,Este,Spring,Buried Up,buried,Glucose,19.93539532,8.328317231,3.055928107
+730,Este,Spring,Buried Up,buried,Glucose,19.92570768,24.19242726,3.054443073
+731,Este,Spring,Buried Up,buried,Glucose,20.18020832,49.00193571,3.093455876
+732,Este,Spring,Buried Up,buried,Glucose,22.15493998,15.36857633,3.396165598
+733,Este,Spring,Buried Up,buried,Glucose,23.74642173,21.96146374,3.64012634
+734,Este,Spring,Buried Up,buried,Glucose,19.94341415,16.48605513,3.057157326
+797,Este,Spring,Daylight,daylight,Arabinose,13.331853,12.32513387,2.278270379
+798,Este,Spring,Daylight,daylight,Arabinose,6.056048993,4.129689892,1.034913679
+799,Este,Spring,Daylight,daylight,Arabinose,14.09262622,26.05569813,2.408278346
+800,Este,Spring,Daylight,daylight,Arabinose,14.61165655,16.20872383,2.496975049
+801,Este,Spring,Daylight,daylight,Arabinose,15.33278247,24.80338598,2.620207718
+802,Este,Spring,Daylight,daylight,Arabinose,16.17530888,14.95159286,2.764186426
+803,Este,Spring,Daylight,daylight,Arabinose,15.70868834,14.52058223,2.684445991
+804,Este,Spring,Daylight,daylight,Cellobiose,18.4202056,7.606991489,3.147815146
+805,Este,Spring,Daylight,daylight,Cellobiose,13.34216374,13.28347758,2.280032374
+806,Este,Spring,Daylight,daylight,Cellobiose,15.0808001,11.48050314,2.57714664
+807,Este,Spring,Daylight,daylight,Cellobiose,16.05496334,13.85106933,2.743620666
+808,Este,Spring,Daylight,daylight,Cellobiose,19.89006555,15.4416022,3.398998413
+809,Este,Spring,Daylight,daylight,Cellobiose,18.03700844,8.752389324,3.08233087
+810,Este,Spring,Daylight,daylight,Cellobiose,13.37832757,15.74116951,2.286212384
+783,Este,Spring,Daylight,daylight,Control,6.190151061,9.623791424,
+784,Este,Spring,Daylight,daylight,Control,6.090814077,12.46005411,
+785,Este,Spring,Daylight,daylight,Control,6.237623139,17.31688964,
+786,Este,Spring,Daylight,daylight,Control,5.699399588,10.07073566,
+787,Este,Spring,Daylight,daylight,Control,4.973906212,5.91470399,
+788,Este,Spring,Daylight,daylight,Control,6.529255601,3.338819415,
+789,Este,Spring,Daylight,daylight,Control,5.241052113,5.36249184,
+790,Este,Spring,Daylight,daylight,Glucose,6.760966825,10.105364,1.155376559
+791,Este,Spring,Daylight,daylight,Glucose,16.01605991,18.84208696,2.736972489
+792,Este,Spring,Daylight,daylight,Glucose,12.31737424,5.497691154,2.104906863
+793,Este,Spring,Daylight,daylight,Glucose,13.94963313,16.92569605,2.383842363
+794,Este,Spring,Daylight,daylight,Glucose,18.02164523,12.49277024,3.079705463
+795,Este,Spring,Daylight,daylight,Glucose,20.40516692,12.00096,3.487023699
+796,Este,Spring,Daylight,daylight,Glucose,18.69224964,12.73001915,3.194304548
+195,Amberly,Summer,Buried Down,buried,Arabinose,3.161919425,16.85553042,2.287155391
+196,Amberly,Summer,Buried Down,buried,Arabinose,3.205776086,18.71934468,2.318878843
+197,Amberly,Summer,Buried Down,buried,Arabinose,1.013577136,20.81704985,0.733164923
+198,Amberly,Summer,Buried Down,buried,Arabinose,3.329766051,9.486255624,2.408566239
+199,Amberly,Summer,Buried Down,buried,Arabinose,2.820620292,6.428783212,2.040278717
+200,Amberly,Summer,Buried Down,buried,Arabinose,5.126552411,10.24246823,3.708260841
+201,Amberly,Summer,Buried Down,buried,Arabinose,4.999582604,16.35607302,3.616417995
+202,Amberly,Summer,Buried Down,buried,Arabinose,3.513449206,7.82135454,2.541432343
+203,Amberly,Summer,Buried Down,buried,Cellobiose,6.335070308,22.7175174,4.58243499
+204,Amberly,Summer,Buried Down,buried,Cellobiose,2.439808598,20.372,1.76482087
+205,Amberly,Summer,Buried Down,buried,Cellobiose,5.548531077,10.14896,4.01349657
+206,Amberly,Summer,Buried Down,buried,Cellobiose,3.760115443,15.71554286,2.719856881
+207,Amberly,Summer,Buried Down,buried,Cellobiose,12.01328658,10.72850894,8.689738568
+208,Amberly,Summer,Buried Down,buried,Cellobiose,5.53377089,12.05355734,4.002819878
+209,Amberly,Summer,Buried Down,buried,Cellobiose,7.757441495,17.74161529,5.611298631
+210,Amberly,Summer,Buried Down,buried,Cellobiose,5.839201571,14.30721066,4.223751323
+179,Amberly,Summer,Buried Down,buried,Control,1.506318924,17.04338017,
+180,Amberly,Summer,Buried Down,buried,Control,0.967821594,38.40665304,
+181,Amberly,Summer,Buried Down,buried,Control,0.551010259,11.48529375,
+182,Amberly,Summer,Buried Down,buried,Control,1.771471456,30.0024,
+183,Amberly,Summer,Buried Down,buried,Control,2.786633388,18.85594419,
+184,Amberly,Summer,Buried Down,buried,Control,1.404722679,17.86225361,
+185,Amberly,Summer,Buried Down,buried,Control,1.560735404,11.67394155,
+186,Amberly,Summer,Buried Down,buried,Control,0.511031294,35.87506956,
+187,Amberly,Summer,Buried Down,buried,Glucose,4.005627046,12.0843,2.897446223
+188,Amberly,Summer,Buried Down,buried,Glucose,4.607130474,15.1864,3.332540108
+189,Amberly,Summer,Buried Down,buried,Glucose,2.009129162,51.54064685,1.45329149
+190,Amberly,Summer,Buried Down,buried,Glucose,2.074598094,23.98336421,1.500648049
+191,Amberly,Summer,Buried Down,buried,Glucose,0.877636498,37.90683704,0.63483308
+192,Amberly,Summer,Buried Down,buried,Glucose,3.376342042,19.06761156,2.442256701
+193,Amberly,Summer,Buried Down,buried,Glucose,1.32955057,28.28797714,0.961722405
+194,Amberly,Summer,Buried Down,buried,Glucose,0,0,0
+159,Amberly,Summer,Buried Up,buried,Arabinose,7.008238522,7.656054597,2.029412272
+160,Amberly,Summer,Buried Up,buried,Arabinose,7.652592517,10.8342,2.216001227
+161,Amberly,Summer,Buried Up,buried,Arabinose,7.319278211,17.83745927,2.119481661
+162,Amberly,Summer,Buried Up,buried,Arabinose,9.476047791,20.27575433,2.744028705
+163,Amberly,Summer,Buried Up,buried,Arabinose,15.22175371,30.81395317,4.40784281
+164,Amberly,Summer,Buried Up,buried,Arabinose,7.167610695,,2.075562506
+165,Amberly,Summer,Buried Up,buried,Arabinose,11.58116178,7.766825,3.35361757
+166,Amberly,Summer,Buried Up,buried,Arabinose,7.826905755,28.43924975,2.266478023
+167,Amberly,Summer,Buried Up,buried,Cellobiose,13.87345687,42.23776088,4.017409446
+168,Amberly,Summer,Buried Up,buried,Cellobiose,11.98505184,23.02791627,3.470574126
+169,Amberly,Summer,Buried Up,buried,Cellobiose,9.332714441,16.93389936,2.702522918
+170,Amberly,Summer,Buried Up,buried,Cellobiose,3.762928953,9.050169821,1.089651012
+171,Amberly,Summer,Buried Up,buried,Cellobiose,7.097005381,21.673853,2.055116956
+172,Amberly,Summer,Buried Up,buried,Cellobiose,12.81051713,15.0401202,3.709608426
+173,Amberly,Summer,Buried Up,buried,Cellobiose,13.37189125,29.10765838,3.872168465
+174,Amberly,Summer,Buried Up,buried,Cellobiose,11.43107825,20.77634552,3.310157096
+144,Amberly,Summer,Buried Up,buried,Control,1.796285107,17.82218399,
+145,Amberly,Summer,Buried Up,buried,Control,4.8270428,19.32043096,
+146,Amberly,Summer,Buried Up,buried,Control,3.238215535,19.09062287,
+147,Amberly,Summer,Buried Up,buried,Control,2.966716267,32.76857872,
+148,Amberly,Summer,Buried Up,buried,Control,3.262460827,13.32132857,
+149,Amberly,Summer,Buried Up,buried,Control,4.480966824,88.41556074,
+150,Amberly,Summer,Buried Up,buried,Control,3.601651062,9.398510924,
+151,Amberly,Summer,Buried Up,buried,Glucose,5.53612238,8.968108696,1.603123904
+152,Amberly,Summer,Buried Up,buried,Glucose,5.934713711,1.454113653,1.71854608
+153,Amberly,Summer,Buried Up,buried,Glucose,13.39860094,4.664133319,3.879902929
+154,Amberly,Summer,Buried Up,buried,Glucose,8.818705917,3.837822986,2.553678782
+155,Amberly,Summer,Buried Up,buried,Glucose,11.26606173,6.778995431,3.262372401
+156,Amberly,Summer,Buried Up,buried,Glucose,11.03426399,20.96193239,3.195249517
+157,Amberly,Summer,Buried Up,buried,Glucose,2.299772414,2.101900476,0.665957122
+158,Amberly,Summer,Buried Up,buried,Glucose,15.79997513,2.633823285,4.57528141
+231,Amberly,Summer,Daylight,daylight,Arabinose,3.363649557,8.341229494,6.199043152
+232,Amberly,Summer,Daylight,daylight,Arabinose,0.616818412,1.619232446,1.136766446
+233,Amberly,Summer,Daylight,daylight,Arabinose,1.807613316,44.99846084,3.331343756
+234,Amberly,Summer,Daylight,daylight,Arabinose,6.876093925,255.8099368,12.67230793
+235,Amberly,Summer,Daylight,daylight,Arabinose,5.788860855,11.17716413,10.66859006
+236,Amberly,Summer,Daylight,daylight,Arabinose,0.322872367,8.043406579,0.595038127
+237,Amberly,Summer,Daylight,daylight,Arabinose,4.342220354,6.888646286,8.002501716
+238,Amberly,Summer,Daylight,daylight,Arabinose,4.205223122,6.800066635,7.750022454
+239,Amberly,Summer,Daylight,daylight,Cellobiose,0,0,0
+240,Amberly,Summer,Daylight,daylight,Cellobiose,0,0,0
+241,Amberly,Summer,Daylight,daylight,Cellobiose,1.124271778,4.729166123,2.071978411
+242,Amberly,Summer,Daylight,daylight,Cellobiose,1.711412262,8.190977002,3.154049874
+243,Amberly,Summer,Daylight,daylight,Cellobiose,1.813111303,11.25723283,3.341476279
+244,Amberly,Summer,Daylight,daylight,Cellobiose,1.232167377,5.521979637,2.270824773
+245,Amberly,Summer,Daylight,daylight,Cellobiose,3.19840264,2.145026788,5.89450109
+246,Amberly,Summer,Daylight,daylight,Cellobiose,2.175204967,14.31521162,4.008797357
+215,Amberly,Summer,Daylight,daylight,Control,0.006533112,8.452299833,
+216,Amberly,Summer,Daylight,daylight,Control,0.426443976,32.67588119,
+217,Amberly,Summer,Daylight,daylight,Control,0.997943131,35.44728,
+218,Amberly,Summer,Daylight,daylight,Control,0.920219908, ,
+219,Amberly,Summer,Daylight,daylight,Control,0.985896214,20.22220588,
+220,Amberly,Summer,Daylight,daylight,Control,1.003826562,12.33941246,
+221,Amberly,Summer,Daylight,daylight,Control,0,,
+222,Amberly,Summer,Daylight,daylight,Control,0,,
+223,Amberly,Summer,Daylight,daylight,Glucose,2.759566298,6.767693139,5.085746977
+224,Amberly,Summer,Daylight,daylight,Glucose,3.154341345,9.180881471,5.81329826
+225,Amberly,Summer,Daylight,daylight,Glucose,0.777391874,2.696294118,1.432695557
+226,Amberly,Summer,Daylight,daylight,Glucose,0,0,0
+227,Amberly,Summer,Daylight,daylight,Glucose,3.080935701,6.073125036,5.678015215
+228,Amberly,Summer,Daylight,daylight,Glucose,12.83921683,11.79298385,23.66205451
+229,Amberly,Summer,Daylight,daylight,Glucose,7.825442912,20.31295072,14.42191211
+230,Amberly,Summer,Daylight,daylight,Glucose,4.59357395,11.7519441,8.465734215
+5,Eastgate,Summer,Buried Down,buried,Arabinose,12.42688926,3.618710526,2.211667049
+6,Eastgate,Summer,Buried Down,buried,Arabinose,14.31674504,4.291514771,2.54801283
+7,Eastgate,Summer,Buried Down,buried,Arabinose,11.59823125,3.294253432,2.064187212
+8,Eastgate,Summer,Buried Down,buried,Cellobiose,11.48166958,4.757228809,2.043442229
+9,Eastgate,Summer,Buried Down,buried,Cellobiose,11.92940522,3.041814645,2.12312767
+10,Eastgate,Summer,Buried Down,buried,Cellobiose,11.80395272,3.489477933,2.100800349
+11,Eastgate,Summer,Buried Down,buried,Cellobiose,12.48849629,2.795114021,2.222631519
+12,Eastgate,Summer,Buried Down,buried,Cellobiose,12.87462489,4.928623923,2.29135249
+13,Eastgate,Summer,Buried Down,buried,Control,5.637319926,3.220344476,
+14,Eastgate,Summer,Buried Down,buried,Control,6.009345161,2.820738462,
+15,Eastgate,Summer,Buried Down,buried,Control,5.366375966,2.133444365,
+16,Eastgate,Summer,Buried Down,buried,Control,5.462112719,2.531119931,
+1,Eastgate,Summer,Buried Down,buried,Glucose,15.96325673,2.461121383,2.841049613
+2,Eastgate,Summer,Buried Down,buried,Glucose,18.05881706,5.821044879,3.214005518
+3,Eastgate,Summer,Buried Down,buried,Glucose,12.19847919,4.711839368,2.171015926
+4,Eastgate,Summer,Buried Down,buried,Glucose,9.966078675,3.555345964,1.773705982
+25,Eastgate,Summer,Buried Up,buried,Arabinose,11.55458448,3.308627818,1.962066825
+26,Eastgate,Summer,Buried Up,buried,Arabinose,9.791697727,3.292317028,1.662713645
+27,Eastgate,Summer,Buried Up,buried,Cellobiose,10.0858622,3.256504718,1.712665277
+28,Eastgate,Summer,Buried Up,buried,Control,5.888986211,2.015988005,
+22,Eastgate,Summer,Buried Up,buried,Glucose,8.834330189,2.793294162,1.500144485
+23,Eastgate,Summer,Buried Up,buried,Glucose,12.6426862,1.91218705,2.146835761
+24,Eastgate,Summer,Buried Up,buried,Glucose,11.2083703,3.491073837,1.903276709
+115,Este,Summer,Buried Down,buried,Arabinose,11.73662826,4.690730558,2.430027699
+116,Este,Summer,Buried Down,buried,Arabinose,11.34827543,6.76322963,2.349620608
+117,Este,Summer,Buried Down,buried,Arabinose,11.43892216,6.723636844,2.368388697
+118,Este,Summer,Buried Down,buried,Arabinose,10.42234301,6.167472834,2.157909551
+119,Este,Summer,Buried Down,buried,Arabinose,11.29704207,4.264328224,2.339012922
+120,Este,Summer,Buried Down,buried,Arabinose,9.134212701,5.565391548,1.89120669
+121,Este,Summer,Buried Down,buried,Arabinose,9.79790685,3.809963864,2.028622234
+122,Este,Summer,Buried Down,buried,Arabinose,11.7786745,4.704323684,2.438733225
+123,Este,Summer,Buried Down,buried,Cellobiose,10.73747426,5.088598994,2.223156371
+124,Este,Summer,Buried Down,buried,Cellobiose,10.69664671,6.076067442,2.214703169
+125,Este,Summer,Buried Down,buried,Cellobiose,11.09157846,5.661716787,2.296472402
+126,Este,Summer,Buried Down,buried,Cellobiose,10.01706636,4.204895102,2.073998442
+127,Este,Summer,Buried Down,buried,Cellobiose,11.40556147,6.04443956,2.361481482
+128,Este,Summer,Buried Down,buried,Cellobiose,7.173885702,9.187548132,1.485327863
+129,Este,Summer,Buried Down,buried,Cellobiose,12.58627956,4.766797696,2.605945019
+130,Este,Summer,Buried Down,buried,Cellobiose,11.23705881,5.907684506,2.326593598
+131,Este,Summer,Buried Down,buried,Control,5.117795818,5.886758528,
+132,Este,Summer,Buried Down,buried,Control,6.988869543,3.474306039,
+133,Este,Summer,Buried Down,buried,Control,4.288513878,7.609433989,
+134,Este,Summer,Buried Down,buried,Control,4.536291225,4.050744202,
+135,Este,Summer,Buried Down,buried,Control,4.980078798,4.851108717,
+136,Este,Summer,Buried Down,buried,Control,3.56992418,3.000757149,
+137,Este,Summer,Buried Down,buried,Control,5.344839552,2.943173437,
+138,Este,Summer,Buried Down,buried,Control,3.812351942,2.838522452,
+108,Este,Summer,Buried Down,buried,Glucose,8.160823771,7.069417967,1.689669927
+109,Este,Summer,Buried Down,buried,Glucose,11.9689986,5.199112964,2.478139164
+110,Este,Summer,Buried Down,buried,Glucose,10.43583043,4.974985306,2.160702072
+111,Este,Summer,Buried Down,buried,Glucose,7.974368245,6.514555856,1.651064965
+112,Este,Summer,Buried Down,buried,Glucose,9.188922716,6.535914959,1.902534206
+113,Este,Summer,Buried Down,buried,Glucose,12.06691325,5.589330141,2.498412048
+114,Este,Summer,Buried Down,buried,Glucose,11.28816157,6.060994395,2.337174245
+79,Este,Summer,Buried Up,buried,Arabinose,9.928783735,4.74887247,3.201751809
+80,Este,Summer,Buried Up,buried,Arabinose,10.9528469,2.542606641,3.531983204
+81,Este,Summer,Buried Up,buried,Arabinose,9.107535033,5.196291959,2.936922341
+82,Este,Summer,Buried Up,buried,Arabinose,9.503379606,4.376207407,3.064571015
+83,Este,Summer,Buried Up,buried,Arabinose,8.837151152,4.337710739,2.84973119
+84,Este,Summer,Buried Up,buried,Arabinose,12.07964099,6.736187328,3.895342413
+85,Este,Summer,Buried Up,buried,Arabinose,14.23241865,6.432279247,4.589552294
+86,Este,Summer,Buried Up,buried,Arabinose,8.527344388,6.210933105,2.749827275
+87,Este,Summer,Buried Up,buried,Cellobiose,11.59031623,4.393592627,3.737549024
+88,Este,Summer,Buried Up,buried,Cellobiose,9.592315168,4.367712262,3.093250217
+89,Este,Summer,Buried Up,buried,Cellobiose,27.55553678,15.43368515,8.885880899
+90,Este,Summer,Buried Up,buried,Cellobiose,35.08936817,8.006740374,11.31532834
+91,Este,Summer,Buried Up,buried,Cellobiose,8.951556445,4.467549857,2.88662366
+92,Este,Summer,Buried Up,buried,Cellobiose,9.003676231,5.270285021,2.903430816
+93,Este,Summer,Buried Up,buried,Cellobiose,8.884967728,5.751785131,2.865150683
+94,Este,Summer,Buried Up,buried,Cellobiose,13.57832664,4.637625882,4.378626128
+95,Este,Summer,Buried Up,buried,Control,2.563220174,2.337797273,
+96,Este,Summer,Buried Up,buried,Control,2.510132727,2.614660342,
+97,Este,Summer,Buried Up,buried,Control,1.910054194,2.312323699,
+98,Este,Summer,Buried Up,buried,Control,3.361971513,6.696450123,
+99,Este,Summer,Buried Up,buried,Control,2.242209323,6.159187542,
+100,Este,Summer,Buried Up,buried,Control,3.002689431,6.123263359,
+101,Este,Summer,Buried Up,buried,Control,3.139447072,5.130521933,
+102,Este,Summer,Buried Up,buried,Control,6.078653797,2.740071587,
+72,Este,Summer,Buried Up,buried,Glucose,8.945620498,4.509922518,2.884709485
+73,Este,Summer,Buried Up,buried,Glucose,10.36682138,3.39682848,3.343006555
+74,Este,Summer,Buried Up,buried,Glucose,8.842869665,6.671732159,2.851575249
+75,Este,Summer,Buried Up,buried,Glucose,3.838664283,4.285914422,1.237860612
+76,Este,Summer,Buried Up,buried,Glucose,7.528920734,5.425091507,2.427863898
+77,Este,Summer,Buried Up,buried,Glucose,9.017641718,5.215934483,2.907934291
+78,Este,Summer,Buried Up,buried,Glucose,4.569684358,5.858931712,1.473593901
+43,Este,Summer,Daylight,daylight,Arabinose,10.71181729,7.815032967,10.79684986
+44,Este,Summer,Daylight,daylight,Arabinose,7.790846139,10.6182407,7.852691449
+45,Este,Summer,Daylight,daylight,Arabinose,6.833992993,10.25723077,6.88824261
+46,Este,Summer,Daylight,daylight,Arabinose,8.317423266,6.282315084,8.383448652
+47,Este,Summer,Daylight,daylight,Arabinose,8.944382749,12.39977405,9.015385065
+48,Este,Summer,Daylight,daylight,Arabinose,13.72682568,11.230065,13.835792
+49,Este,Summer,Daylight,daylight,Arabinose,10.33965833,6.750801254,10.42173662
+50,Este,Summer,Daylight,daylight,Arabinose,9.184591968,11.54274789,9.257501114
+51,Este,Summer,Daylight,daylight,Cellobiose,8.596564425,11.29775532,8.66480569
+52,Este,Summer,Daylight,daylight,Cellobiose,11.48111412,9.022889261,11.57225352
+53,Este,Summer,Daylight,daylight,Cellobiose,7.051280041,10.94637523,7.107254526
+54,Este,Summer,Daylight,daylight,Cellobiose,5.595212522,8.229794366,5.639628449
+55,Este,Summer,Daylight,daylight,Cellobiose,11.18481128,10.87907441,11.27359857
+56,Este,Summer,Daylight,daylight,Cellobiose,7.788879208,8.420047678,7.850708904
+57,Este,Summer,Daylight,daylight,Cellobiose,9.321611693,9.130413372,9.395608529
+58,Este,Summer,Daylight,daylight,Cellobiose,9.811927373,9.447441614,9.889816434
+59,Este,Summer,Daylight,daylight,Control,0,0,
+60,Este,Summer,Daylight,daylight,Control,0,0,
+61,Este,Summer,Daylight,daylight,Control,1.09740192,5.320193023,
+62,Este,Summer,Daylight,daylight,Control,0.068535296,7.55414536,
+63,Este,Summer,Daylight,daylight,Control,1.016024186,7.520375593,
+64,Este,Summer,Daylight,daylight,Control,0.935560809,13.90560674,
+65,Este,Summer,Daylight,daylight,Control,1.568871636,9.882354771,
+66,Este,Summer,Daylight,daylight,Control,3.250600687,4.220286445,
+35,Este,Summer,Daylight,daylight,Glucose,7.587052622,12.01332363,7.647280178
+36,Este,Summer,Daylight,daylight,Glucose,7.439440765,5.861807084,7.498496548
+37,Este,Summer,Daylight,daylight,Glucose,14.15102183,10.35465861,14.2633555
+38,Este,Summer,Daylight,daylight,Glucose,10.83013673,8.916878184,10.91610855
+39,Este,Summer,Daylight,daylight,Glucose,13.45831419,11.24297322,13.56514901
+40,Este,Summer,Daylight,daylight,Glucose,9.910501255,8.392215441,9.989172815
+41,Este,Summer,Daylight,daylight,Glucose,14.81505268,8.009912626,14.93265757
+42,Este,Summer,Daylight,daylight,Glucose,14.28076838,4.806586047,14.394132
