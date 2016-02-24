@@ -32,10 +32,11 @@ nds$carbon <- factor(nds$carbon, levels = c("Control", "Arabinose", "Cellobiose"
 ############################################################################################
 #C limitation analysis with all the data
   #to determine carbon limitation patterns in the aggregate,
-  #I think it's better to do it with NRR which takes into account season/reach differences
-  #in the response over background.  In that case, the controls are not a value that is 
-  #analyzed in the model since the carbon responses are divided by the control.  
-  #To continue using cr.area, we can either make a variable or just a find and replace
+    #I think it's better to do it with NRR which takes into account season/reach differences
+    #in the response over background.  In that case, the controls are not a value that is 
+    #analyzed in the model since the carbon responses are divided by the control.  
+    #To continue using cr.area, we can either make a variable or just a find and replace
+  #I'll put code and diagnostics for each for now, so we can decide based on results
 ############################################################################################
 fall<-subset(nds, season=="Fall")
 spring<-subset(nds, season=="Spring")
