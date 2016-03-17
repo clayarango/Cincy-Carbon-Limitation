@@ -86,6 +86,11 @@ plot(filter(fall.spring, !is.na(nrr)) %>% select(stream),
 bartlett.test(nrr~stream, data=fall.spring)
   #differences among streams (p<2.2e-16)
 
+
+#My personal preference is to avoid transforming data when possibble (see Zuur
+#pages 72, 420-421, 448).  Lets try using the weights and
+#random arguments to generate a model that passes the diagnostics.
+
 #log normalize nrr and try again
 fall.spring$l.nrr<-log10(fall.spring$nrr+1)
 
@@ -164,6 +169,85 @@ par(op)
 summary(M3)
   #carbon is least significant
 
+#Lets use different variance covariates to improve residual
+#distributions
+vf1 = varIdent(form = ~ 1|season)  # by season
+vf2 = varPower(form = ~ fitted(.)) # fitted values as variance covariate (also try varExp, varConstPower)
+vf3 = varPower(form = ~ fitted(.)|season)# fitted values as variance covariate (by season?)
+
+M4<-lme(l.nrr~carbon*season*reach, random=~1|stream, 
+        weights = vf1,
+        data=fall.spring, na.action=na.omit, method="REML")
+
+M5<-lme(l.nrr~carbon*season*reach, random=~1|stream, 
+        weights = varComb(vf1, vf2),
+        data=fall.spring, na.action=na.omit, method="REML")
+
+M6<-lme(l.nrr~carbon*season*reach, random=~1|stream, 
+        weights = varComb(vf1, vf3),
+        data=fall.spring, na.action=na.omit, method="REML")
+
+anova(M3, M4, M5, M6) # model 6 wins
+
+#graphical analysis of M6
+E<-resid(M6, type="normalized")
+F<-fitted(M6)
+op<-par(mfrow=c(2,2), mar=c(4,4,3,2))
+plot(x=F, y=E, xlab="Fitted Values", ylab="Residuals")
+#not well distributed around 0
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(carbon), 
+     E, xlab="Carbon Type", 
+     ylab="Residuals")
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(season), 
+     E, xlab="Season", 
+     ylab="Residuals")
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(reach), 
+     E, xlab="Reach", 
+     ylab="Residuals")
+par(op)
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(stream), 
+     E, xlab="Reach", 
+     ylab="Residuals")  #by stream still looks funky
+
+# Use stream as variance covariate
+vf4 = varIdent(form = ~1|stream)
+M7<-lme(l.nrr~carbon*season*reach, random=~1|stream, 
+        weights = varComb(vf1, vf3, vf4), # season, fitted, stream
+        data=fall.spring, na.action=na.omit, method="REML")
+
+anova(M3, M4, M5, M6, M7)  # M7 is the winner
+plot(M7)
+
+#graphical analysis of M7
+E<-resid(M7, type="normalized")
+F<-fitted(M7)
+op<-par(mfrow=c(2,2), mar=c(4,4,3,2))
+plot(x=F, y=E, xlab="Fitted Values", ylab="Residuals")
+#not well distributed around 0
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(carbon), 
+     E, xlab="Carbon Type", 
+     ylab="Residuals")
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(season), 
+     E, xlab="Season", 
+     ylab="Residuals")
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(reach), 
+     E, xlab="Reach", 
+     ylab="Residuals")
+par(op)
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(stream), 
+     E, xlab="Reach", 
+     ylab="Residuals")  #by stream is improved
+
+
+# Move on to model selection
 M3.full<-lme(l.nrr~carbon*season*reach, random=~1|stream,
              method="ML", data=fall.spring, na.action=na.omit)
 M3.a<-update(M1.full, .~. -carbon:season:reach)
