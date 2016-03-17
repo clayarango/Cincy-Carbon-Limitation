@@ -14,9 +14,11 @@
 install.packages("nlme")
 install.packages("nortest")
 install.packages("dplyr")
+install.packages("lme4")
 library(nlme)
 library(nortest)
 library(dplyr)
+library(lme4)
 
 #attach and evaluate data
 nds<-read.table(file="cincy.nds.csv", header=T, sep=',')
@@ -31,67 +33,302 @@ nds$carbon <- factor(nds$carbon, levels = c("Control", "Arabinose", "Cellobiose"
 
 ############################################################################################
 #C limitation analysis with all the data
-  #to determine carbon limitation patterns in the aggregate,
-    #I think it's better to do it with NRR which takes into account season/reach differences
-    #in the response over background.  In that case, the controls are not a value that is 
-    #analyzed in the model since the carbon responses are divided by the control.  
-    #To continue using cr.area, we can either make a variable or just a find and replace
-  #I'll put code and diagnostics for each for now, so we can decide based on results
+
+#to determine carbon limitation patterns in the aggregate,
+  #I think it's better to do it with NRR which takes into account season/reach differences
+  #in the response over background for better comparison.  In that case, the controls are 
+  #not a value that is analyzed in the model since the carbon responses are divided by the 
+  #control.  I'll put code and diagnostics for NRR and CR.AREA for now, so we can decide 
+  #which is best based on results
 ############################################################################################
 fall<-subset(nds, season=="Fall")
 spring<-subset(nds, season=="Spring")
 fall.spring<-rbind(fall,spring)
 
-M1<-gls(nrr~carbon+season+reach+stream, data=fall.spring, na.action=na.omit)
+
+#follow Zuur's method for random effects, p.130-140 
+#first model does not include stream
+M1<-gls(nrr~carbon*season*reach, data=fall.spring, 
+        na.action=na.omit)
 summary(M1)
 qqnorm(residuals(M1))
 qqline(residuals(M1))
 ad.test(residuals(M1))
-plot(M1)
+plot(M1)  #yuck
 hist(residuals(M1))
-plot(fall.spring$nrr,residuals(M1)) #not plotting due to NAs in nrr
-plot(filter(fall.spring, !is.na(nrr)) %>% select(carbon), # code to filter out null value (dplyr package) -J
+
+plot(filter(fall.spring, !is.na(nrr)) %>% select(carbon), 
      residuals(M1), 
-     xlab="carbon type", 
+     xlab="Carbon Type", 
+     ylab="Residuals")
+bartlett.test(nrr~carbon, data=fall.spring)
+  #differences among carbon variance (p=0.0029)
+
+plot(filter(fall.spring, !is.na(nrr)) %>% select(season), 
+     residuals(M1), 
+     xlab="Season", 
+     ylab="Residuals")
+bartlett.test(nrr~season, data=fall.spring)
+  #Fall is obviously much more variable than spring (p<2.2e-16)
+
+plot(filter(fall.spring, !is.na(nrr)) %>% select(reach), 
+     residuals(M1), 
+     xlab="Reach", 
+     ylab="Residuals")
+bartlett.test(nrr~reach, data=fall.spring)
+  #differences between reaches (p<2.2e-16)
+
+plot(filter(fall.spring, !is.na(nrr)) %>% select(stream), 
+     residuals(M1), 
+     xlab="Stream", 
+     ylab="Residuals")
+bartlett.test(nrr~stream, data=fall.spring)
+  #differences among streams (p<2.2e-16)
+
+#log normalize nrr and try again
+fall.spring$l.nrr<-log10(fall.spring$nrr+1)
+
+M2<-gls(l.nrr~carbon*season*reach, data=fall.spring, 
+        na.action=na.omit)
+
+anova(M1,M2)#can't do it bc of different response variables (nrr v l.nrr)
+AIC(M1,M2)#AIC is much better in M2
+
+summary(M2)
+qqnorm(residuals(M2))
+qqline(residuals(M2))
+ad.test(residuals(M2)) 
+  #no good
+plot(M2)  
+  #still not great
+hist(residuals(M2))#this looks OK
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(carbon), 
+     residuals(M2), 
+     xlab="Carbon Type", 
+     ylab="Residuals")
+bartlett.test(l.nrr~carbon, data=fall.spring)
+  #no differences among carbon variance (p=0.28)
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(season), 
+     residuals(M2), 
+     xlab="Season", 
+     ylab="Residuals")
+bartlett.test(l.nrr~season, data=fall.spring)
+  #Fall is still more variable than spring (p<2.2e-16)
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(reach), 
+     residuals(M2), 
+     xlab="Reach", 
+     ylab="Residuals")
+bartlett.test(l.nrr~reach, data=fall.spring)
+  #differences between reaches (p8.4e-9)
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(stream), 
+     residuals(M2), 
+     xlab="Stream", 
+     ylab="Residuals")
+bartlett.test(l.nrr~stream, data=fall.spring)
+#differences among streams (p<2.2e-16)
+
+#use stream as a random effect
+M3<-lme(l.nrr~carbon*season*reach, random=~1|stream, 
+        data=fall.spring, na.action=na.omit, method="REML")
+
+#model validation
+anova(M2,M3)
+  #M3 is far better
+
+#graphical analysis
+E<-resid(M3, type="normalized")
+F<-fitted(M3)
+op<-par(mfrow=c(2,2), mar=c(4,4,3,2))
+plot(x=F, y=E, xlab="Fitted Values", ylab="Residuals")
+  #not well distributed around 0
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(carbon), 
+     E, xlab="Carbon Type", 
      ylab="Residuals")
 
-vf<-varIdent(form=~1|carbon)
-  #I tried all effects as an alternate variance structure, and this one produced the best model
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(season), 
+     E, xlab="Season", 
+     ylab="Residuals")
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(reach), 
+     E, xlab="Reach", 
+     ylab="Residuals")
+par(op)
+
+#model optimization
+summary(M3)
+  #carbon is least significant
+
+M3.full<-lme(l.nrr~carbon*season*reach, random=~1|stream,
+             method="ML", data=fall.spring, na.action=na.omit)
+M3.a<-update(M1.full, .~. -carbon:season:reach)
+M3.b<-update(M1.full, .~. -carbon:season)
+M3.c<-update(M1.full, .~. -carbon:reach)
+anova(M3.full, M3.a)
+  #three-way interaction can go
+anova(M3.full,M3.b)
+  #why doesn't this work?
+anova(M3.full,M3.c)
+  #why doesn't this work?
+
+  #at any rate, carbon can leave as a main factor
+
+M4.full<-lme(l.nrr~season*reach, random=~1|stream,
+             method="ML", data=fall.spring, na.action=na.omit)
+summary(M4.full)
+  #all of these terms are significant
+M4.a<-update(M2.full, .~. -season:reach)
+anova(M4.full,M4.a)
+  #need to retain the interaction
+
+AIC(M3.full,M4.full)
+  #the model without C has lower df and higher AIC?
+M5<-lme(l.nrr~season*reach, random=~1|stream,
+        method="REML",data=fall.spring, na.action=na.omit)
+
+summary(M5)
+
+E2<-residuals(M5)
+F2<-fitted(M5)
+qqnorm(E2)
+qqline(E2)
+ad.test(E2) 
+  #acceptable
+plot(M5)  
+  #still not great
+op<-par(mfrow=c(2,3), mar=c(4,4,3,2))#make the plot window big for this
+plot(x=F2, y=E2, xlab="Fitted Values", ylab="Residuals")
+  #same as previous command
+hist(E2, main="")#this looks OK
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(carbon), 
+     E2, xlab="Carbon Type", ylab="Residuals",
+     main="")
+bartlett.test(l.nrr~carbon, data=fall.spring)
+  #no differences among carbon variance (p=0.28)
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(season), 
+     E2, 
+     xlab="Season", 
+     ylab="Residuals")
+bartlett.test(l.nrr~season, data=fall.spring)
+  #Fall is still more variable than spring (p<2.2e-16)
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(reach), 
+     residuals(M2), 
+     xlab="Reach", 
+     ylab="Residuals")
+bartlett.test(l.nrr~reach, data=fall.spring)
+#differences between reaches (p8.4e-9)
+
+plot(filter(fall.spring, !is.na(l.nrr)) %>% select(stream), 
+     residuals(M2), 
+     xlab="Stream", 
+     ylab="Residuals")
+bartlett.test(l.nrr~stream, data=fall.spring)
+#differences among streams (p<2.2e-16)
+
+par(op)
+
+#code here as borrowed from Zuur to look for an additive component
+  #should we model the additive with gamm?
+library(lattice)  
+xyplot(E2~l.nrr|season*reach, data=fall.spring, ylab="Residuals",
+       xlab="l.nrr",
+       panel=function(x,y){
+         panel.grid(h=-1,v=2)
+         panel.points(x,y,col=1)
+         panel.loess(x,y,span=0.5,col=1,lwd=2)
+       })
+
+#I installed lme4 on my work computer and ran this
+x<-lmer(l.nrr~carbon*season*reach+(reach|stream), data=fall.spring, na.action=na.omit)
+summary(x)
+
+x2<-lmer(l.nrr~season*reach+(reach|stream), data=fall.spring, na.action=na.omit)
+summary(x2)
+
+anova(x,x2)
+  #no difference, but x2 has lower AIC
+AIC(x2,M5)
+  #x2 has lower AIC than the lme model 5 from above
+qqnorm(residuals(x))
+ad.test(residuals(x))
+  #not normal, but not awful
+
+qqnorm(residuals(x2))
+ad.test(residuals(x2))
+  #not normal, but not awful
+
+summary(x2)
+  #how to get p values?  Looks like season is significant, and there is an interaction between
+    #season and daylight where spring has a lower response in daylight
+
+with(fall.spring, 
+     interaction.plot(reach,season,l.nrr, 
+     ylim=c(0,1),lty=c(1,12),lwd=3,ylab="log NRR", 
+     xlab="Reach",trace.label="Season")) #no data in the plot?
+
+
+#code below was from last time when we decide to use a random factor
+  #based on that analysis, it makes sense to accomodate the variance among all the model variables
+
+vf<-varIdent(form=~1|carbon*season*reach*stream)
 M2<-gls(nrr~carbon+season+reach+stream, data=fall.spring, na.action=na.omit, weights=vf)
-anova(M1,M2)
 summary(M2)
-  #arabinose is different than control (p<0.0001), not different than glucose, cellobiose higher (p=0.0426)
-  #streams are different, so good blocking factor
-  #buried has a stronger response than daylight (p<0.0001)
-  #spring a stronger response than fall
+anova(M1,M2)
+  #this has much lower AIC and is a significantly different model
 qqnorm(residuals(M2))
 qqline(residuals(M2))
 ad.test(residuals(M2))
-plot(M2)
-hist(residuals(M2))
-plot(fall.spring$nrr,residuals(M2))
+  #things fall apart after +1 quantile...seems like a log normalization might be in order
 
-vf<-varIdent(form=~1|carbon*season)
-M3<-gls(nrr~carbon+season+reach+stream, data=fall.spring, na.action=na.omit, weights=vf)
-anova(M1,M2,M3)
-  #this has lower AIC, but the conclusion is the same
-qqnorm(residuals(M3))
-qqline(residuals(M3))
-ad.test(residuals(M3))
-plot(M3)
-hist(residuals(M3))
-plot(fall.spring$nrr,residuals(M3))
+plot(M2)#but this looks better
+hist(residuals(M2))#there's the big tail on the residuals
+
+plot(filter(fall.spring, !is.na(nrr)) %>% select(carbon), 
+     residuals(M2), 
+     xlab="Carbon Type", 
+     ylab="Residuals")
+  #central tendency looks better but they all have big outliers
+
+plot(filter(fall.spring, !is.na(nrr)) %>% select(season), 
+     residuals(M1), 
+     xlab="Season", 
+     ylab="Residuals")
+  #fall especially has the outliers
+
+plot(filter(fall.spring, !is.na(nrr)) %>% select(reach), 
+     residuals(M1), 
+     xlab="Reach", 
+     ylab="Residuals")
+  #daylight also
+
+plot(filter(fall.spring, !is.na(nrr)) %>% select(stream), 
+     residuals(M1), 
+     xlab="Stream", 
+     ylab="Residuals")
+  #Este
 
 
-vf<-varIdent(form=~1|carbon*season*reach)
-M4<-gls(nrr~carbon+season+reach+stream, data=fall.spring, na.action=na.omit, weights=vf)
-anova(M1,M2,M3,M4)
-  #this has even lower AIC, but the conclusion is the same
+#try a model with reach+stream+season
 
-plot(M4)
-hist(residuals(M4))
-plot(fall.spring$nrr,residuals(M4))
+vf<-varIdent(form=~1|season*reach*stream)
+M4<-gls(l.nrr~carbon+season+reach+stream, data=fall.spring, na.action=na.omit, weights=vf)
+summary(M4)
+anova(M3,M4)
+  #this has much lower AIC and is a significantly different model
 qqnorm(residuals(M4))
+qqline(residuals(M4))
+ad.test(residuals(M4))
+  #not good
+
+plot(M4)  #looks not bad
+hist(residuals(M4))#these look OK
 
 ############################################################################################
 #C limitation analysis by stream*season*reach
