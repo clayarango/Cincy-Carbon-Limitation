@@ -1,4 +1,5 @@
 #17-Feb-16
+#Hi Clay
 #Script to analyze cincy nds from buried stream study 
 #two data files.  cincy.nds is the data file with all the individuals reps for the nds analysis
   #based on prior analysis by Jake, "buried up" and "buried down" are the same, so analyze them as "buried"
