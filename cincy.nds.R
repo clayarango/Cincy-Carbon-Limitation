@@ -206,10 +206,11 @@ M9b<-lme(nrr~carbon*season*reach, random=~1|stream,
         data=fall.spring, na.action=na.omit, method="REML",
         control = ctrl)
   
-anova(M2, M3, M3b, M4, M4b, M5, M5b, M6, M6b, M7, M7b, M8, M8b, M9, M9b) # model 9 wins, but it didn't converge
-                                      # model 7b wins?
+anova(M2, M3, M3b, M4, M4b, M5, M5b, M6, M6b, M7, M7b, M8, M8b, M9, M9b) 
+  #model 9 wins, but it didn't converge, so model 7b wins
+    #use vf1b and vf5 as alternate variance structures
 
-#graphical analysis of M5 versus M9
+#graphical analysis of M7b versus M9
 E7b<-resid(M7b, type="normalized")
 F7b<-fitted(M7b)
 E9<-resid(M9, type="normalized")
@@ -257,42 +258,39 @@ plot(filter(fall.spring, !is.na(nrr)) %>% select(stream),
 
 par(op)
 
-# Use stream as variance covariate
+#Try using using stream as variance covariate
 vf8 = varIdent(form = ~1|stream)
 
 M10<-lme(nrr~carbon*season*reach, random=~1|stream, 
-        weights = varComb(vf1b, vf3, vf8), # season*reach, fitted, stream
-        data=fall.spring, na.action=na.omit, method="REML")
-
-M11<-lme(nrr~carbon*season*reach, random=~1|stream, 
-         weights = varComb(vf1, vf7, vf8),
+         weights = varComb(vf1, vf5, vf8),
          data=fall.spring, na.action=na.omit, method="REML",
          control = ctrl)
 
-anova(M2, M3, M3b, M4, M4b, M5, M5b, M6, M6b, M7, M7b, M8, M8b, M9, M9b, M10, M11)   #M11 is the winner, but no convergence
-                                                  #otherwise, M10?
-plot(M10)
-plot(M11)
-  #M11 looks much nicer
+M10b<-lme(nrr~carbon*season*reach, random=~1|stream, 
+        weights = varComb(vf1b, vf5, vf8), # season*reach, fitted, stream
+        data=fall.spring, na.action=na.omit, method="REML")
 
-#graphical analysis of M10 versus M11
+
+anova(M2, M3, M3b, M4, M4b, M5, M5b, M6, M6b, M7, M7b, M8, M8b, M9, M9b, M10, M10b)   
+  #M10b is the winner so use vf1b, vf5, vf8 as alternate variance structures
+
+#graphical analysis of M10 versus M10b
 E10<-resid(M10, type="normalized")
 F10<-fitted(M10)
-E11<-resid(M11, type="normalized")
-F11<-fitted(M11)
+E10b<-resid(M10b, type="normalized")
+F10b<-fitted(M10b)
 
 op<-par(mfrow=c(1,2), mar=c(4,4,2,1))
 plot(x=F10, y=E10, xlab="Fitted Values", ylab="Residuals", main="Model 10")
-plot(x=F11, y=E11, xlab="Fitted Values", ylab="Residuals", main="Model 11")
-  #better spread for M11
+plot(x=F10b, y=E10b, xlab="Fitted Values", ylab="Residuals", main="Model 10b")
 
 plot(filter(fall.spring, !is.na(nrr)) %>% select(carbon), 
      E10, xlab="Carbon Type", 
      ylab="Residuals", main="Model 10")
 
 plot(filter(fall.spring, !is.na(nrr)) %>% select(carbon), 
-     E11, xlab="Carbon Type", 
-     ylab="Residuals", main="Model 11")
+     E10b, xlab="Carbon Type", 
+     ylab="Residuals", main="Model 10b")
   #not much difference
 
 plot(filter(fall.spring, !is.na(nrr)) %>% select(season), 
@@ -300,37 +298,37 @@ plot(filter(fall.spring, !is.na(nrr)) %>% select(season),
      ylab="Residuals", main="Model 10")
 
 plot(filter(fall.spring, !is.na(nrr)) %>% select(season), 
-     E11, xlab="Season", 
-     ylab="Residuals", main="Model 11")
-  #M11 might look a bit better
+     E10b, xlab="Season", 
+     ylab="Residuals", main="Model 10b")
+  #M10b might look a bit better
 
 plot(filter(fall.spring, !is.na(nrr)) %>% select(reach), 
      E10, xlab="Reach", 
      ylab="Residuals", main="Model 10")
 
 plot(filter(fall.spring, !is.na(nrr)) %>% select(reach), 
-     E11, xlab="Reach", 
-     ylab="Residuals", main="Model 11")
-  #M11 better
+     E10b, xlab="Reach", 
+     ylab="Residuals", main="Model 10b")
+  #M10b better
 
 plot(filter(fall.spring, !is.na(nrr)) %>% select(stream), 
-     E10, xlab="Reach", 
+     E10, xlab="Stream", 
      ylab="Residuals", main="Model 10")
 
 plot(filter(fall.spring, !is.na(nrr)) %>% select(stream), 
-     E11, xlab="Reach", 
-     ylab="Residuals", main="Model 11")
-  #by stream is improved in both, better in M11
+     E10b, xlab="Stream", 
+     ylab="Residuals", main="Model 10b")
+  #by stream is improved in both, better in M10b
 
 qqnorm(E10, main="Model 10")
 qqline(E10)
 ad.test(E10) 
   #not normal
 
-qqnorm(E11, main="Model 11")
-qqline(E11)
-ad.test(E11) 
-  #not normal, but better fit
+qqnorm(E10b, main="Model 10b")
+qqline(E10b)
+ad.test(E10b) 
+  #not normal
 
 h<-hist(E10, main="Model 10")
 xfit10<-seq(min(E10),max(E10),length=length(E10))
@@ -338,77 +336,98 @@ yfit10<-dnorm(xfit10,mean=mean(E10),sd=sd(E10))
 yfit10<-yfit10*diff(h$mids[1:2])*length(E10)
 lines(xfit10, yfit10, col="blue", lwd=2)
 
-h<-hist(E11, main="Model 11")
+h<-hist(E10b, main="Model 10b")
+xfit10b<-seq(min(E10b),max(E10b),length=length(E10b))
+yfit10b<-dnorm(xfit10b,mean=mean(E10b),sd=sd(E10b))
+yfit10b<-yfit10b*diff(h$mids[1:2])*length(E10b)
+lines(xfit10b, yfit10b, col="blue", lwd=2)
+
+par(op)
+
+anova(M10)
+anova(M10b)
+  #both yield the same significant factors
+
+# Move on to model selection
+M10b.full<-lme(nrr~carbon*season*reach, random=~1|stream, 
+              weights = varComb(vf1b, vf5, vf8),
+              data=fall.spring, na.action=na.omit, method="ML",
+              control = ctrl)
+
+anova(M10b.full)
+
+M10b.a<-update(M10b.full, .~. -carbon:season:reach)
+anova(M10b.full, M10b.a)
+  #three-way interaction can go because the model is significantly better without it
+  #the good model is now M10b.a
+
+M10b.b<-update(M10b.a, .~. -carbon:season)
+M10b.c<-update(M10b.a, .~. -carbon:reach)
+M10b.d<-update(M10b.a, .~. -season:reach)
+
+anova(M10b.a,M10b.b) #p=0.1537
+anova(M10b.a,M10b.c) #p=0.4785
+anova(M10b.a,M10b.d) #p=2e-4
+  #carbon:reach interaction is the least significant and can be dropped
+    #M10b.c is the new full model
+
+M10b.e<-update(M10b.c, .~. -carbon:season)
+M10b.f<-update(M10b.c, .~. -season:reach)
+
+anova(M10b.c,M10b.e) #p=0.0355
+anova(M10b.c,M10b.f) #p<0.0001
+  #carbon:season interaction can probably stay based on p-value, but when we
+    #examined other model diagnostics, we decided to take it out since this 
+    #p-value is on the edge, and the weight of the evidence suggested it wasn't helping
+    #the model much.
+  #M10b.e is the new full model
+
+M10b.g<-update(M10b.e, .~. -season:reach)
+anova(M10b.g, M10b.e)
+  #retain season:reach
+    #M10b.e is still the best model
+
+M10b.h<-update(M10b.e, .~. -carbon)
+anova(M10.e, M10.h)
+  #model is not significantly different without carbon, so it can go
+
+M11.full<-lme(nrr~season*reach,
+              random=~1|stream, weights=varComb(vf1b,vf5,vf8),
+              method="REML", data=fall.spring, na.action=na.omit,
+              control=ctrl)
+
+anova(M11.full)
+  #all of these terms are significant
+
+E11<-resid(M11.full, type="normalized")
+F11<-fitted(M11.full)
+qqnorm(E11)
+qqline(E11)
+ad.test(E11) 
+  #not normal, but not as bad as we started
+
+h<-hist(E11, breaks=16, main="Model 11", xlab="Residuals") #defaulted to too few breaks for my taste
 xfit11<-seq(min(E11),max(E11),length=length(E11))
 yfit11<-dnorm(xfit11,mean=mean(E11),sd=sd(E11))
 yfit11<-yfit11*diff(h$mids[1:2])*length(E11)
 lines(xfit11, yfit11, col="blue", lwd=2)
-  #M11 is better
-par(op)
-
-anova(M10)
-anova(M11)
-  #both yield the same significant factors
-
-# Move on to model selection
-M11.full<-lme(nrr~carbon*season*reach, random=~1|stream, 
-              weights = varComb(vf1, vf7, vf8),
-              data=fall.spring, na.action=na.omit, method="ML",
-              control = ctrl)
-
-anova(M11.full)
-
-M11.a<-update(M11.full, .~. -carbon:season:reach)
-M11.b<-update(M11.full, .~. -carbon:season)
-M11.c<-update(M11.full, .~. -carbon:reach)
-anova(M11.full, M11.a)
-  #three-way interaction can go
-
-anova(M11.full,M11.b)
-  #why doesn't this work?  Different interaction terms?
-
-anova(M11.full,M11.c)
-  #why doesn't this work?  Different interaction terms?
-
-#at any rate, carbon can leave as a main factor
-
-M12.full<-lme(nrr~season*reach, random=~1|stream,
-              weights = varComb(vf1, vf7, vf8), 
-              method="ML", data=fall.spring, na.action=na.omit,
-              control=ctrl)
-anova(M12.full)
-  #all of these terms are significant
-M12.a<-update(M12.full, .~. -season:reach)
-anova(M12.full,M12.a)
-  #need to retain the interaction
-
-anova(M11.full,M12.full)
-  #not significantly different but AIC is better with M12.full
-
-E12<-resid(M12.full, type="normalized")
-F12<-fitted(M12.full)
-qqnorm(E12)
-qqline(E12)
-ad.test(E12) 
-  #not normal, but not as bad as we started
-hist(E12)
 
 op<-par(mfrow=c(2,2), mar=c(4,4,3,2))
-plot(x=F12, y=E12, xlab="Fitted Values", ylab="Residuals")
+plot(x=F11, y=E11, xlab="Fitted Values", ylab="Residuals")
 
 plot(filter(fall.spring, !is.na(nrr)) %>% select(carbon), 
-     E12, xlab="Carbon Type", ylab="Residuals")
+     E11, xlab="Carbon Type", ylab="Residuals")
 
 plot(filter(fall.spring, !is.na(nrr)) %>% select(season), 
-     E12, xlab="Season", ylab="Residuals")
+     E11, xlab="Season", ylab="Residuals")
 
 plot(filter(fall.spring, !is.na(nrr)) %>% select(reach), 
-     E12, xlab="Reach", ylab="Residuals")
+     E11, xlab="Reach", ylab="Residuals")
 par(op)
 
 plot(filter(fall.spring, !is.na(nrr)) %>% select(stream), 
-     E12, xlab="Stream", ylab="Residuals")
-  #stream finally looks pretty good
+     E11, xlab="Stream", ylab="Residuals")
+  #stream looks pretty good
 
 #interaction plot
 op<-par(mfrow=c(1,1), mar=c(4,4,2,1))
@@ -424,10 +443,10 @@ with(x,
 
 par(op)
 
-#code here as borrowed from Zuur to look for an additive component
-#should we model the additive with gamm?
+#code here as borrowed from Zuur to look for an additive component, which i
+  #don't think is necessary
 library(lattice)  
-xyplot(E12~nrr|season*reach, data=fall.spring, ylab="Residuals",
+xyplot(E11~nrr|season*reach, data=fall.spring, ylab="Residuals",
        xlab="nrr",
        panel=function(x,y){
          panel.grid(h=-1,v=2)
