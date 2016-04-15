@@ -37,7 +37,7 @@ str(reach)
   #LEU, CELLO, SULF, PHOS, DOPA, DOPAH2, GLYC, DOPA, CQI, BG, POX,
   #LCI, HIX, BIX, FI, P2H
 
-M1<-gls(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM,data=reach,na.action=na.omit)
+M1<-gls(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM,data=reach,na.action=na.omit, method="ML")
 anova(M1)
   #CBOM and FBOM are positively related to glucose.nrr, but PERI.DM is not
 E1<-(residuals(M1))
@@ -51,7 +51,7 @@ plot(reach$glucose.nrr, E1, xlab="NRR", ylab="Residuals")
   #seems to have an exponential function
 
 #drop peri.dm from the model since it's not significant and compare the two
-M2<-gls(glucose.nrr~CBOM.DM+FBOM.DM,data=reach,na.action=na.omit)
+M2<-gls(glucose.nrr~CBOM.DM+FBOM.DM,data=reach,na.action=na.omit, method="ML")
 anova(M2)
 
 anova(M1,M2)
@@ -66,7 +66,7 @@ plot(reach$glucose.nrr, E2, xlab="NRR", ylab="Residuals")
 
 #use stream as a random factor
 M3<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream, 
-        data=reach, na.action=na.omit, method="REML")
+        data=reach, na.action=na.omit, method="ML")
 anova(M3)
 anova(M2,M3)
   #M3 is marginally better
@@ -102,7 +102,7 @@ vf7 = varConstPower(form = ~fitted(.)|reach)
 ctrl<-lmeControl(returnObject=TRUE, maxIter=5200, msMaxIter=5200)
 
 M4<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-        weights=vf1, data=reach, na.action=na.omit)
+        weights=vf1, data=reach, na.action=na.omit, method="ML")
 
 M5<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
         weights=vf2, data=reach, na.action=na.omit,
@@ -131,9 +131,10 @@ M9<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
 
 M10<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
         weights=vf7, data=reach, na.action=na.omit,
-        control=ctrl)
+        control=ctrl, method="ML")
+  #produces a singularity using "ML" but not using "REML"
 
-anova(M3,M4,M10)
+anova(M3,M4)
   #M4 is best, accounts for reach
 
 #try different varIdent structures
@@ -143,24 +144,26 @@ vf9 = varIdent(form = ~ 1|stream)
 vf10 = varIdent(form= ~ 1|reach*season)
 
 M11<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-        weights=vf8, data=reach, na.action=na.omit)
+        weights=vf8, data=reach, na.action=na.omit, method="ML")
+  #produces a singularity using "ML" but not using "REML"
 
 M12<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-         weights=vf9, data=reach, na.action=na.omit)
+         weights=vf9, data=reach, na.action=na.omit, method="ML")
 
 M13<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-         weights=vf10, data=reach, na.action=na.omit)
+         weights=vf10, data=reach, na.action=na.omit, method="ML")
+  #produces a singularity using "ML" but not using "REML"
 
-anova(M4,M11,M12,M13)
-  #M13 is best, accounts for reach and season
+anova(M4,M12)
+  #M12 is best, accounts for stream
 
-E13<-(residuals(M13))
-qqnorm(E13)
-ad.test(E13)
+E12<-(residuals(M12))
+qqnorm(E12)
+ad.test(E12)
   #not normal
-hist(E13, xlab="residuals", main="")
+hist(E12, xlab="residuals", main="")
   #this looks not great
-plot(reach$glucose.nrr, E13, xlab="NRR", ylab="Residuals")
+plot(reach$glucose.nrr, E12, xlab="NRR", ylab="Residuals")
   #still linear
 
 
@@ -170,43 +173,49 @@ vf12 = varPower(form = ~ fitted(.)|CBOM.DM)
 vf13 = varPower(form = ~ fitted(.)|FBOM.DM)
 
 M14<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-        weights=vf11, data=reach, na.action=na.omit)
+        weights=vf11, data=reach, na.action=na.omit, method="ML")
 M15<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-         weights=vf12, data=reach, na.action=na.omit)
+         weights=vf12, data=reach, na.action=na.omit, method="ML")
 M16<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-         weights=vf13, data=reach, na.action=na.omit)
+         weights=vf13, data=reach, na.action=na.omit, method="ML")
 
-anova(M13,M14,M15,M16)
+anova(M12,M14,M15,M16)
   #M14 is slightly better...why are M14,M15,M16 identical?
+  #this is dicey due to the identical fit and the crazy F values
 
 
 #try combining variance structures
 M17<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-        weights=varComb(vf10,vf11), data=reach, na.action=na.omit)
+        weights=varComb(vf9,vf11), data=reach, na.action=na.omit, method="ML")
 anova(M14,M17)  
   #M14 again
+anova(M14)
 
-E14<-(residuals(M14))
-qqnorm(E14)
-ad.test(E14)
+E4<-(residuals(M4))
+qqnorm(E4)
+ad.test(E4)
   #not normal
-hist(E14, xlab="residuals", main="")
+hist(E4, xlab="residuals", main="")
   #big outlier
-plot(reach$glucose.nrr, E14, xlab="NRR", ylab="Residuals")
+plot(reach$glucose.nrr, E4, xlab="NRR", ylab="Residuals")
   #these residuals look the best of all, but they aren't great
+
+#in balance, M4 or M12 are the current best, but plot diagnostics for M4 look
+  #better than M12
 
 #let's try normalizing the data in case that will pull the outlier down into the cloud
 reach$L.glucose.nrr<-log(reach$glucose.nrr+1)
 
 #start basic
 M18<-lme(L.glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-         data=reach, na.action=na.omit)
+         data=reach, na.action=na.omit, method="ML")
 #try with the same weights as the best model above
 M19<-lme(L.glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-         weights=varComb(vf10,vf11), data=reach,na.action=na.omit)
+         weights=vf1, data=reach,na.action=na.omit, method="ML")
 
-AIC(M14,M18,M19)
+AIC(M4,M18,M19)
     #M18 has lower AIC     
+anova(M18)
 
 E18<-(residuals(M18))
 qqnorm(E18)
@@ -223,7 +232,8 @@ anova(M18)
   #same significant factors
 summary(M18)
   #interpretation is that the biofilm response to glucose is strongest with 
-    #greater standing stocks of CBOM and FBOM
+    #greater standing stocks of CBOM and FBOM, possibly because of high CBOM
+    #standing stocks in the fall
 
 ##############################################################################
 ##############################################################################
@@ -615,7 +625,8 @@ summary(M20)
 
 #interpretation is that the biofilm response to cellobiose is stronger with lower 
   #standing stocks of CBOM, but the model residuals are screwed up so maybe not valid?
-
+#try to average all carbon sources together because the NDS data showed no carbon effect
+  #or do a MANOVA approach to analyze the carbon source simultaneously
 
 ##############################################################################
 ##############################################################################
@@ -640,7 +651,7 @@ reach$daily.par
 
 #N acquistion enzymes
 
-M1<-gls(NACE.DM~season+reach+stream, data=reach,na.action=na.omit)
+M1<-gls(NACE.DM~season+reach+stream, data=reach,na.action=na.omit, method="ML")
   #can't do interactions bc of just one point per season*reach*stream combination
 anova(M1)
 summary(M1)
@@ -656,7 +667,7 @@ hist(residuals(M1))
   #not bad
 plot(reach$NACE.DM,residuals(M1))
   #positive relationship?
-  y<-lm(residuals(x)~reach$NACE.DM)
+  y<-lm(residuals(M1)~reach$NACE.DM)
   summary(y)
   #yep
     
@@ -672,7 +683,7 @@ bartlett.test(residuals(M1), reach$stream)
 
 #looks like stream is weirdest. let's try it as a random factor
 M2<-lme(NACE.DM~season+reach, random=~1|stream, 
-        data=reach,na.action=na.omit, method="REML")
+        data=reach,na.action=na.omit, method="ML")
 
 anova(M1,M2)
   #M1 is better, so maybe nesting is not the best here
@@ -686,35 +697,37 @@ vf5<-varIdent(form=~1|stream*season)
 vf6<-varIdent(form=~1|stream*season*reach)#this one won't work because there are 0 df for the three interaction
 
 M3<-gls(NACE.DM~season+reach+stream, 
-        weights=vf1, data=reach,na.action=na.omit)
+        weights=vf1, data=reach,na.action=na.omit, method="ML")
 M4<-gls(NACE.DM~season+reach+stream, 
-        weights=vf2, data=reach,na.action=na.omit)
+        weights=vf2, data=reach,na.action=na.omit, method="ML")
 M5<-gls(NACE.DM~season+reach+stream, 
-        weights=vf3, data=reach,na.action=na.omit)
+        weights=vf3, data=reach,na.action=na.omit, method="ML")
 M6<-gls(NACE.DM~season+reach+stream, 
-        weights=vf4, data=reach,na.action=na.omit)
+        weights=vf4, data=reach,na.action=na.omit, method="ML")
+  #false convergence
 M7<-gls(NACE.DM~season+reach+stream, 
-        weights=vf5, data=reach,na.action=na.omit)
+        weights=vf5, data=reach,na.action=na.omit, method="ML")
+  #false convergence
 
-anova(M1,M3,M4,M5,M6,M7)#accounting for stream variance is best, which makes sense
+anova(M1,M3,M4,M5)#accounting for stream variance is best, which makes sense
   #M3 is best
 
 
-qqnorm(residuals(M3))
-qqline(residuals(M3))
-ad.test(residuals(M3))  
+qqnorm(residuals(M14))
+qqline(residuals(M14))
+ad.test(residuals(M14))  
   #residuals are normal
-plot(M3)
+plot(M14)
   #not bad, but there's an odd gap between 400-900
-hist(residuals(M3))
-plot(reach$NACE.DM,residuals(M3))
+hist(residuals(M14))
+plot(reach$NACE.DM,residuals(M14))
   #looks OK for the n
 
-plot(reach$season,residuals(M3), xlab="Season", ylab="Residuals")
+plot(reach$season,residuals(M14), xlab="Season", ylab="Residuals")
 #OK
-plot(reach$reach,residuals(M3), xlab="Reach", ylab="Residuals")
+plot(reach$reach,residuals(M14), xlab="Reach", ylab="Residuals")
 #OK
-plot(reach$stream,residuals(M3), xlab="Stream", ylab="Residuals")
+plot(reach$stream,residuals(M14), xlab="Stream", ylab="Residuals")
 #OK
 
 #by stream is still funky so try stream as a random effect along with the varIdent
@@ -730,53 +743,61 @@ vf8 = varExp(form = ~ fitted(.))
 vf9 = varConstPower(form = ~ fitted(.))
 
 M9<-gls(NACE.DM~season+reach+stream, 
-        weights=varComb(vf1,vf7), data=reach,na.action=na.omit)
+        weights=varComb(vf1,vf7), data=reach,na.action=na.omit, method="ML")
 
 M10<-gls(NACE.DM~season+reach+stream, 
-        weights=varComb(vf1,vf8), data=reach,na.action=na.omit)
+        weights=varComb(vf1,vf8), data=reach,na.action=na.omit, method="ML")
+  #doesn't converge
 
 M11<-gls(NACE.DM~season+reach+stream, 
-        weights=varComb(vf1,vf9), data=reach,na.action=na.omit)
+        weights=varComb(vf1,vf9), data=reach,na.action=na.omit, method="ML")
 
-anova(M3,M9,M10,M11)
-  #model 3 is still the best...i think we've exhausted our options?
+anova(M3,M9,M11)
+  #model 9 is the best, but graphical diagnostics look terrible.  stick with M3 
 
 anova(M3)
 
-#term deletion to optimize model
-M12<-gls(NACE.DM~season+stream, 
-        weights=vf1, data=reach, na.action=na.omit)
+#term deletion to optimize model, remove stream which is least significant
+M12<-gls(NACE.DM~season+reach, 
+        weights=vf1, data=reach, na.action=na.omit, method="ML")
 
 anova(M3,M12)
-  #model 3 is still the best
+  #model 12 is better than M3 because no significant difference
+anova(M12)
 
-M13<-gls(NACE.DM~season+reach, 
-         weights=vf1, data=reach, na.action=na.omit)
+M13<-gls(NACE.DM~season, weights=vf1, 
+         data=reach, na.action=na.omit, method="ML")
 
-anova(M3,M12,M13)
+anova(M12,M13)
   #model 3 is the best
-summary(M3)
+M14<-gls(NACE.DM~season, weights=vf1, 
+         data=reach, na.action=na.omit, method="REML")
+
+anova(M14)
+summary(M14)
   #interpretation is that Fall has the most N acquiring enzymes NACE compared to spring and summer
-    #possibly due to a pulse of recalcitrant terrestrial C?
+    #possibly due to a pulse of recalcitrant terrestrial C?  
+  #M14 has worse looking diagnostics, but we deleted the insignificant terms 
+    #and the interpretation is the same
 
 ####################################################################
 ####################################################################
 
 #N acquisition
 
-M1<-gls(LEU.C~season+reach+stream, data=reach,na.action=na.omit)
+M1<-gls(LEU.C~season+reach+stream, data=reach,na.action=na.omit, method="ML")
 anova(M1)
 summary(M1)
   #almost higher in spring compared to fall p=0.0503
 
-qqnorm(residuals(M1))
-qqline(residuals(M1))
-ad.test(residuals(M1))  
+qqnorm(residuals(M5))
+qqline(residuals(M5))
+ad.test(residuals(M5))  
   #OK, but they look like they have an exponential pattern
-plot(M1)
+plot(M5)
   #variation proportional to fit
-hist(residuals(M1))
-plot(reach$LEU.C,residuals(M1))
+hist(residuals(M5))
+plot(reach$LEU.C,residuals(M5))
   #positive relationship?
   y<-lm(residuals(M1)~reach$LEU.C)
   summary(y)
@@ -784,7 +805,7 @@ plot(reach$LEU.C,residuals(M1))
 
 #try to use stream as a random factor
 M2<-lme(LEU.C~season+reach, random=~1|stream, 
-          data=reach,na.action=na.omit, method="REML")
+          data=reach,na.action=na.omit, method="ML")
 anova(M1,M2)
   #M1 is better, so the random factor is not the best
 
@@ -800,35 +821,38 @@ vf7<-varExp(form = ~ fitted(.))
 ctrl<-glsControl(returnObject=TRUE, maxIter=5200, msMaxIter=5200)
 
 M3<-gls(LEU.C~season+reach+stream, 
-       weights=vf1, data=reach,na.action=na.omit)  
+       weights=vf1, data=reach,na.action=na.omit, method="ML")  
 M4<-gls(LEU.C~season+reach+stream, 
-        weights=vf2, data=reach,na.action=na.omit)  
+        weights=vf2, data=reach,na.action=na.omit, method="ML")  
 M5<-gls(LEU.C~season+reach+stream, 
-        weights=vf3, data=reach,na.action=na.omit)
+        weights=vf3, data=reach,na.action=na.omit, method="ML")
 M6<-gls(LEU.C~season+reach+stream, 
-        weights=vf4, data=reach,na.action=na.omit)  
+        weights=vf4, data=reach,na.action=na.omit, method="ML")
+  #error
 M7<-gls(LEU.C~season+reach+stream, 
-        weights=vf5, data=reach,na.action=na.omit)
-  #false convergence
+        weights=vf5, data=reach,na.action=na.omit, method="ML")
+  #error
 M8<-gls(LEU.C~season+reach+stream, 
-        weights=vf6, data=reach,na.action=na.omit)
+        weights=vf6, data=reach,na.action=na.omit, method="ML")
+  #no covergence
 M9<-gls(LEU.C~season+reach+stream, 
         weights=vf7, data=reach,na.action=na.omit,
-        control=ctrl)
+        method="ML")
   #no covergence
 
-anova(M1,M3,M4,M5,M6,M8)
-  #M8 is best, using fitted values as an alternate variance structure
+anova(M1,M3,M4,M5)
+  #M5 is best, using season as an alternate variance structure
 
 #try a combined variance structure just for fun
 M10<-gls(LEU.C~season+reach+stream, 
-        weights=varComb(vf4,vf6), data=reach,na.action=na.omit)  
+        weights=varComb(vf3,vf7), data=reach,na.action=na.omit,
+        method="ML")  
 
-anova(M1,M8,M10)
+anova(M5,M10)
   #M8 wins
 
-anova(M8)
-summary(M8)
+anova(M5)
+summary(M5)
   #no significant factors...Spring is greater than Fall at p=0.0834
     #other similar models have significant factors...ie., M6
     #we should look at the residual details and see if another model 
@@ -857,8 +881,7 @@ plot(reach$LEU.C,residuals(M8))
   summary(y)
     #driven by the same outlier
 
-#We'll need to expand this graphical analysis to see how alternate models
-  #account for variance.  Some have significance, and others do not
+#Stream is significant in the model, but this isn't interesting
 #We'll also need to do a find+replace to swap LEU.C with LEU.DM to check
   #that variable.  Looks like LEU.C in that some models are significant
   #but others are not
@@ -1293,7 +1316,7 @@ summary(M11)
   #so a smaller number means there is more labile carbon and a bigger number means more
   #recalcitrant carbon
 
-M1<-gls(LCI~season+reach+stream, data=reach, na.action=na.omit)
+M1<-gls(LCI~season+reach+stream, data=reach, na.action=na.omit, method="ML")
 anova(M1)
 summary(M1)
   #smaller number in daylight compared to buried (more labile in daylight),
