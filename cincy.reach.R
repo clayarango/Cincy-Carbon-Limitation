@@ -38,7 +38,8 @@ str(reach)
   #LEU, CELLO, SULF, PHOS, DOPA, DOPAH2, GLYC, DOPA, CQI, BG, POX,
   #LCI, HIX, BIX, FI, P2H
 
-M1<-gls(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM,data=reach,na.action=na.omit, method="ML")
+M1<-gls(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM,data=reach,na.action=na.omit, 
+        method="REML")  # Zuur says start with REML
 anova(M1)
   #CBOM and FBOM are positively related to glucose.nrr, but PERI.DM is not
 E1<-(residuals(M1))
@@ -51,42 +52,47 @@ hist(E1, xlab="residuals", main="")
 plot(reach$glucose.nrr, E1, xlab="NRR", ylab="Residuals")
   #seems to have an exponential function
 
+#Jake: finish optimizing the random part before optimizing the fixed part.
+#Jake: comment out variable selection
 #drop peri.dm from the model since it's not significant and compare the two
-M2<-gls(glucose.nrr~CBOM.DM+FBOM.DM,data=reach,na.action=na.omit, method="ML")
-anova(M2)
+# M2<-gls(glucose.nrr~CBOM.DM+FBOM.DM,data=reach,na.action=na.omit, method="ML")
+# anova(M2)
+# 
+# anova(M1,M2)
+#   #M2 is better
+# E2<-(residuals(M2))
+# qqnorm(E2)
+# ad.test(E2)
+# hist(E2,xlab="residuals", main="")
+#   #not awesome
+# plot(reach$glucose.nrr, E2, xlab="NRR", ylab="Residuals")
+#   #about the same
 
+
+# Jake: continue working on random effects.
+#use stream as a random factor
+M2<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream, 
+        data=reach, na.action=na.omit, 
+        method="REML") # use REML for random structure
+anova(M2)
 anova(M1,M2)
-  #M2 is better
+  #M2 is marginally better
+
 E2<-(residuals(M2))
 qqnorm(E2)
 ad.test(E2)
-hist(E2,xlab="residuals", main="")
-  #not awesome
-plot(reach$glucose.nrr, E2, xlab="NRR", ylab="Residuals")
-  #about the same
-
-#use stream as a random factor
-M3<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream, 
-        data=reach, na.action=na.omit, method="ML")
-anova(M3)
-anova(M2,M3)
-  #M3 is marginally better
-
-E3<-(residuals(M3))
-qqnorm(E3)
-ad.test(E3)
   #normal
-hist(E3, xlab="residuals", main="")
+hist(E2, xlab="residuals", main="")
   #this has better spread
-plot(reach$glucose.nrr, E3, xlab="NRR", ylab="Residuals")
+plot(reach$glucose.nrr, E2, xlab="NRR", ylab="Residuals")
   #still yucky
 
-E3.n<-residuals(M3, type="normalized")
-coplot(E3.n~glucose.nrr|stream, data=reach, ylab="Normalized Residuals")
+E2.n<-residuals(M2, type="normalized")
+coplot(E2.n~glucose.nrr|stream, data=reach, ylab="Normalized Residuals")
   #stream is heterogenous, but accounted for as a random effect
-coplot(E3.n~glucose.nrr|season, data=reach, ylab="Normalized Residuals")
+coplot(E2.n~glucose.nrr|season, data=reach, ylab="Normalized Residuals")
   #season is also heterogenous
-coplot(E3.n~glucose.nrr|reach, data=reach, ylab="Normalized Residuals")
+coplot(E2.n~glucose.nrr|reach, data=reach, ylab="Normalized Residuals")
   #reach is too
 
 #probably need to account for reach and season somehow
@@ -102,41 +108,35 @@ vf7 = varConstPower(form = ~fitted(.)|reach)
 
 ctrl<-lmeControl(returnObject=TRUE, maxIter=5200, msMaxIter=5200)
 
-M4<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-        weights=vf1, data=reach, na.action=na.omit, method="ML")
+M3<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+        weights=vf1, data=reach, na.action=na.omit)
 
-M5<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
+M4<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
         weights=vf2, data=reach, na.action=na.omit,
         control=ctrl)
   #won't converge
 
-M6<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
+M5<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
         weights=vf3, data=reach, na.action=na.omit,
         control=ctrl)
   #won't converge
 
-M7<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-        weights=vf4, data=reach, na.action=na.omit,
-        control=ctrl)
-  #won't converge
+M6<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+        weights=vf4, data=reach, na.action=na.omit)
 
-M8<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-        weights=vf5, data=reach, na.action=na.omit,
-        control=ctrl)
-  #won't converge
+M7<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+        weights=vf5, data=reach, na.action=na.omit)
 
-M9<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-        weights=vf6, data=reach, na.action=na.omit,
-        control=ctrl)
-  #won't converge
+M8<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+        weights=vf6, data=reach, na.action=na.omit)
+  #won't converge, even when using control = ctrl.  Omitted here to save time.
 
-M10<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-        weights=vf7, data=reach, na.action=na.omit,
-        control=ctrl, method="ML")
-  #produces a singularity using "ML" but not using "REML"
+M9<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+        weights=vf7, data=reach, na.action=na.omit, control=ctrl)
+  #produces Error
 
-anova(M3,M4)
-  #M4 is best, accounts for reach
+anova(M1,M2,M3,M6,M7)
+  #M6 is best, accounts residuals as a function of fitted values
 
 #try different varIdent structures
 vf1 = varIdent(form = ~ 1|reach)#pasted from above for organization sake
@@ -144,27 +144,28 @@ vf8 = varIdent(form = ~ 1|season)
 vf9 = varIdent(form = ~ 1|stream)
 vf10 = varIdent(form= ~ 1|reach*season)
 
-M11<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-        weights=vf8, data=reach, na.action=na.omit, method="ML")
-  #produces a singularity using "ML" but not using "REML"
+M10<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+        weights=vf8, data=reach, na.action=na.omit, 
+        method="REML")  # I think method should be REML
 
-M12<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-         weights=vf9, data=reach, na.action=na.omit, method="ML")
+M11<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+         weights=vf9, data=reach, na.action=na.omit, 
+         method="REML")
 
-M13<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-         weights=vf10, data=reach, na.action=na.omit, method="ML")
-  #produces a singularity using "ML" but not using "REML"
+M12<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+         weights=vf10, data=reach, na.action=na.omit, 
+         method="REML")
 
-anova(M4,M12)
-  #M12 is best, accounts for stream
+anova(M1,M2,M3,M6,M7,M10,M11,M12)
+  #M6 is still the best
 
-E12<-(residuals(M12))
-qqnorm(E12)
-ad.test(E12)
+E6<-(residuals(M6))
+qqnorm(E6)
+ad.test(E6)
   #not normal
-hist(E12, xlab="residuals", main="")
+hist(E6, xlab="residuals", main="")
   #this looks not great
-plot(reach$glucose.nrr, E12, xlab="NRR", ylab="Residuals")
+plot(reach$glucose.nrr, E6, xlab="NRR", ylab="Residuals")
   #still linear
 
 
@@ -173,48 +174,49 @@ vf11 = varPower(form = ~ fitted(.)|glucose.nrr)
 vf12 = varPower(form = ~ fitted(.)|CBOM.DM)
 vf13 = varPower(form = ~ fitted(.)|FBOM.DM)
 
-M14<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-        weights=vf11, data=reach, na.action=na.omit, method="ML")
-M15<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-         weights=vf12, data=reach, na.action=na.omit, method="ML")
-M16<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-         weights=vf13, data=reach, na.action=na.omit, method="ML")
+M13<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+        weights=vf11, data=reach, na.action=na.omit, method="REML")
+M14<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+         weights=vf12, data=reach, na.action=na.omit, method="REML")
+M15<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+         weights=vf13, data=reach, na.action=na.omit, method="REML")
 
-anova(M12,M14,M15,M16)
-  #M14 is slightly better...why are M14,M15,M16 identical?
+anova(M1,M2,M3,M6,M7,M10,M11,M12,M13,M14,M15)
+#M6 is still the best
+  #M14 is slightly better...why are M13,M14,M15 identical?
   #this is dicey due to the identical fit and the crazy F values
 
 
 #try combining variance structures
-M17<-lme(glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-        weights=varComb(vf9,vf11), data=reach, na.action=na.omit, method="ML")
-anova(M14,M17)  
-  #M14 again
-anova(M14)
+M16<-lme(glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+        weights=varComb(vf9,vf11), data=reach, na.action=na.omit, method="REML")
+anova(M1,M2,M3,M6,M7,M10,M11,M12,M13,M14,M15,M16)  
+  #M6 again
+anova(M6)  # nothing significant!
 
-E4<-(residuals(M4))
-qqnorm(E4)
-ad.test(E4)
-  #not normal
-hist(E4, xlab="residuals", main="")
-  #big outlier
-plot(reach$glucose.nrr, E4, xlab="NRR", ylab="Residuals")
-  #these residuals look the best of all, but they aren't great
+#Does liklihood ratio test indicate that M6 (random + weights) is better than M1 or M2?
+anova(M1, M6) #yes
+anova(M2, M6) #yes
+# See lines 162-166 for model diagnostics.  Look terrible.
+# Dont' think we can resolve with weights and random
 
-#in balance, M4 or M12 are the current best, but plot diagnostics for M4 look
-  #better than M12
 
-#let's try normalizing the data in case that will pull the outlier down into the cloud
+#let's try normalizing the data in case that will fix the issues
+#Zuur pg. 91, step 6 "consider a transformation on the response
+#variable as a last resort"
 reach$L.glucose.nrr<-log(reach$glucose.nrr+1)
 
 #start basic
-M18<-lme(L.glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-         data=reach, na.action=na.omit, method="ML")
+M17<-gls(L.glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM,
+         data=reach, na.action=na.omit, method="REML")
+# Add random
+M18<-lme(L.glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+         data=reach, na.action=na.omit, method="REML")
 #try with the same weights as the best model above
-M19<-lme(L.glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
-         weights=vf1, data=reach,na.action=na.omit, method="ML")
+M19<-lme(L.glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream,
+         weights=vf4, data=reach,na.action=na.omit, method="REML")
 
-AIC(M4,M18,M19)
+AIC(M17,M18,M19)
     #M18 has lower AIC     
 anova(M18)
 
@@ -228,11 +230,59 @@ hist(E18, xlab="residuals", main="")
 plot(reach$L.glucose.nrr, E18, xlab="NRR", ylab="Residuals")
   #these residuals have the best vertical spread of all
 
-anova(M14,M18,M19)#can't use this bc response variables are different
-anova(M18)
-  #same significant factors
-summary(M18)
-  #interpretation is that the biofilm response to glucose is strongest with 
+
+# Now it is time to find the optimal fixed structure (pg.91, step 7)
+# F-statistic, bad because it uses sequential testing and the order of the main
+# effects is important.  Uses REML
+anova(M18) # cant trust results
+
+#t-statistic  This works unless one variable is a factor with more than 2 levels (uses REML)
+summary(M18) #  PERI.DM not significant, CBOM and FBOM are.
+
+# Remove PERI
+M19 <- lme(L.glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream,
+           data=reach,na.action=na.omit, method="REML")
+
+summary(M19) #FBOM and CBOM significant.  Stop here!
+
+#For kicks, lets try optimizing the fixed components using liklihood ratio test
+#This requires ML.
+#Compare nested models 
+M21 <- lme(L.glucose.nrr~CBOM.DM+FBOM.DM+PERI.DM, random=~1|stream, # full model
+           data=reach, na.action=na.omit, method="ML")
+
+M22 <- lme(L.glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream, # remove PERI
+           data=reach, na.action=na.omit, method="ML")
+
+M23 <- lme(L.glucose.nrr~CBOM.DM+PERI.DM, random=~1|stream, # remove FBOM
+           data=reach, na.action=na.omit, method="ML")
+
+M24 <- lme(L.glucose.nrr~FBOM.DM+PERI.DM, random=~1|stream, # remove CBOM
+           data=reach, na.action=na.omit, method="ML")
+
+anova(M21, M22)  # p=0.44 for PERI
+anova(M21, M23)  # p=0.01 for FBOM
+anova(M21, M24)  # p=0.006 for CBOM
+
+# Remove PERI, least significant term
+# New full model = M22
+M25 <- lme(L.glucose.nrr~FBOM.DM, random=~1|stream, # remove CBOM
+                  data=reach, na.action=na.omit, method="ML")
+
+M26 <- lme(L.glucose.nrr~CBOM.DM, random=~1|stream, # remove FBOM
+           data=reach, na.action=na.omit, method="ML")
+
+anova(M22, M25) # CBOM is significant, p = 0.0065
+anova(M22, M26) # FBOM is significant, p = 0.0084
+# End of Backwards selection to identify optimal fixed structure
+
+# Fit final model
+MFinal <- lme(L.glucose.nrr~CBOM.DM+FBOM.DM, random=~1|stream, # remove PERI
+              data=reach, na.action=na.omit, 
+              method="REML")  # now return to REML!
+summary(MFinal)  # same results as summary(M19), line 246 above!
+
+#interpretation is that the biofilm response to glucose is strongest with 
     #greater standing stocks of CBOM and FBOM, possibly because of high CBOM
     #standing stocks in the fall
 
