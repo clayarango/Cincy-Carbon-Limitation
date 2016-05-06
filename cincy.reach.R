@@ -727,14 +727,14 @@ anova(M24,M25)
 #this might help with model selection  http://www.inside-r.org/packages/cran/MAINT.Data/docs/MANOVA
 
 y <- cbind(reach$glucose.nrr,reach$arabinose.nrr,reach$cellobiose.nrr)
-M1 <- manova(y ~ CBOM.DM+FBOM.DM+PERI.DM, data=reach, na.action=na.omit)
+L.y <- cbind(log(reach$glucose.nrr+1),log(reach$arabinose.nrr+1),log(reach$cellobiose.nrr+1))
+M1 <- manova(L.y ~ CBOM.DM+FBOM.DM+PERI.DM, data=reach, na.action=na.omit)
 summary.aov(M1, test="Pillai")#used to get the univariate statistics
 summary(M1,test="Pillai")#used for overall model statistics
 
 residuals(M1)#can I extract each column into a separate vector to look at fits?
 M1.r<-data.frame(residuals(M1))
 names(M1.r)
-
 fitted(M1)
 M1.f<-data.frame(fitted(M1))
 names(M1.f)
@@ -798,6 +798,12 @@ extractAIC(M2)
 extractAIC(M3)
   #second model has lowest AIC
   #final model has CBOM as significant in all univariate summaries and the overall summary
+
+#add code for using adonis in package "vegan"
+  #http://cc.oulu.fi/~jarioksa/softhelp/vegan/html/adonis.html
+  #adonis(y~CBOM.DM+FBOM.DM, data=reach, na.action=na.omit, perm=1e4)
+  #M1<-adonis(y~CBOM.DM+FBOM.DM, data=reach, na.action=na.omit, perm=1e4)
+  #coefficients(M1)
 
 ####################################################################
 ####################################################################
@@ -922,13 +928,14 @@ anova(M3,M9,M10,M11)
   #model 3 is still the best 
 
 anova(M3)
+summary(M3)
 
 #term deletion to optimize model, remove stream which is least significant
   #rerun M3 with ML to compare different fixed effects
 M3<-gls(NACE.DM~season+reach+stream, 
-        weights=vf1, data=reach,na.action=na.omit, metho="ML")
+        weights=vf1, data=reach,na.action=na.omit, method="ML")
 
-M12<-gls(NACE.DM~season+reach, 
+M12<-gls(NACE.DM~season+stream, 
         weights=vf1, data=reach, na.action=na.omit, method="ML")
 
 anova(M3,M12)
@@ -1451,6 +1458,9 @@ summary(M3)
 #graphical diagnostics, and just marginally worse AIC. Interpretation is that
 #spring and summer have lower P acquistion enzymes compared to fall
 
+  #backward model selection ultimately, but don't include this yet unless
+    #the literature and the writing justifies it
+
 ##################################################################
 ##################################################################
 
@@ -1535,38 +1545,139 @@ anova(M10)
   #M6 has unreasonable F values
   #M10 has nothing significant
 
-plot(reach$season,residuals(M9), xlab="Season", ylab="Residuals")
-bartlett.test(residuals(M9), reach$season)  
+plot(reach$season,residuals(M5), xlab="Season", ylab="Residuals")
+bartlett.test(residuals(M5), reach$season)  
   #OK
-plot(reach$reach,residuals(M9), xlab="Reach", ylab="Residuals")
-bartlett.test(residuals(M9), reach$reach)  
+plot(reach$reach,residuals(M5), xlab="Reach", ylab="Residuals")
+bartlett.test(residuals(M5), reach$reach)  
   #OK
-plot(reach$stream,residuals(M9), xlab="Stream", ylab="Residuals")
-bartlett.test(residuals(M9), reach$stream)  
+plot(reach$stream,residuals(M5), xlab="Stream", ylab="Residuals")
+bartlett.test(residuals(M5), reach$stream)  
   #not great
   
-qqnorm(residuals(M9))
-qqline(residuals(M9))
-ad.test(residuals(M9))  
+qqnorm(residuals(M5))
+qqline(residuals(M5))
+ad.test(residuals(M5))  
   #not good
-plot(M9)
+plot(M5)
   #this looks OK
-hist(residuals(M9))
-plot(reach$DOPAH2.DM,residuals(M9))
+hist(residuals(M5))
+plot(reach$DOPAH2.DM,residuals(M5))
 
   #M5 does the overall best job
-anova(M5)
-summary(M5)
+anova(M1)
+summary(M1)
   #interpretation is that daylight has lower effort to acquire recalcitrant carbon compared to 
     #buried
 
   #can repeat this on DOPA.DM and DOPA.C (phenol oxidase assay...recalcitrant carbon)
     #and with DOPAH2.C, but none of these start significant (some are 0.05<x<0.10)
+  #add backwards model selection
 
 ##################################################################
 ##################################################################
 #GLYC and CQI (index of carbon quality as ratio of GLYC/DOPA, higher numbers are more labile)
   #neither are significant with first model run
+
+  #try to rerun and optimize the model
+M1<-gls(GLYC~season+reach+stream, data=reach,na.action=na.omit)
+anova(M1)
+summary(M1)
+
+#try alternate variance structures
+vf1<-varIdent(form = ~1|stream)
+vf2<-varIdent(form=~1|reach)
+vf3<-varIdent(form=~1|season)
+vf4<-varIdent(form=~1|stream*reach)
+vf5<-varIdent(form=~1|stream*season)
+vf6<-varPower(form = ~ fitted(.))
+vf7<-varExp(form = ~ fitted(.))
+
+M3<-gls(GLYC~season+reach+stream, 
+        weights=vf1, data=reach,na.action=na.omit)  
+M4<-gls(GLYC~season+reach+stream, 
+        weights=vf2, data=reach,na.action=na.omit)  
+M5<-gls(GLYC~season+reach+stream, 
+        weights=vf3, data=reach,na.action=na.omit)
+M6<-gls(GLYC~season+reach+stream, 
+        weights=vf4, data=reach,na.action=na.omit)  
+M7<-gls(GLYC~season+reach+stream, 
+        weights=vf5, data=reach,na.action=na.omit)
+M8<-gls(GLYC~season+reach+stream, 
+        weights=vf6, data=reach,na.action=na.omit)
+M9<-gls(GLYC~season+reach+stream, 
+        weights=vf7, data=reach,na.action=na.omit)
+
+anova(M1,M3,M4,M5,M6,M7,M8,M9)
+
+anova(M9)
+
+#best two models are not significant
+
+
+M1<-gls(CQI~season+reach+stream, data=new2.reach,na.action=na.omit)
+anova(M1)
+summary(M1)
+
+#try alternate variance structures
+vf1<-varIdent(form = ~1|stream)
+vf2<-varIdent(form=~1|reach)
+vf3<-varIdent(form=~1|season)
+vf4<-varIdent(form=~1|stream*reach)
+vf5<-varIdent(form=~1|stream*season)
+vf6<-varPower(form = ~ fitted(.))
+vf7<-varExp(form = ~ fitted(.))
+
+M3<-gls(CQI~season+reach+stream, 
+        weights=vf1, data=new2.reach,na.action=na.omit)  
+M4<-gls(CQI~season+reach+stream, 
+        weights=vf2, data=new2.reach,na.action=na.omit)  
+M5<-gls(CQI~season+reach+stream, 
+        weights=vf3, data=new2.reach,na.action=na.omit)
+M6<-gls(CQI~season+reach+stream, 
+        weights=vf4, data=new2.reach,na.action=na.omit)  
+M7<-gls(CQI~season+reach+stream, 
+        weights=vf5, data=new2.reach,na.action=na.omit)
+M8<-gls(CQI~season+reach+stream, 
+        weights=vf6, data=new2.reach,na.action=na.omit)
+  #no convergence
+M9<-gls(CQI~season+reach+stream, 
+        weights=vf7, data=new2.reach,na.action=na.omit)
+
+anova(M1,M3,M4,M5,M6,M7,M9)
+  #M3 is best
+
+anova(M6)
+  #no significant factors
+  
+#drop outlier and rerun
+new2.reach<-reach[reach$CQI<10,]
+
+
+qqnorm(residuals(M6))
+qqline(residuals(M6))
+ad.test(residuals(M6))  
+#not so good
+
+plot(M6)
+#not horrible
+hist(residuals(M6))
+#major outliers
+plot(new2.reach$CQI,residuals(M6))
+#outliers
+
+
+plot(reach$season,residuals(M1), xlab="Season", ylab="Residuals")
+bartlett.test(residuals(M1), reach$season)  
+#not OK big variation in spring
+plot(reach$reach,residuals(M1), xlab="Reach", ylab="Residuals")
+bartlett.test(residuals(M1), reach$reach)  
+#OK
+plot(reach$stream,residuals(M1), xlab="Stream", ylab="Residuals")
+bartlett.test(residuals(M1), reach$stream)  
+#OK
+
+
 
 ##################################################################
 ##################################################################
@@ -1795,25 +1906,25 @@ anova(M8)
   #M3, M8, M9 reach is significant
   #M4, M5, season, reach, stream significant
 
-qqnorm(residuals(M5))
-qqline(residuals(M5))
-ad.test(residuals(M5))  
+qqnorm(residuals(M4))
+qqline(residuals(M4))
+ad.test(residuals(M4))  
 #OK
 
-plot(M10)
+plot(M4)
   #better
-hist(residuals(M10))
-plot(reach$LCI,residuals(M10))
+hist(residuals(M4))
+plot(reach$LCI,residuals(M4))
   #increasing variation with LCI
 
-plot(reach$season,residuals(M10), xlab="Season", ylab="Residuals")
-bartlett.test(residuals(M10), reach$season)  
+plot(reach$season,residuals(M4), xlab="Season", ylab="Residuals")
+bartlett.test(residuals(M4), reach$season)  
 #looks great
-plot(reach$reach,residuals(M10), xlab="Reach", ylab="Residuals")
-bartlett.test(residuals(M10), reach$reach)  
+plot(reach$reach,residuals(M4), xlab="Reach", ylab="Residuals")
+bartlett.test(residuals(M4), reach$reach)  
 #looks great
-plot(reach$stream,residuals(M10), xlab="Stream", ylab="Residuals")
-bartlett.test(residuals(M10), reach$stream)  
+plot(reach$stream,residuals(M4), xlab="Stream", ylab="Residuals")
+bartlett.test(residuals(M4), reach$stream)  
 #OK
 
 anova(M4)
@@ -1831,6 +1942,10 @@ anova(M10)
 
 #the combined structure doesn't handle the trend of increasing residuals with observations as well, 
   #but the model output is more intuitive for interpreting the seasonal effect
+
+#stick with M1, but double check post-hoc comparisons for season given 3 levels
+anova(M1)
+summary(M1)
 
 ##################################################################
 ##################################################################
@@ -1913,8 +2028,8 @@ anova(M10,M11)
 new.reach<-reach[reach$HIX>0.71,]
 
 M12<-gls(HIX~season+reach+stream, data=new.reach, na.action=na.omit)
-anova(M1)
-summary(M1)
+anova(M12)
+summary(M12)
 
 M13<-gls(HIX~season+reach+stream, 
         weights=vf1, data=new.reach,na.action=na.omit)  
@@ -1956,22 +2071,22 @@ anova(M1)
 summary(M1)
   #spring and summer have higher BIX than fall
 
-qqnorm(residuals(M4))
-qqline(residuals(M4))
-ad.test(residuals(M4))  
+qqnorm(residuals(M1))
+qqline(residuals(M1))
+ad.test(residuals(M1))  
   #good
-hist(residuals(M4))
-plot(reach$BIX,residuals(M4))
+hist(residuals(M1))
+plot(reach$BIX,residuals(M1))
   #major categorical variation, but vertical spread not awful
 
-plot(reach$season,residuals(M4), xlab="Season", ylab="Residuals")
-bartlett.test(residuals(M4), reach$season)  
+plot(reach$season,residuals(M1), xlab="Season", ylab="Residuals")
+bartlett.test(residuals(M1), reach$season)  
   #OK
-plot(reach$reach,residuals(M4), xlab="Reach", ylab="Residuals")
-bartlett.test(residuals(M4), reach$reach)  
+plot(reach$reach,residuals(M1), xlab="Reach", ylab="Residuals")
+bartlett.test(residuals(M1), reach$reach)  
   #OK
-plot(reach$stream,residuals(M4), xlab="Stream", ylab="Residuals")
-bartlett.test(residuals(M4), reach$stream)  
+plot(reach$stream,residuals(M1), xlab="Stream", ylab="Residuals")
+bartlett.test(residuals(M1), reach$stream)  
   #OK
 
 #try alternate variance structures
@@ -2011,32 +2126,38 @@ anova(M9)
   #is this as good as it gets given the bimodality?  I can't imagine
     #log normalization will help given the bimodality
   
-anova(M3)
-summary(M3)
+anova(M1)
+summary(M1)
 
 #term deletion
-M3.full<-gls(BIX~season+reach+stream, 
-        weights=vf1, data=reach,na.action=na.omit,
+M1.full<-gls(BIX~season+reach+stream, 
+        data=reach,na.action=na.omit,
         method="ML")  
 
 M10<-gls(BIX~season+reach, 
-         weights=vf1, data=reach,na.action=na.omit,
+         data=reach,na.action=na.omit,
          method="ML")  
 
-anova(M3.full, M10)
+anova(M1.full, M10)
   #M10 has lower AIC but not different, so it's better
 
 anova(M10)
-  #all terms are significant, so we're good.  Rerun with REML 
-M10.full<-gls(BIX~season+reach, 
-         weights=vf1, data=reach,na.action=na.omit,
+
+M11<-gls(BIX~season, 
+         data=reach,na.action=na.omit,
+         method="ML") 
+
+anova(M10,M11)
+
+anova(M11)
+M11.full<-gls(BIX~season, 
+         data=reach,na.action=na.omit,
          method="REML")  
-anova(M10.full)
-summary(M10.full)
+anova(M11.full)
+summary(M11.full)
 
   #spring and summer have a higher freshness index than fall
   #daylight has less freshness than than buried (possibly due to green/litter fall inputs?)
-  #but effect size is small and barely significant
 
 ##################################################################
 ##################################################################
@@ -2099,19 +2220,48 @@ anova(M9)
   #M3, M4, M5, M8, M9 season is significant
   #M7 has unreasonable F values
   #sub these models into the graphical evaluation above
-    #looks like M3-5 might handle the data the best, but the bimodal nature
-      #is a challenge
-anova(M5)
+  
+  #looks like M4 might handle the data the best, (plot(M4) balanced the ends of the bimodal data
 
-summary(M5)
+anova(M4)
+
+summary(M4)
   #spring and summer have a higher FI than fall indicating more microbial compared to terrestrial
   
+#model optimization
+M4.full<-gls(FI~season+reach+stream, 
+        weights=vf2, data=reach,na.action=na.omit,
+        method="ML")  
+anova(M4.full)
 
-  #random thought...is high fall variance compared to narrow summer variance
-    #accounted for by different disturbance frq (more t-storm summer) or
-    #differences in OM (leaf input in fall)? Maybe we need a covariate like CBOM standing stock?
+#remove stream and rerun
+M10<-gls(FI~season+reach,
+         weights=vf2, data=reach, na.action=na.omit,
+         method="ML")
 
-  #need to decide which model is best and then do backward selection
+anova(M4.full,M10)
+  #lower AIC and not significantly different, so stream can go
+
+anova(M10)
+
+#remove reach
+M11<-gls(FI~season,
+         weights=vf2, data=reach, na.action=na.omit,
+         method="ML")
+
+anova(M10,M11)
+  #lower AIC and not significantly different, so stream can go
+
+anova(M11)
+
+M11.full<-gls(FI~season,
+         weights=vf2, data=reach, na.action=na.omit,
+         method="REML")
+
+anova(M11.full)
+summary(M11.full)
+  #interpretation is that spring and summer have higher FI (more microbial dervied DOM)
+    #than fall (more terrestrial DOM)
 
 ##################################################################
 ##################################################################
@@ -2271,8 +2421,8 @@ M9<-gls(P2H~season+reach+stream,
 anova(M1,M3,M4,M5,M7,M8,M9)
   #M7 look like it wins, stream*season
 
-anova(M9)
-  #M4 has season significant
+anova(M8)
+  #M1, M4 has season significant
   #M3, M5, M9 has season and stream significant
   #M8 has everything significant
   #M7 has unreasonable F ratios
@@ -2281,13 +2431,26 @@ anova(M9)
 
 anova(M1,M3,M4,M5,M8,M9)
   #looks like M5, M8, or M9 might be the best
-  #graphical diagnostics all look about the same
+    #all graphical diagnostics all look about the same, 
+    #and none handle plot(residuals v observation) very well, but both modes are equally 
+    #distributed around 0.  
+    #based on AIC, it's M8
 
+anova(M8)
 summary(M8)
-  #spring and summer have the highest P2H in all models, one model shows daylight with less
+  #spring and summer have the highest P2H in all models, daylight has less
     #P2H but a very small effect size
 
 ##################################################################
+
+#the following analysis is really not that important.  I thought
+#it might be nice to show that CQI and LCI are related to each other
+#since they should be, and they are if you drop one crazy outlier
+#the fit is negative expoential, so it's difficult to model linearly.
+#I'm not sure how hard we need to try pull this out since it doesn't
+#hit at the main points of Carbon quality in open/buried and fall/spring.
+#you can take a look at what i've done so far and see what you think.
+
 ##################################################################
 #CQI and LCI should be inversely related to each other
   #bigger CQI=better carbon, bigger LCI=worse carbon
