@@ -67,20 +67,31 @@ par(op)
 #but in spring, buried have greater response to added carbon
 #whereas in fall, daylight reaches have greater response to added carbon
 
-data = data.frame(aggregate(nrr~season+reach, data=fall.spring, 
-            FUN=function(x) c(mean=mean(x), sd=sd(x), 
-            n=length(x), se=sd(x)/sqrt(length(x)))))
-data#look at aggregated data
-x=data.frame(reach=factor(c("Buried","Buried","Open","Open")), 
-            season=factor(c("Fall","Spring","Fall","Spring"), 
-            levels=c("Fall","Spring")), 
-            nrr.mean=c(4.19558058,2.51384505,7.17557390,1.94443149),
-            nrr.se=c(0.27504630,0.08000855,0.78039976,0.09377607))
+## Lines 71-79 can be replaced with 81-85
+# data = data.frame(aggregate(nrr~season+reach, data=fall.spring, 
+#             FUN=function(x) c(mean=mean(x), sd=sd(x), 
+#             n=length(x), se=sd(x)/sqrt(length(x)))))
+# data#look at aggregated data
+# x=data.frame(reach=factor(c("Buried","Buried","Open","Open")), 
+#             season=factor(c("Fall","Spring","Fall","Spring"), 
+#             levels=c("Fall","Spring")), 
+#             nrr.mean=c(4.19558058,2.51384505,7.17557390,1.94443149),
+#             nrr.se=c(0.27504630,0.08000855,0.78039976,0.09377607))
+
+x <- group_by(fall.spring, season, reach) %>%  # Grouping function causes subsequent functions to aggregate by season and reach
+  summarize(nrr.mean = mean(nrr, na.rm = TRUE), # na.rm = TRUE to remove missing values
+            nrr.sd=sd(nrr, na.rm = TRUE),  # na.rm = TRUE to remove missing values
+            n = sum(!is.na(nrr)), # of observations, excluding NAs. 
+            nrr.se=nrr.sd/sqrt(n))
+
 p<-ggplot(data=x, 
-       aes(x=season, y=nrr.mean, fill=reach)) + geom_bar(stat="identity", 
-       position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=nrr.mean, 
-       ymax=nrr.mean+nrr.se), width=0.2, 
-       position=position_dodge(0.9)) + scale_fill_manual(values=c("black","snow"))
+          aes(x=season, y=nrr.mean, fill=reach)) + 
+  geom_bar(stat="identity", 
+           position=position_dodge(), color = "black") + 
+  geom_errorbar(aes(ymin=nrr.mean, 
+                    ymax=nrr.mean+nrr.se), width=0.2, 
+                position=position_dodge(0.9)) + 
+  scale_fill_manual(values=c("black","snow"))
 p+xlab("Season")+ylab("NRR (treatment:control)")+labs(fill="Reach")+theme_bw()
 ############################################################################################
 #Reach scale data analysis
