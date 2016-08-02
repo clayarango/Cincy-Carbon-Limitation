@@ -67,17 +67,6 @@ par(op)
 #but in spring, buried have greater response to added carbon
 #whereas in fall, daylight reaches have greater response to added carbon
 
-## Lines 71-79 can be replaced with 81-85
-# data = data.frame(aggregate(nrr~season+reach, data=fall.spring, 
-#             FUN=function(x) c(mean=mean(x), sd=sd(x), 
-#             n=length(x), se=sd(x)/sqrt(length(x)))))
-# data#look at aggregated data
-# x=data.frame(reach=factor(c("Buried","Buried","Open","Open")), 
-#             season=factor(c("Fall","Spring","Fall","Spring"), 
-#             levels=c("Fall","Spring")), 
-#             nrr.mean=c(4.19558058,2.51384505,7.17557390,1.94443149),
-#             nrr.se=c(0.27504630,0.08000855,0.78039976,0.09377607))
-
 x <- group_by(fall.spring, season, reach) %>%  # Grouping function causes subsequent functions to aggregate by season and reach
   summarize(nrr.mean = mean(nrr, na.rm = TRUE), # na.rm = TRUE to remove missing values
             nrr.sd=sd(nrr, na.rm = TRUE),  # na.rm = TRUE to remove missing values
@@ -142,14 +131,12 @@ summary(multCompTukey)
 
 #interpretation:  more N acquisition effort in fall compared to spring
 
-data = data.frame(aggregate(NACE.DM~season, data=reach, 
-             FUN=function(x) c(mean=mean(x), sd=sd(x), 
-             n=length(x), se=sd(x)/sqrt(length(x)))))
-data#look at aggregated data
-x=data.frame(season=factor(c("Fall","Spring","Summer"), 
-             levels=c("Fall","Spring","Summer")), 
-             NACE.mean=c(1292.0847,473.3486,1020.8635),
-             NACE.se=c(154.7755,210.6108,138.3992))
+x <- group_by(reach, season) %>%  
+  summarize(NACE.mean = mean(NACE.DM, na.rm = TRUE), 
+            NACE.sd=sd(NACE.DM, na.rm = TRUE),  
+            n = sum(!is.na(NACE.DM)),  
+            NACE.se=NACE.sd/sqrt(n))
+
 p<-ggplot(data=x, 
           aes(x=season, y=NACE.mean)) + geom_bar(stat="identity", 
           position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=NACE.mean, 
@@ -170,14 +157,12 @@ summary(M.dopah2)
 
 #interpretation:  more lignin degradation effort in buried compared to daylight regardless of season
 
-data = data.frame(aggregate(DOPAH2.DM~reach, data=reach, 
-          FUN=function(x) c(mean=mean(x), sd=sd(x), 
-          n=length(x), se=sd(x)/sqrt(length(x)))))
-data#look at aggregated data
-x=data.frame(reach=factor(c("Buried","Daylight"), 
-          levels=c("Buried","Daylight")), 
-          DOPAH2.mean=c(66.079513,29.633145),
-          DOPAH2.se=c(8.583403,9.577104))
+x <- group_by(reach, reach) %>%  
+  summarize(DOPAH2.mean = mean(DOPAH2.DM, na.rm = TRUE), 
+            DOPAH2.sd=sd(DOPAH2.DM, na.rm = TRUE),  
+            n = sum(!is.na(DOPAH2.DM)),  
+            DOPAH2.se=DOPAH2.sd/sqrt(n))
+
 p<-ggplot(data=x, 
           aes(x=reach, y=DOPAH2.mean)) + geom_bar(stat="identity", 
           position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=DOPAH2.mean, 
@@ -197,14 +182,12 @@ summary(M.pox)
 #interpretation:  more recalcitrant C degradation effort in buried compared to daylight 
     #regardless of season
 
-data = data.frame(aggregate(POX~reach, data=reach, 
-          FUN=function(x) c(mean=mean(x), sd=sd(x), 
-          n=length(x), se=sd(x)/sqrt(length(x)))))
-data#look at aggregated data
-x=data.frame(reach=factor(c("Buried","Daylight"), 
-          levels=c("Buried","Daylight")), 
-          POX.mean=c(753199.1,324964.2),
-          POX.se=c(136687.6,163517.4))
+x <- group_by(reach, reach) %>%  
+  summarize(POX.mean = mean(POX, na.rm = TRUE), 
+            POX.sd=sd(POX, na.rm = TRUE),  
+            n = sum(!is.na(POX)),  
+            POX.se=POX.sd/sqrt(n))
+
 p<-ggplot(data=x, 
           aes(x=reach, y=POX.mean)) + geom_bar(stat="identity", 
           position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=POX.mean, 
@@ -237,20 +220,18 @@ summary(multCompTukey)
 #spring and fall don't differ, but summer has more recalcitrant carbon than the fall
 #daylight has more labile carbon than buried
 
-data = data.frame(aggregate(LCI~season+reach, data=reach, 
-          FUN=function(x) c(mean=mean(x), sd=sd(x), 
-          n=length(x), se=sd(x)/sqrt(length(x)))))
-data#look at aggregated data
-x=data.frame(reach=factor(c("Buried","Buried","Buried","Open","Open","Open")), 
-          season=factor(c("Fall","Spring","Summer","Fall","Spring","Summer"), 
-          levels=c("Fall","Spring","Summer")), 
-          LCI.mean=c(0.75679360,0.91763295,0.93085557,0.60661323,0.60207482,0.89880824),
-          LCI.se=c(0.10750636,0.04472784,0.01133049,0.11575625,0.11305799,0.06472929))
+x <- group_by(reach, season, reach) %>%  
+  summarize(LCI.mean = mean(LCI, na.rm = TRUE), 
+            LCI.sd=sd(LCI, na.rm = TRUE),  
+            n = sum(!is.na(LCI)),  
+            LCI.se=LCI.sd/sqrt(n))
+
 p<-ggplot(data=x, 
           aes(x=season, y=LCI.mean, fill=reach)) + geom_bar(stat="identity", 
           position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=LCI.mean, 
           ymax=LCI.mean+LCI.se), width=0.2, 
           position=position_dodge(0.9)) + scale_fill_manual(values=c("black","snow"))
+
 p+xlab("Season")+ylab("LCI (recalcitrant/(labile+recalcitrant))")+labs(fill="Reach")+theme_bw()
 
 ############HIX, humification index from Pennino
@@ -281,15 +262,12 @@ summary(multCompTukey)
 #Daylight has higher humification index than buried, possibly due to terrestrial inputs to
   #open reaches
 
-data = data.frame(aggregate(HIX~season+reach, data=new.reach, 
-          FUN=function(x) c(mean=mean(x), sd=sd(x), 
-          n=length(x), se=sd(x)/sqrt(length(x)))))
-data#look at aggregated data
-x=data.frame(reach=factor(c("Buried","Buried","Buried","Open","Open","Open")), 
-          season=factor(c("Fall","Spring","Summer","Fall","Spring","Summer"), 
-          levels=c("Fall","Spring","Summer")), 
-          HIX.mean=c(0.889640833,0.875041500,0.894589833,0.938477000,0.881083500,0.874557750),
-          HIX.se=c(0.024981359,0.001638500,0.005782358,0.009319571,0.014257931,0.014645250))
+x <- group_by(new.reach, season, reach) %>%  # Grouping function causes subsequent functions to aggregate by season and reach
+  summarize(HIX.mean = mean(HIX, na.rm = TRUE), # na.rm = TRUE to remove missing values
+            HIX.sd=sd(HIX, na.rm = TRUE),  # na.rm = TRUE to remove missing values
+            n = sum(!is.na(HIX)), # of observations, excluding NAs. 
+            HIX.se=HIX.sd/sqrt(n))
+
 p<-ggplot(data=x, 
           aes(x=season, y=HIX.mean, fill=reach)) + geom_bar(stat="identity", 
           position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=HIX.mean, 
@@ -319,14 +297,12 @@ summary(multCompTukey)
 
 #spring and summer have higher freshness than fall, but they don't differ from each other
 
-data = data.frame(aggregate(BIX~season, data=reach, 
-          FUN=function(x) c(mean=mean(x), sd=sd(x), 
-          n=length(x), se=sd(x)/sqrt(length(x)))))
-data#look at aggregated data
-x=data.frame(season=factor(c("Fall","Spring","Summer"), 
-          levels=c("Fall","Spring","Summer")), 
-          BIX.mean=c(0.0981945833,0.7412309167,0.7377986000),
-          BIX.se=c(0.0007789257,0.0059971767,0.0062660596))
+x <- group_by(reach, season) %>%  # Grouping function causes subsequent functions to aggregate by season and reach
+  summarize(BIX.mean = mean(BIX, na.rm = TRUE), # na.rm = TRUE to remove missing values
+            BIX.sd=sd(BIX, na.rm = TRUE),  # na.rm = TRUE to remove missing values
+            n = sum(!is.na(BIX)), # of observations, excluding NAs. 
+            BIX.se=BIX.sd/sqrt(n))
+
 p<-ggplot(data=x, 
           aes(x=season, y=BIX.mean)) + geom_bar(stat="identity", 
           position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=BIX.mean, 
@@ -361,14 +337,12 @@ summary(multCompTukey)
 #fall has a larger terrestrial signature than spring or summer.  spring and summer not different
   #from each other
 
-data = data.frame(aggregate(FI~season, data=reach, 
-          FUN=function(x) c(mean=mean(x), sd=sd(x), 
-          n=length(x), se=sd(x)/sqrt(length(x)))))
-data#look at aggregated data
-x=data.frame(season=factor(c("Fall","Spring","Summer"), 
-          levels=c("Fall","Spring","Summer")), 
-          FI.mean=c(0.335320000,1.278229250,1.262672300),
-          FI.se=c(0.028975281,0.004810842,0.008548331))
+x <- group_by(reach, season) %>%  # Grouping function causes subsequent functions to aggregate by season and reach
+  summarize(FI.mean = mean(FI, na.rm = TRUE), # na.rm = TRUE to remove missing values
+            FI.sd=sd(FI, na.rm = TRUE),  # na.rm = TRUE to remove missing values
+            n = sum(!is.na(FI)), # of observations, excluding NAs. 
+            FI.se=FI.sd/sqrt(n))
+
 p<-ggplot(data=x, 
           aes(x=season, y=FI.mean)) + geom_bar(stat="identity", 
           position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=FI.mean, 
@@ -404,15 +378,12 @@ summary(multCompTukey)
 #spring and summer have higher P2H than fall, daylight has lower P2H than buried with small
   #effect size, possibly due to greater biological activity using the better OM?
 
-data = data.frame(aggregate(P2H~season+reach, data=new.reach, 
-        FUN=function(x) c(mean=mean(x), sd=sd(x), 
-        n=length(x), se=sd(x)/sqrt(length(x)))))
-data#look at aggregated data
-x=data.frame(reach=factor(c("Buried","Buried","Buried","Open","Open","Open")), 
-        season=factor(c("Fall","Spring","Summer","Fall","Spring","Summer"), 
-        levels=c("Fall","Spring","Summer")), 
-        P2H.mean=c(0.04535483,0.79201250,0.60917967,0.03616317,0.67722583,0.67767175),
-        P2H.se=c(0.01262531,0.06582000,0.04264401,0.01879541,0.08523015,0.03721975))
+x <- group_by(reach, season, reach) %>%  # Grouping function causes subsequent functions to aggregate by season and reach
+  summarize(P2H.mean = mean(P2H, na.rm = TRUE), # na.rm = TRUE to remove missing values
+            P2H.sd=sd(P2H, na.rm = TRUE),  # na.rm = TRUE to remove missing values
+            n = sum(!is.na(P2H)), # of observations, excluding NAs. 
+            P2H.se=P2H.sd/sqrt(n))
+
 p<-ggplot(data=x, 
         aes(x=season, y=P2H.mean, fill=reach)) + geom_bar(stat="identity", 
         position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=P2H.mean, 
