@@ -226,13 +226,39 @@ x <- group_by(reach, season, reach) %>%
             n = sum(!is.na(LCI)),  
             LCI.se=LCI.sd/sqrt(n))
 
-p<-ggplot(data=x, 
-          aes(x=season, y=LCI.mean, fill=reach)) + geom_bar(stat="identity", 
-          position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=LCI.mean, 
-          ymax=LCI.mean+LCI.se), width=0.2, 
-          position=position_dodge(0.9)) + scale_fill_manual(values=c("black","snow"))
+ggplot(data=x, aes(x=season, y=LCI.mean, fill=reach)) + 
+  geom_bar(stat="identity", position=position_dodge(), colour="black") + 
+  geom_errorbar(aes(ymin=LCI.mean, ymax=LCI.mean+LCI.se), width=0.2, position=position_dodge(0.9)) + 
+  scale_fill_manual(values=c("black","snow")) +  # consider adopting pure black and white, or a greyscale.  "snow" will likely trigger additiona publication charges
+  xlab("Season")+
+  ylab("LCI (recalcitrant/(labile+recalcitrant))") +
+  ylim(0, 1.05) + # add a bit of room at top for legend
+  labs(fill="Reach")+
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),  # Eliminate major gridlines
+        panel.grid.minor = element_blank(),  # Eliminate minor gridlines
+        legend.title = element_text(size = 6),  # Eliminate legend title
+        legend.key = element_blank(),  # Eliminate boxes around legend elements
+        legend.position = c(0.5, 0.95),  # Specify legend position
+        legend.text=element_text(size=8),  # Specify legend text size.  also see legend.title
+        legend.background = element_blank(),  # Eliminate white fill in legend.
+        legend.direction = "horizontal", # horizontal legend, default is vertical
+        legend.key.size = unit(0.3, "cm"), # size of boxes in legend
+        axis.title.y = element_text(size = 8), # y axis label text size
+        axis.text.y = element_text(size = 8), # y axis tick label text size
+        axis.title.x = element_text(size = 8), # x axis label text size
+        axis.text.x = element_text(size = 8)) # x axis tick label text size
 
-p+xlab("Season")+ylab("LCI (recalcitrant/(labile+recalcitrant))")+labs(fill="Reach")+theme_bw()
+  
+ggsave('output/figures/lciByReachSeason.tiff',  # export as .tif
+units="in",  # specify units for dimensions
+width=3.25,   # 1 column
+height=3.25, # Whatever works
+dpi=1200,   # ES&T. 300-600 at PLOS One,
+compression = "lzw")
+
+
+
 
 ############HIX, humification index from Pennino
 
