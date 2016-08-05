@@ -37,9 +37,11 @@ unique(reach$season)
 unique(reach$reach)
 str(reach)
 
+reach$season <- factor(reach$season, levels = c("Summer", "Autumn", "Spring"))
+
 ############################################################################################
 #Carbon limitation analysis with NDS data
-fall<-subset(nds, season=="Fall")
+fall<-subset(nds, season=="Autumn")
 spring<-subset(nds, season=="Spring")
 fall.spring<-rbind(fall,spring)
 fall.spring<-droplevels(fall.spring)#removes summer as a level bc it has no values
@@ -59,29 +61,51 @@ op<-par(mfrow=c(1,1), mar=c(4,4,2,1))
 x<-fall.spring[complete.cases(fall.spring),]#strips NA rows from data for plotting
 x<-droplevels(x)#removes levels with no values, such as summer
 with(x, 
-     interaction.plot(reach,season,nrr, 
-                      ylim=c(0,8),lty=c(1,12),lwd=2,ylab="NRR", 
-                      xlab="Reach", trace.label="Season"))
+    interaction.plot(reach,season,nrr, 
+    ylim=c(0,8),lty=c(1,12),lwd=2,ylab="NRR", 
+    xlab="Reach", trace.label="Season"))
 par(op)
 #fall has stronger NRR than spring, 
 #but in spring, buried have greater response to added carbon
 #whereas in fall, daylight reaches have greater response to added carbon
 
 x <- group_by(fall.spring, season, reach) %>%  # Grouping function causes subsequent functions to aggregate by season and reach
-  summarize(nrr.mean = mean(nrr, na.rm = TRUE), # na.rm = TRUE to remove missing values
-            nrr.sd=sd(nrr, na.rm = TRUE),  # na.rm = TRUE to remove missing values
-            n = sum(!is.na(nrr)), # of observations, excluding NAs. 
-            nrr.se=nrr.sd/sqrt(n))
+    summarize(nrr.mean = mean(nrr, na.rm = TRUE), # na.rm = TRUE to remove missing values
+         nrr.sd=sd(nrr, na.rm = TRUE),  # na.rm = TRUE to remove missing values
+         n = sum(!is.na(nrr)), # of observations, excluding NAs. 
+         nrr.se=nrr.sd/sqrt(n))
 
-p<-ggplot(data=x, 
-          aes(x=season, y=nrr.mean, fill=reach)) + 
-  geom_bar(stat="identity", 
-           position=position_dodge(), color = "black") + 
-  geom_errorbar(aes(ymin=nrr.mean, 
-                    ymax=nrr.mean+nrr.se), width=0.2, 
-                position=position_dodge(0.9)) + 
-  scale_fill_manual(values=c("black","snow"))
-p+xlab("Season")+ylab("NRR (treatment:control)")+labs(fill="Reach")+theme_bw()
+ggplot(data=x, 
+       aes(x=season, y=nrr.mean, fill=reach)) + 
+       geom_bar(stat="identity", position=position_dodge(), color = "black") + 
+       geom_errorbar(aes(ymin=nrr.mean, ymax=nrr.mean+nrr.se), width=0.2, 
+                  position=position_dodge(0.9)) + 
+       scale_fill_manual(values=c("black","white")) +
+       xlab("Season") +
+       ylab("NRR (treatment:control)") +
+       ylim(0,8.5) +
+       labs(fill="Reach") +
+       theme_bw() +
+       theme(panel.grid.major=element_blank(),
+             panel.grid.minor=element_blank(),
+             legend.title=element_text(size=6),
+             legend.key=element_blank(),
+             legend.position=c(0.5,0.95),
+             legend.text=element_text(size=8),
+             legend.background=element_blank(),
+             legend.direction="horizontal",
+             legend.key.size=unit(0.3, "cm"),
+             axis.title.y=element_text(size=8),
+             axis.title.x=element_text(size=8),
+             axis.text.x=element_text(size=8))
+
+ggsave('output/figures/nrrByReachSeason.tiff',
+       units="in",
+       width=3.25,
+       height=3.25,
+       dpi=1200,
+       compression="lzw")
+
 ############################################################################################
 #Reach scale data analysis
 
@@ -137,13 +161,27 @@ x <- group_by(reach, season) %>%
             n = sum(!is.na(NACE.DM)),  
             NACE.se=NACE.sd/sqrt(n))
 
-p<-ggplot(data=x, 
-          aes(x=season, y=NACE.mean)) + geom_bar(stat="identity", 
-          position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=NACE.mean, 
-          ymax=NACE.mean+NACE.se), width=0.2, 
-          position=position_dodge(0.9)) + scale_fill_manual(values=c("black"))
+ggplot(data=x,aes(x=season, y=NACE.mean)) + 
+    geom_bar(stat="identity", position=position_dodge(), color = "black") + 
+    geom_errorbar(aes(ymin=NACE.mean, ymax=NACE.mean+NACE.se), width=0.2, 
+         position=position_dodge(0.9)) + 
+    scale_fill_manual(values=c("black")) +
+    xlab("Season") +
+    ylab("NACE (nmol g-1 DM h-1)") +
+    theme_bw() +
+    theme(panel.grid.major=element_blank(),
+         panel.grid.minor=element_blank(),
+         axis.title.y=element_text(size=8),
+         axis.title.x=element_text(size=8),
+         axis.text.x=element_text(size=8))
 
-p+xlab("Season")+ylab("NACE (nmol g-1 DM h-1)")+theme_bw()
+ggsave('output/figures/naceBySeason.tiff',
+       units="in",
+       width=3.25,
+       height=3.25,
+       dpi=1200,
+       compression="lzw")
+
 #check units with Brian
 
 
@@ -163,13 +201,27 @@ x <- group_by(reach, reach) %>%
             n = sum(!is.na(DOPAH2.DM)),  
             DOPAH2.se=DOPAH2.sd/sqrt(n))
 
-p<-ggplot(data=x, 
-          aes(x=reach, y=DOPAH2.mean)) + geom_bar(stat="identity", 
-          position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=DOPAH2.mean, 
-          ymax=DOPAH2.mean+DOPAH2.se), width=0.2, 
-          position=position_dodge(0.9)) + scale_fill_manual(values=c("black"))
+ggplot(data=x,aes(x=reach, y=DOPAH2.mean)) + 
+  geom_bar(stat="identity", position=position_dodge(), color = "black") + 
+  geom_errorbar(aes(ymin=DOPAH2.mean, ymax=DOPAH2.mean+DOPAH2.se), width=0.2, 
+                position=position_dodge(0.9)) + 
+  scale_fill_manual(values=c("black")) +
+  xlab("Reach") +
+  ylab("DOPAH2 (nmol g-1 DM h-1)") +
+  theme_bw() +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        axis.title.y=element_text(size=8),
+        axis.title.x=element_text(size=8),
+        axis.text.x=element_text(size=8))
 
-p+xlab("Reach")+ylab("DOPAH2 (nmol g-1 DM h-1)")+theme_bw()
+ggsave('output/figures/dopah2ByReach.tiff',
+       units="in",
+       width=3.25,
+       height=3.25,
+       dpi=1200,
+       compression="lzw")
+
 #check units with Brian and write "DOPAH2" properly...wth is this stuff?
 
 ############POX, Brian Hill's alternate DOPA metric?
@@ -188,13 +240,26 @@ x <- group_by(reach, reach) %>%
             n = sum(!is.na(POX)),  
             POX.se=POX.sd/sqrt(n))
 
-p<-ggplot(data=x, 
-          aes(x=reach, y=POX.mean)) + geom_bar(stat="identity", 
-          position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=POX.mean, 
-          ymax=POX.mean+POX.se), width=0.2, 
-          position=position_dodge(0.9)) + scale_fill_manual(values=c("black"))
+ggplot(data=x,aes(x=reach, y=POX.mean)) + 
+  geom_bar(stat="identity", position=position_dodge(), color = "black") + 
+  geom_errorbar(aes(ymin=POX.mean, ymax=POX.mean+POX.se), width=0.2, 
+                position=position_dodge(0.9)) + 
+  scale_fill_manual(values=c("black")) +
+  xlab("Reach") +
+  ylab("POX (nmol g-1 DM h-1)") +
+  theme_bw() +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        axis.title.y=element_text(size=8),
+        axis.title.x=element_text(size=8),
+        axis.text.x=element_text(size=8))
 
-p+xlab("Reach")+ylab("POX (mol g-1 C h-1)")+theme_bw()
+ggsave('output/figures/poxByReach.tiff',
+       units="in",
+       width=3.25,
+       height=3.25,
+       dpi=1200,
+       compression="lzw")
 
 ############LCI, index of carbon lability calculcated as recalcitrant/(labile+recalcitrant)
     #so a smaller number means there is more labile carbon and a bigger number means more
@@ -229,7 +294,7 @@ x <- group_by(reach, season, reach) %>%
 ggplot(data=x, aes(x=season, y=LCI.mean, fill=reach)) + 
   geom_bar(stat="identity", position=position_dodge(), colour="black") + 
   geom_errorbar(aes(ymin=LCI.mean, ymax=LCI.mean+LCI.se), width=0.2, position=position_dodge(0.9)) + 
-  scale_fill_manual(values=c("black","snow")) +  # consider adopting pure black and white, or a greyscale.  "snow" will likely trigger additiona publication charges
+  scale_fill_manual(values=c("black","white")) +  # consider adopting pure black and white, or a greyscale.  "snow" will likely trigger additiona publication charges
   xlab("Season")+
   ylab("LCI (recalcitrant/(labile+recalcitrant))") +
   ylim(0, 1.05) + # add a bit of room at top for legend
@@ -248,7 +313,6 @@ ggplot(data=x, aes(x=season, y=LCI.mean, fill=reach)) +
         axis.text.y = element_text(size = 8), # y axis tick label text size
         axis.title.x = element_text(size = 8), # x axis label text size
         axis.text.x = element_text(size = 8)) # x axis tick label text size
-
   
 ggsave('output/figures/lciByReachSeason.tiff',  # export as .tif
 units="in",  # specify units for dimensions
@@ -256,9 +320,6 @@ width=3.25,   # 1 column
 height=3.25, # Whatever works
 dpi=1200,   # ES&T. 300-600 at PLOS One,
 compression = "lzw")
-
-
-
 
 ############HIX, humification index from Pennino
 
@@ -294,12 +355,35 @@ x <- group_by(new.reach, season, reach) %>%  # Grouping function causes subseque
             n = sum(!is.na(HIX)), # of observations, excluding NAs. 
             HIX.se=HIX.sd/sqrt(n))
 
-p<-ggplot(data=x, 
-          aes(x=season, y=HIX.mean, fill=reach)) + geom_bar(stat="identity", 
-          position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=HIX.mean, 
-          ymax=HIX.mean+HIX.se), width=0.2, 
-          position=position_dodge(0.9)) + scale_fill_manual(values=c("black","snow"))
-p+xlab("Season")+ylab("Humification Index (HIX))")+labs(fill="Reach")+theme_bw()
+ggplot(data=x, aes(x=season, y=HIX.mean, fill=reach)) + 
+  geom_bar(stat="identity", position=position_dodge(), colour="black") + 
+  geom_errorbar(aes(ymin=HIX.mean, ymax=HIX.mean+HIX.se), width=0.2, position=position_dodge(0.9)) + 
+  scale_fill_manual(values=c("black","white")) +  
+  xlab("Season")+
+  ylab("HIX") +
+  ylim(0, 1.05) + 
+  labs(fill="Reach")+
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        legend.title = element_text(size = 6),  
+        legend.key = element_blank(),  
+        legend.position = c(0.5, 0.95),  
+        legend.text=element_text(size=8),  
+        legend.background = element_blank(),  
+        legend.direction = "horizontal", 
+        legend.key.size = unit(0.3, "cm"), 
+        axis.title.y = element_text(size = 8), 
+        axis.text.y = element_text(size = 8), 
+        axis.title.x = element_text(size = 8), 
+        axis.text.x = element_text(size = 8)) 
+
+ggsave('output/figures/hixByReachSeason.tiff',  
+       units="in",  
+       width=3.25,   
+       height=3.25, 
+       dpi=1200,   
+       compression = "lzw")
 
 ############BIX, biological freshness index from Pennino
 
@@ -329,13 +413,26 @@ x <- group_by(reach, season) %>%  # Grouping function causes subsequent function
             n = sum(!is.na(BIX)), # of observations, excluding NAs. 
             BIX.se=BIX.sd/sqrt(n))
 
-p<-ggplot(data=x, 
-          aes(x=season, y=BIX.mean)) + geom_bar(stat="identity", 
-          position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=BIX.mean, 
-          ymax=BIX.mean+BIX.se), width=0.2, 
-          position=position_dodge(0.9)) + scale_fill_manual(values=c("black"))
+ggplot(data=x,aes(x=season, y=BIX.mean)) + 
+  geom_bar(stat="identity", position=position_dodge(), color = "black") + 
+  geom_errorbar(aes(ymin=BIX.mean, ymax=BIX.mean+BIX.se), width=0.2, 
+                position=position_dodge(0.9)) + 
+  scale_fill_manual(values=c("black")) +
+  xlab("Season") +
+  ylab("BIX") +
+  theme_bw() +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        axis.title.y=element_text(size=8),
+        axis.title.x=element_text(size=8),
+        axis.text.x=element_text(size=8))
 
-p+xlab("Season")+ylab("Biological Freshness Index (BIX)")+theme_bw()
+ggsave('output/figures/bixBySeason.tiff',
+       units="in",
+       width=3.25,
+       height=3.25,
+       dpi=1200,
+       compression="lzw")
 
 ############FI is fluorescence index from Pennino. bigger=microbial, lower=terrestrial
 
@@ -369,13 +466,26 @@ x <- group_by(reach, season) %>%  # Grouping function causes subsequent function
             n = sum(!is.na(FI)), # of observations, excluding NAs. 
             FI.se=FI.sd/sqrt(n))
 
-p<-ggplot(data=x, 
-          aes(x=season, y=FI.mean)) + geom_bar(stat="identity", 
-          position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=FI.mean, 
-          ymax=FI.mean+FI.se), width=0.2, 
-          position=position_dodge(0.9)) + scale_fill_manual(values=c("black"))
+ggplot(data=x,aes(x=season, y=FI.mean)) + 
+  geom_bar(stat="identity", position=position_dodge(), color = "black") + 
+  geom_errorbar(aes(ymin=FI.mean, ymax=FI.mean+FI.se), width=0.2, 
+                position=position_dodge(0.9)) + 
+  scale_fill_manual(values=c("black")) +
+  xlab("Season") +
+  ylab("FI") +
+  theme_bw() +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        axis.title.y=element_text(size=8),
+        axis.title.x=element_text(size=8),
+        axis.text.x=element_text(size=8))
 
-p+xlab("Season")+ylab("Fluoroscence Index (FI)")+theme_bw()
+ggsave('output/figures/fiBySeason.tiff',
+       units="in",
+       width=3.25,
+       height=3.25,
+       dpi=1200,
+       compression="lzw")
 
 ############P2H is protein to humic ratio from Pennino. bigger numbers are more protein like OM 
   #compared to humic-like OM
@@ -410,9 +520,32 @@ x <- group_by(reach, season, reach) %>%  # Grouping function causes subsequent f
             n = sum(!is.na(P2H)), # of observations, excluding NAs. 
             P2H.se=P2H.sd/sqrt(n))
 
-p<-ggplot(data=x, 
-        aes(x=season, y=P2H.mean, fill=reach)) + geom_bar(stat="identity", 
-        position=position_dodge(), colour="black") + geom_errorbar(aes(ymin=P2H.mean, 
-        ymax=P2H.mean+P2H.se), width=0.2, 
-        position=position_dodge(0.9)) + scale_fill_manual(values=c("black","snow"))
-p+xlab("Season")+ylab("Protein to Humic Ratio)")+labs(fill="Reach")+theme_bw()
+ggplot(data=x, aes(x=season, y=P2H.mean, fill=reach)) + 
+  geom_bar(stat="identity", position=position_dodge(), color="black") + 
+  geom_errorbar(aes(ymin=P2H.mean, ymax=P2H.mean+P2H.se), width=0.2, position=position_dodge(0.9)) + 
+  scale_fill_manual(values=c("black","white")) +  
+  xlab("Season")+
+  ylab("Protein/Humic ratio") +
+  ylim(0, 1.5) + 
+  labs(fill="Reach")+
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        legend.title = element_text(size = 6),  
+        legend.key = element_blank(),  
+        legend.position = c(0.5, 0.95),  
+        legend.text=element_text(size=8),  
+        legend.background = element_blank(),  
+        legend.direction = "horizontal", 
+        legend.key.size = unit(0.3, "cm"), 
+        axis.title.y = element_text(size = 8), 
+        axis.text.y = element_text(size = 8), 
+        axis.title.x = element_text(size = 8), 
+        axis.text.x = element_text(size = 8)) 
+
+ggsave('output/figures/p2hByReachSeason.tiff',  
+       units="in",  
+       width=3.25,   
+       height=3.25, 
+       dpi=1200,   
+       compression = "lzw")
