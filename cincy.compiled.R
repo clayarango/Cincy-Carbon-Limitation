@@ -248,7 +248,7 @@ p.pox <- ggplot(data=x,aes(x=reach, y=POX.mean)) + # assign to object to include
                 position=position_dodge(0.9)) + 
   scale_fill_manual(values=c("black")) +
   xlab("Reach") +
-  ylab(expression(POX~(mmol~g^{-1}~DM~h^{-1}))) + #changed to mmol
+  ylab(expression(POX~(mmol~gDM^{-1}~h^{-1}))) + #changed to mmol.  -1 should come after DM, not g, right?
   theme_bw() +
   theme(panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),
