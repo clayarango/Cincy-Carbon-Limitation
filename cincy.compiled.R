@@ -236,18 +236,19 @@ summary(M.pox)
     #regardless of season
 
 x <- group_by(reach, reach) %>%  
-  summarize(POX.mean = mean(POX, na.rm = TRUE), 
-            POX.sd=sd(POX, na.rm = TRUE),  
+  summarize(POX.mean = mean(POX, na.rm = TRUE)/1000, # Divide by 1000 to make numbers more manageable
+            POX.sd=sd(POX, na.rm = TRUE)/1000,  # Divide by 1000 to make numbers more manageable
             n = sum(!is.na(POX)),  
             POX.se=POX.sd/sqrt(n))
 
 p.pox <- ggplot(data=x,aes(x=reach, y=POX.mean)) + # assign to object to include in two panel fig with POX
   geom_bar(stat="identity", position=position_dodge(), color = "black") + 
-  geom_errorbar(aes(ymin=POX.mean, ymax=POX.mean+POX.se), width=0.2, 
+  geom_errorbar(aes(ymin=POX.mean, ymax=POX.mean+POX.se), 
+                width=0.2, 
                 position=position_dodge(0.9)) + 
   scale_fill_manual(values=c("black")) +
   xlab("Reach") +
-  ylab("POX (nmol g-1 DM h-1)") +
+  ylab(expression(POX~(mmol~g^{-1}~DM~h^{-1}))) + #changed to mmol
   theme_bw() +
   theme(panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),
@@ -264,6 +265,7 @@ p.pox <- ggplot(data=x,aes(x=reach, y=POX.mean)) + # assign to object to include
 
 ############Two panel plot of DOPA and POX
 # Stacked two panel graph.  This make sure left and right edges of plots are alligned.
+# We can also do horizontal plot if you prefer.
 # Code stolen from http://stackoverflow.com/questions/13294952/left-align-two-graph-edges-ggplot
 gA <- ggplotGrob(p.dopa)  # set up figure
 gB <- ggplotGrob(p.pox)  # set up figure
