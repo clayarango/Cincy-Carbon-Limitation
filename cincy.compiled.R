@@ -167,7 +167,7 @@ ggplot(data=x,aes(x=season, y=NACE.mean)) +
          position=position_dodge(0.9)) + 
     scale_fill_manual(values=c("black")) +
     xlab("Season") +
-    ylab("NACE (nmol g-1 DM h-1)") +
+    ylab(expression(NACE~(nmol~g^{-1}~DM~h^{-1}))) + # code for superscripts
     theme_bw() +
     theme(panel.grid.major=element_blank(),
          panel.grid.minor=element_blank(),
@@ -201,7 +201,7 @@ x <- group_by(reach, reach) %>%
             n = sum(!is.na(DOPAH2.DM)),  
             DOPAH2.se=DOPAH2.sd/sqrt(n))
 
-ggplot(data=x,aes(x=reach, y=DOPAH2.mean)) + 
+p.dopa <- ggplot(data=x,aes(x=reach, y=DOPAH2.mean)) + # assign to object to include in two panel fig with POX
   geom_bar(stat="identity", position=position_dodge(), color = "black") + 
   geom_errorbar(aes(ymin=DOPAH2.mean, ymax=DOPAH2.mean+DOPAH2.se), width=0.2, 
                 position=position_dodge(0.9)) + 
@@ -215,14 +215,15 @@ ggplot(data=x,aes(x=reach, y=DOPAH2.mean)) +
         axis.title.x=element_text(size=8),
         axis.text.x=element_text(size=8))
 
-ggsave('output/figures/dopah2ByReach.tiff',
-       units="in",
-       width=3.25,
-       height=3.25,
-       dpi=1200,
-       compression="lzw")
+# ggsave('output/figures/dopah2ByReach.tiff',  # this function is not necessary if creating a 2 panel fig.  see below
+#        units="in",
+#        width=3.25,
+#        height=3.25,
+#        dpi=1200,
+#        compression="lzw")
 
 #check units with Brian and write "DOPAH2" properly...wth is this stuff?
+#no idea.  I sure hope Brian knows what he is talking about!
 
 ############POX, Brian Hill's alternate DOPA metric?
 reach$L.POX<-log(reach$POX+1)
@@ -240,7 +241,7 @@ x <- group_by(reach, reach) %>%
             n = sum(!is.na(POX)),  
             POX.se=POX.sd/sqrt(n))
 
-ggplot(data=x,aes(x=reach, y=POX.mean)) + 
+p.pox <- ggplot(data=x,aes(x=reach, y=POX.mean)) + # assign to object to include in two panel fig with POX
   geom_bar(stat="identity", position=position_dodge(), color = "black") + 
   geom_errorbar(aes(ymin=POX.mean, ymax=POX.mean+POX.se), width=0.2, 
                 position=position_dodge(0.9)) + 
@@ -254,12 +255,31 @@ ggplot(data=x,aes(x=reach, y=POX.mean)) +
         axis.title.x=element_text(size=8),
         axis.text.x=element_text(size=8))
 
-ggsave('output/figures/poxByReach.tiff',
-       units="in",
-       width=3.25,
-       height=3.25,
-       dpi=1200,
-       compression="lzw")
+# ggsave('output/figures/poxByReach.tiff', # this function is not necessary if creating a 2 panel fig.  see below
+#        units="in",
+#        width=3.25,
+#        height=3.25,
+#        dpi=1200,
+#        compression="lzw")
+
+############Two panel plot of DOPA and POX
+# Stacked two panel graph.  This make sure left and right edges of plots are alligned.
+# Code stolen from http://stackoverflow.com/questions/13294952/left-align-two-graph-edges-ggplot
+gA <- ggplotGrob(p.dopa)  # set up figure
+gB <- ggplotGrob(p.pox)  # set up figure
+maxWidth = grid::unit.pmax(gA$widths[2:5], gB$widths[2:5])  # set up figure
+gA$widths[2:5] <- as.list(maxWidth)  # set up figure
+gB$widths[2:5] <- as.list(maxWidth)  # set up figure
+
+tiff(filename = 'output/figures/dopa.pox.2panel.tiff', #open plotting device
+     width = 3.25,
+     height = 6.5,
+     units = "in",
+     res = 1200,
+     compression = "lzw")
+grid.arrange(gA, gB, ncol=1)  # push plot to device
+dev.off()  # close device
+
 
 ############LCI, index of carbon lability calculcated as recalcitrant/(labile+recalcitrant)
     #so a smaller number means there is more labile carbon and a bigger number means more
@@ -362,6 +382,28 @@ ggplot(data=x, aes(x=season, y=HIX.mean, fill=reach)) +
   xlab("Season")+
   ylab("HIX") +
   ylim(0, 1.05) + 
+  labs(fill="Reach")+
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        legend.title = element_text(size = 6),  
+        legend.key = element_blank(),  
+        legend.position = c(0.5, 0.95),  
+        legend.text=element_text(size=8),  
+        legend.background = element_blank(),  
+        legend.direction = "horizontal", 
+        legend.key.size = unit(0.3, "cm"), 
+        axis.title.y = element_text(size = 8), 
+        axis.text.y = element_text(size = 8), 
+        axis.title.x = element_text(size = 8), 
+        axis.text.x = element_text(size = 8)) 
+
+ggplot(data=new.reach, aes(x=season, y=HIX, fill=reach)) + # consider boxplot for this one
+  geom_boxplot() + 
+  scale_fill_manual(values=c("black","white")) +  
+  xlab("Season")+
+  ylab("HIX") +
+  #ylim(0, 1.05) + 
   labs(fill="Reach")+
   theme_bw() +
   theme(panel.grid.major = element_blank(),  
