@@ -139,13 +139,15 @@ points(reach$cellobiose.nrr~reach$CBOM.DM, pch=21)
 nrr.cbom=read.table(file="cincy.nrr.cbom.csv", header=T, sep=",")
 nrr.cbom$carbon <- factor(nrr.cbom$carbon, levels = c("Glucose", "Arabinose", "Cellobiose"))
 names(nrr.cbom)
-ggplot(nrr.cbom, aes(x=cbom, y=nrr, pch=carbon)) +
-  geom_point() +
+label=paste("r^2 == 0.32")
+ggplot(nrr.cbom, aes(x=cbom, y=nrr)) +
   geom_errorbar(data=nrr.cbom, mapping=aes(ymin=nrr- nrr.se, ymax=nrr+nrr.se), width=0.2) +
+  geom_point(size=2, pch=21, aes(fill=carbon)) +
+  scale_fill_manual(name="Carbon", values=c("white", "gray", "black")) +
   xlab(expression(CBOM~gDM^{-2})) +
   ylab("NRR (treatment:control)") +
+  stat_smooth(method="lm", se=F, col="black") +
   theme_bw() +
-  geom_errorbar(data=nrr.cbom, mapping=aes(ymin=nrr- nrr.se, ymax=nrr+nrr.se), width=0.2) +
   theme(panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),
         axis.title.y=element_text(size=8),
@@ -156,7 +158,9 @@ ggplot(nrr.cbom, aes(x=cbom, y=nrr, pch=carbon)) +
         legend.position = c(0.2, 0.85),  
         legend.text=element_text(size=8),  
         legend.background = element_blank(), 
-        legend.key.size = unit(0.3, "cm"))
+        legend.key.size = unit(0.3, "cm")) +
+  annotate("text", x=70, y=18, label="p=0.039", size=3, hjust=0) +
+  annotate("text", x=70, y=16, label=label, size=3, parse=T, hjust=0) 
 
 ggsave('output/figures/nrrVcbom.tiff',  # this function is not necessary if creating a 2 panel fig.  see below
        units="in",
