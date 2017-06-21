@@ -40,7 +40,7 @@ nds$carbon <- factor(nds$carbon, levels = c("Control", "Arabinose", "Cellobiose"
   #not a value that is analyzed in the model since the carbon responses are divided by the 
   #control.  
 ############################################################################################
-fall<-subset(nds, season=="Fall")
+fall<-subset(nds, season=="Autumn")
 spring<-subset(nds, season=="Spring")
 fall.spring<-rbind(fall,spring)
 fall.spring<-droplevels(fall.spring)#removes summer a level bc it has no values

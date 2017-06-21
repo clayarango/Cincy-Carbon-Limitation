@@ -13,12 +13,14 @@ install.packages("dplyr")
 install.packages("multcomp")
 install.packages("MASS")
 install.packages("ggplot2")
+install.packages("gridExtra")
 library(nlme)
 library(nortest)
 library(dplyr)
 library(multcomp)
 library(MASS)
 library(ggplot2)
+library(gridExtra)
 
 #load and evaluate NDS data
 nds<-read.table(file="cincy.nds.csv", header=T, sep=',')
@@ -126,12 +128,42 @@ summary(M1)
 
 #interpretation:  the more CBOM and FBOM, the greater the response to added carbon in NDS
 
-plot(reach$glucose.nrr~reach$CBOM.DM)
+plot(reach$glucose.nrr~reach$CBOM.DM, ylab="NRR (treatment:control)", xlab="Coarse Benthic Organic Matter (gAFDM m^2)", pch=19)
 plot(reach$arabinose.nrr~reach$CBOM.DM)
 plot(reach$cellobiose.nrr~reach$CBOM.DM)
-
+points(reach$arabinose.nrr~reach$CBOM.DM, pch=21)
+points(reach$cellobiose.nrr~reach$CBOM.DM, pch=21)
 #these look terrible...maybe it's better not to graph these?
 
+
+nrr.cbom=read.table(file="cincy.nrr.cbom.csv", header=T, sep=",")
+nrr.cbom$carbon <- factor(nrr.cbom$carbon, levels = c("Glucose", "Arabinose", "Cellobiose"))
+names(nrr.cbom)
+ggplot(nrr.cbom, aes(x=cbom, y=nrr, pch=carbon)) +
+  geom_point() +
+  geom_errorbar(data=nrr.cbom, mapping=aes(ymin=nrr- nrr.se, ymax=nrr+nrr.se), width=0.2) +
+  xlab(expression(CBOM~gDM^{-2})) +
+  ylab("NRR (treatment:control)") +
+  theme_bw() +
+  geom_errorbar(data=nrr.cbom, mapping=aes(ymin=nrr- nrr.se, ymax=nrr+nrr.se), width=0.2) +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        axis.title.y=element_text(size=8),
+        axis.title.x=element_text(size=8),
+        axis.text.x=element_text(size=8),
+        legend.title = element_text(size = 6),
+        legend.key = element_blank(),  
+        legend.position = c(0.2, 0.85),  
+        legend.text=element_text(size=8),  
+        legend.background = element_blank(), 
+        legend.key.size = unit(0.3, "cm"))
+
+ggsave('output/figures/nrrVcbom.tiff',  # this function is not necessary if creating a 2 panel fig.  see below
+       units="in",
+       width=3.25,
+       height=3.25,
+       dpi=1200,
+       compression="lzw")
 ############N acquisition enzymes
 vf1<-varIdent(form = ~1|stream)
 
@@ -167,7 +199,7 @@ ggplot(data=x,aes(x=season, y=NACE.mean)) +
          position=position_dodge(0.9)) + 
     scale_fill_manual(values=c("black")) +
     xlab("Season") +
-    ylab(expression(NACE~(nmol~g^{-1}~DM~h^{-1}))) + # code for superscripts
+    ylab(expression(NACE~(nmol~gDM^{-1}~h^{-1}))) + # code for superscripts
     theme_bw() +
     theme(panel.grid.major=element_blank(),
          panel.grid.minor=element_blank(),
@@ -207,13 +239,30 @@ p.dopa <- ggplot(data=x,aes(x=reach, y=DOPAH2.mean)) + # assign to object to inc
                 position=position_dodge(0.9)) + 
   scale_fill_manual(values=c("black")) +
   xlab("Reach") +
-  ylab("DOPAH2 (nmol g-1 DM h-1)") +
+  ylab(expression(DOPAH2~(nmol~gDM^{-1}~h^{-1}))) +
   theme_bw() +
   theme(panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),
         axis.title.y=element_text(size=8),
         axis.title.x=element_text(size=8),
         axis.text.x=element_text(size=8))
+
+#altered code that doesn't plot x axis label for stacked graph
+p.dopa <- ggplot(data=x,aes(x=reach, y=DOPAH2.mean)) + # assign to object to include in two panel fig with POX
+  geom_bar(stat="identity", position=position_dodge(), color = "black") + 
+  geom_errorbar(aes(ymin=DOPAH2.mean, ymax=DOPAH2.mean+DOPAH2.se), width=0.2, 
+                position=position_dodge(0.9)) + 
+  scale_fill_manual(values=c("black")) +
+  ylab(expression(DOPAH2~(nmol~gDM^{-1}~h^{-1}))) +
+  theme_bw() +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        axis.title.y=element_text(size=8),
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  annotate("text", x=2.3, y=73, label="A", size=6)
+
 
 # ggsave('output/figures/dopah2ByReach.tiff',  # this function is not necessary if creating a 2 panel fig.  see below
 #        units="in",
@@ -254,7 +303,8 @@ p.pox <- ggplot(data=x,aes(x=reach, y=POX.mean)) + # assign to object to include
         panel.grid.minor=element_blank(),
         axis.title.y=element_text(size=8),
         axis.title.x=element_text(size=8),
-        axis.text.x=element_text(size=8))
+        axis.text.x=element_text(size=8)) +
+  annotate("text", x=2.3, y=850, label="B", size=6)
 
 # ggsave('output/figures/poxByReach.tiff', # this function is not necessary if creating a 2 panel fig.  see below
 #        units="in",
@@ -264,7 +314,7 @@ p.pox <- ggplot(data=x,aes(x=reach, y=POX.mean)) + # assign to object to include
 #        compression="lzw")
 
 ############Two panel plot of DOPA and POX
-# Stacked two panel graph.  This make sure left and right edges of plots are alligned.
+# Stacked two panel graph.  This make sure left and right edges of plots are aligned.
 # We can also do horizontal plot if you prefer.
 # Code stolen from http://stackoverflow.com/questions/13294952/left-align-two-graph-edges-ggplot
 gA <- ggplotGrob(p.dopa)  # set up figure
@@ -405,7 +455,7 @@ ggplot(data=new.reach, aes(x=season, y=HIX, fill=reach)) + # consider boxplot fo
   scale_fill_manual(values=c("black","white")) +  
   xlab("Season")+
   ylab("HIX") +
-  #ylim(0, 1.05) + 
+  ylim(0.84, 0.97) + 
   labs(fill="Reach")+
   theme_bw() +
   theme(panel.grid.major = element_blank(),  
@@ -422,7 +472,7 @@ ggplot(data=new.reach, aes(x=season, y=HIX, fill=reach)) + # consider boxplot fo
         axis.title.x = element_text(size = 8), 
         axis.text.x = element_text(size = 8)) 
 
-ggsave('output/figures/hixByReachSeason.tiff',  
+ggsave('output/figures/box.hixByReachSeason.tiff',  
        units="in",  
        width=3.25,   
        height=3.25, 
@@ -457,7 +507,9 @@ x <- group_by(reach, season) %>%  # Grouping function causes subsequent function
             n = sum(!is.na(BIX)), # of observations, excluding NAs. 
             BIX.se=BIX.sd/sqrt(n))
 
-ggplot(data=x,aes(x=season, y=BIX.mean)) + 
+x$season <- factor(x$season, levels = c("Summer", "Autumn", "Spring"))
+
+p.BIX <- ggplot(data=x,aes(x=season, y=BIX.mean)) + 
   geom_bar(stat="identity", position=position_dodge(), color = "black") + 
   geom_errorbar(aes(ymin=BIX.mean, ymax=BIX.mean+BIX.se), width=0.2, 
                 position=position_dodge(0.9)) + 
@@ -468,8 +520,10 @@ ggplot(data=x,aes(x=season, y=BIX.mean)) +
   theme(panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),
         axis.title.y=element_text(size=8),
-        axis.title.x=element_text(size=8),
-        axis.text.x=element_text(size=8))
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  annotate("text", x=2, y=0.73, label="A", size=6)
 
 ggsave('output/figures/bixBySeason.tiff',
        units="in",
@@ -510,7 +564,9 @@ x <- group_by(reach, season) %>%  # Grouping function causes subsequent function
             n = sum(!is.na(FI)), # of observations, excluding NAs. 
             FI.se=FI.sd/sqrt(n))
 
-ggplot(data=x,aes(x=season, y=FI.mean)) + 
+x$season <- factor(x$season, levels = c("Summer", "Autumn", "Spring"))
+
+p.FI <- ggplot(data=x,aes(x=season, y=FI.mean)) + 
   geom_bar(stat="identity", position=position_dodge(), color = "black") + 
   geom_errorbar(aes(ymin=FI.mean, ymax=FI.mean+FI.se), width=0.2, 
                 position=position_dodge(0.9)) + 
@@ -522,7 +578,8 @@ ggplot(data=x,aes(x=season, y=FI.mean)) +
         panel.grid.minor=element_blank(),
         axis.title.y=element_text(size=8),
         axis.title.x=element_text(size=8),
-        axis.text.x=element_text(size=8))
+        axis.text.x=element_text(size=8)) +
+  annotate("text", x=2, y=1.25, label="B", size=6)
 
 ggsave('output/figures/fiBySeason.tiff',
        units="in",
@@ -530,6 +587,25 @@ ggsave('output/figures/fiBySeason.tiff',
        height=3.25,
        dpi=1200,
        compression="lzw")
+
+#make 2 panel of BIX and FI
+gA <- ggplotGrob(p.BIX)  # set up figure
+gB <- ggplotGrob(p.FI)  # set up figure
+maxWidth = grid::unit.pmax(gA$widths[2:5], gB$widths[2:5])  # set up figure
+gA$widths[2:5] <- as.list(maxWidth)  # set up figure
+gB$widths[2:5] <- as.list(maxWidth)  # set up figure
+
+tiff(filename = 'output/figures/bix.fi.2panel.tiff', #open plotting device
+     width = 3.25,
+     height = 6.5,
+     units = "in",
+     res = 1200,
+     compression = "lzw")
+grid.arrange(gA, gB, ncol=1)  # push plot to device
+dev.off()  # close device
+
+
+
 
 ############P2H is protein to humic ratio from Pennino. bigger numbers are more protein like OM 
   #compared to humic-like OM
@@ -592,4 +668,208 @@ ggsave('output/figures/p2hByReachSeason.tiff',
        width=3.25,   
        height=3.25, 
        dpi=1200,   
+       compression = "lzw")
+
+########################################################################
+#New four panel figure with HIX, BIX, P/H, FI   20-Jun-17
+########################################################################
+
+reach<-read.table(file="cincy.reach.csv", header=T, sep=',')
+
+reach$season <- factor(reach$season, levels = c("Spring", "Summer", "Autumn"))
+
+new.reach<-reach[reach$HIX>0.71,]#subset data to remove outlier
+
+install.packages("ggplot2")
+install.packages("gridExtra")
+install.packages("scales")
+library(ggplot2)
+library(grid)
+library(gridExtra)
+library(scales)
+
+p.HIX <- ggplot(data=new.reach, aes(x=season, y=HIX, fill=reach)) + 
+  geom_boxplot() + 
+  scale_fill_manual(values=c("black","white")) +  
+  xlab("Season")+
+  ylab("HIX") +
+  ylim(0.84, 0.97) + 
+  labs(fill="Reach")+
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        legend.title = element_text(size = 6),  
+        legend.key = element_blank(),  
+        legend.position = c(0.5, 0.95),  
+        legend.text=element_text(size=8),  
+        legend.background = element_blank(),  
+        legend.direction = "horizontal", 
+        legend.key.size = unit(0.3, "cm"), 
+        axis.title.y = element_text(size = 8), 
+        axis.text.y = element_text(size = 8), 
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  annotate("text", x=0.8, y=0.96, label="A", size=6)
+
+p.P2H <- ggplot(data=reach, aes(x=season, y=P2H, fill=reach)) + 
+  geom_boxplot() + 
+  scale_fill_manual(values=c("black","white")) +  
+  xlab("Season")+
+  ylab("Protein/Humic ratio") +
+  ylim(0, 1.0) + 
+  labs(fill="Reach")+
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        axis.title.y = element_text(size = 8), 
+        axis.text.y = element_text(size = 8), 
+        axis.title.x = element_text(size = 8), 
+        axis.text.x = element_text(size = 8),
+        legend.position = "none") +
+  annotate("text", x=0.8, y=0.95, label="C", size=6)
+
+p.BIX <- ggplot(data=reach,aes(x=season, y=BIX, fill=reach)) + 
+  geom_boxplot() + 
+  scale_fill_manual(values=c("black","white")) +
+  xlab("Season") +
+  ylab("BIX") +
+  ylim(0, 0.8) +
+  theme_bw() +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        axis.title.y=element_text(size=8),
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        legend.position ="none") +
+  annotate("text", x=3, y=0.73, label="B", size=6)
+
+p.FI <- ggplot(data=reach,aes(x=season, y=FI, fill=reach)) + 
+  scale_y_log10() +
+  geom_boxplot() +
+  scale_fill_manual(values=c("black", "white")) +
+  xlab("Season") +
+  ylab("FI") +
+  ylim(0, 1.5) +
+  theme_bw() +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        axis.title.y=element_text(size=8),
+        axis.title.x=element_text(size=8),
+        axis.text.x=element_text(size=8),
+        legend.position = "none") +
+  annotate("text", x=3, y=1.4, label="D", size=6)
+
+#make 4 panel 
+gA <- ggplotGrob(p.HIX)  # set up figure
+gB <- ggplotGrob(p.BIX)  # set up figure
+gC <- ggplotGrob(p.P2H)  # set up figure
+gD <- ggplotGrob(p.FI)  # set up figure
+maxWidth = grid::unit.pmax(gA$widths[2:5], gB$widths[2:5], gC$widths[2:5], gD$widths[2:5])  # set up figure
+gA$widths[2:5] <- as.list(maxWidth)  # set up figure
+gB$widths[2:5] <- as.list(maxWidth)  # set up figure
+gC$widths[2:5] <- as.list(maxWidth)  # set up figure
+gD$widths[2:5] <- as.list(maxWidth)  # set up figure
+
+tiff(filename = 'output/figures/hix.bix.p2h.fi.4panel.tiff', #open plotting device
+     width = 6.5,
+     height = 6.5,
+     units = "in",
+     res = 1200,
+     compression = "lzw")
+grid.arrange(gA, gB, gC, gD, ncol=2)  # push plot to device
+dev.off()  # close device
+
+########################################################################
+#New two panel figure with POX and NACE (dropping DOPAH2)   20-Jun-17
+########################################################################
+
+p.POX <- ggplot(data=reach, aes(x=season, y=POX/1000, fill=reach)) + # assign to object to include in two panel fig with POX
+  geom_boxplot() + 
+  scale_fill_manual(values=c("black", "white")) +
+  xlab("Season") +
+  ylab(expression(POX~(mmol~gDM^{-1}~h^{-1}))) + #changed to mmol.  -1 should come after DM, not g, right?
+  ylim(0, 1600) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),  
+        legend.title = element_text(size = 6),  
+        legend.key = element_blank(),  
+        legend.position = c(0.5, 0.95),  
+        legend.text=element_text(size=8),  
+        legend.background = element_blank(),  
+        legend.direction = "horizontal", 
+        legend.key.size = unit(0.3, "cm"), 
+        axis.title.y = element_text(size = 8), 
+        axis.text.y = element_text(size = 8), 
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  annotate("text", x=3.2, y=1500, label="A", size=6)
+
+p.NACE <- ggplot(data=reach, aes(x=season, y=NACE.DM, fill=reach)) + 
+  geom_boxplot() + 
+  scale_fill_manual(values=c("black", "white")) +
+  xlab("Season") +
+  ylab(expression(NACE~(nmol~gDM^{-1}~h^{-1}))) + # code for superscripts
+  theme_bw() +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        axis.title.y=element_text(size=8),
+        axis.title.x=element_text(size=8),
+        axis.text.x=element_text(size=8),
+        legend.position ="none") +
+  annotate("text", x=0.8, y=1900, label="B", size=6)
+
+############Two panel plot of DOPA and POX
+# Stacked two panel graph.  This make sure left and right edges of plots are aligned.
+# We can also do horizontal plot if you prefer.
+# Code stolen from http://stackoverflow.com/questions/13294952/left-align-two-graph-edges-ggplot
+gA <- ggplotGrob(p.POX)  # set up figure
+gB <- ggplotGrob(p.NACE)  # set up figure
+maxWidth = grid::unit.pmax(gA$widths[2:5], gB$widths[2:5])  # set up figure
+gA$widths[2:5] <- as.list(maxWidth)  # set up figure
+gB$widths[2:5] <- as.list(maxWidth)  # set up figure
+
+tiff(filename = 'output/figures/pox.nace.2panel.tiff', #open plotting device
+     width = 3.25,
+     height = 6.5,
+     units = "in",
+     res = 1200,
+     compression = "lzw")
+grid.arrange(gA, gB, ncol=1)  # push plot to device
+dev.off()  # close device
+
+########################################################################
+#New two panel figure with POX and NACE (dropping DOPAH2)   20-Jun-17
+########################################################################
+
+ggplot(data=reach, aes(x=season, y=CQI, fill=reach)) + 
+  geom_boxplot() + 
+  scale_fill_manual(values=c("black","white")) +  # consider adopting pure black and white, or a greyscale.  "snow" will likely trigger additiona publication charges
+  xlab("Season")+
+  ylab("CQI (lnPOX/(lnBG+lnPOX))") +
+  ylim(0, 1.05) + # add a bit of room at top for legend
+  labs(fill="Reach")+
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),  # Eliminate major gridlines
+        panel.grid.minor = element_blank(),  # Eliminate minor gridlines
+        legend.title = element_text(size = 6),  # Eliminate legend title
+        legend.key = element_blank(),  # Eliminate boxes around legend elements
+        legend.position = c(0.5, 0.95),  # Specify legend position
+        legend.text=element_text(size=8),  # Specify legend text size.  also see legend.title
+        legend.background = element_blank(),  # Eliminate white fill in legend.
+        legend.direction = "horizontal", # horizontal legend, default is vertical
+        legend.key.size = unit(0.3, "cm"), # size of boxes in legend
+        axis.title.y = element_text(size = 8), # y axis label text size
+        axis.text.y = element_text(size = 8), # y axis tick label text size
+        axis.title.x = element_text(size = 8), # x axis label text size
+        axis.text.x = element_text(size = 8)) # x axis tick label text size
+
+ggsave('output/figures/cqiByReachSeason.tiff',  # export as .tif
+       units="in",  # specify units for dimensions
+       width=3.25,   # 1 column
+       height=3.25, # Whatever works
+       dpi=1200,   # ES&T. 300-600 at PLOS One,
        compression = "lzw")

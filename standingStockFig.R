@@ -24,7 +24,7 @@ PanelA <-
   scale_shape_identity() +
   geom_point(aes(shape = shape), fill = 'white', size = 3) +
   geom_point(data=legend, aes(x=x, y=y, shape = shape), fill = 'white', size = 3) +
-  annotate(geom='text', x=c(0.7, 3, 3), y=c(55, 50, 45), label=c("a","OPEN", "BURIED"), size = 3) +
+  annotate(geom='text', x=c(0.7, 3, 3), y=c(55, 50, 45), label=c("A","OPEN", "BURIED"), size = 3) +
   theme_bw() +
   ylab(expression(paste('CBOM (g AFDM ', m^-2, ')'))) +
   theme(axis.text.x = element_text(size =6),
@@ -41,7 +41,7 @@ PanelB <-
   geom_errorbar(aes(ymax = FBOM + FBOM.SE, ymin = FBOM - FBOM.SE), width = 0.1) + 
   scale_shape_identity() +
   geom_point(aes(shape = shape), fill = 'white', size = 3) +
-  annotate(geom='text', x=0.7, y=30, label="b", size = 3) +
+  annotate(geom='text', x=0.7, y=30, label="B", size = 3) +
   theme_bw() +
   ylab(expression(paste('FBOM (g AFDM ', m^-2, ')'))) +
   theme(axis.text.x = element_text(size =6),
@@ -57,7 +57,7 @@ PanelC <-
   geom_errorbar(aes(ymax = chl + chl.se, ymin = chl - chl.se), width = 0.1) + 
   scale_shape_identity() +
   geom_point(aes(shape = shape), fill = 'white', size = 3) +
-  annotate(geom='text', x=0.7, y=215, label="c", size = 3) +
+  annotate(geom='text', x=0.7, y=215, label="C", size = 3) +
   theme_bw() +
   ylab(expression(paste('Chlorophyll a (mg ', m^-2, ')'))) +
   theme(axis.text.x = element_text(size =6),
@@ -73,7 +73,7 @@ PanelD <-
   geom_errorbar(aes(ymax = PERI + PERI.SE, ymin = PERI - PERI.SE), width = 0.1) + 
   scale_shape_identity() +
   geom_point(aes(shape = shape), fill = 'white', size = 3) +
-  annotate(geom='text', x=0.7, y=35, label="d", size = 3) +
+  annotate(geom='text', x=0.7, y=35, label="D", size = 3) +
   theme_bw() +
   ylab(expression(paste('Periphyton (g AFDM ', m^-2, ')'))) +
   theme(axis.text.x = element_text(size =6),
