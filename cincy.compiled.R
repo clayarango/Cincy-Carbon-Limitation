@@ -750,12 +750,13 @@ p.BIX <- ggplot(data=reach,aes(x=season, y=BIX, fill=reach)) +
   annotate("text", x=3, y=0.73, label="B", size=6)
 
 p.FI <- ggplot(data=reach,aes(x=season, y=FI, fill=reach)) + 
-  scale_y_log10() +
+  scale_y_log10(breaks = c(0.5, 1), # specify where to have ticks
+                labels = c(0.5,1)) + # specify tick labels
   geom_boxplot() +
   scale_fill_manual(values=c("black", "white")) +
   xlab("Season") +
   ylab("FI") +
-  ylim(0, 1.5) +
+  #ylim(0, 1.5) + # this was overriding the log scale
   theme_bw() +
   theme(panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),
