@@ -99,7 +99,9 @@ ggplot(data=x,
              legend.key.size=unit(0.3, "cm"),
              axis.title.y=element_text(size=8),
              axis.title.x=element_text(size=8),
-             axis.text.x=element_text(size=8))
+             axis.text.x=element_text(size=8)) +
+  annotate("text", x=1.75, y=7, label="season*reach,", size=3, hjust=0) +
+  annotate("text", x=1.75, y=6.5, label="p<<0.001", size=3, hjust=0)
 
 ggsave('output/figures/nrrByReachSeason.tiff',
        units="in",
@@ -160,7 +162,7 @@ ggplot(nrr.cbom, aes(x=cbom, y=nrr)) +
         legend.background = element_blank(), 
         legend.key.size = unit(0.3, "cm")) +
   annotate("text", x=70, y=18, label="p=0.039", size=3, hjust=0) +
-  annotate("text", x=70, y=16, label=label, size=3, parse=T, hjust=0) 
+  annotate("text", x=70, y=17, label=label, size=3, parse=T, hjust=0) 
 
 ggsave('output/figures/nrrVcbom.tiff',  # this function is not necessary if creating a 2 panel fig.  see below
        units="in",
@@ -168,6 +170,7 @@ ggsave('output/figures/nrrVcbom.tiff',  # this function is not necessary if crea
        height=3.25,
        dpi=1200,
        compression="lzw")
+
 ############N acquisition enzymes
 vf1<-varIdent(form = ~1|stream)
 
@@ -355,13 +358,13 @@ terms.gls <- function(M.lci, ...){
   terms(model.frame(M.lci),...)  
 }
 
-multCompTukey <- glht(M.lci, linfct = mcp(season = "Tukey")) 
+multCompTukey <- glht(M.lci, linfct = mcp(reach = "Tukey")) 
 summary(multCompTukey)
 
 #spring and fall don't differ, but summer has more recalcitrant carbon than the fall
 #daylight has more labile carbon than buried
 
-x <- group_by(reach, season, reach) %>%  
+x <- group_by(reach, season) %>%  
   summarize(LCI.mean = mean(LCI, na.rm = TRUE), 
             LCI.sd=sd(LCI, na.rm = TRUE),  
             n = sum(!is.na(LCI)),  
@@ -632,13 +635,13 @@ terms.gls <- function(M.p2h, ...){
   terms(model.frame(M.p2h),...)  
 }
 
-multCompTukey <- glht(M.p2h, linfct = mcp(season = "Tukey")) 
+multCompTukey <- glht(M.p2h, linfct = mcp(reach = "Tukey")) 
 summary(multCompTukey)
 
 #spring and summer have higher P2H than fall, daylight has lower P2H than buried with small
   #effect size, possibly due to greater biological activity using the better OM?
 
-x <- group_by(reach, season, reach) %>%  # Grouping function causes subsequent functions to aggregate by season and reach
+x <- group_by(reach, reach) %>%  # Grouping function causes subsequent functions to aggregate by season and reach
   summarize(P2H.mean = mean(P2H, na.rm = TRUE), # na.rm = TRUE to remove missing values
             P2H.sd=sd(P2H, na.rm = TRUE),  # na.rm = TRUE to remove missing values
             n = sum(!is.na(P2H)), # of observations, excluding NAs. 
@@ -714,7 +717,12 @@ p.HIX <- ggplot(data=new.reach, aes(x=season, y=HIX, fill=reach)) +
         axis.title.x=element_blank(),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank()) +
-  annotate("text", x=0.8, y=0.96, label="A", size=6)
+  annotate("text", x=0.8, y=0.96, label="A", size=6) +
+  annotate("text", x=1, y=0.91, label="a", size=3) +
+  annotate("text", x=2, y=0.91, label="a", size=3) +
+  annotate("text", x=3, y=0.955, label="b", size=3) +
+  annotate("text", x=1, y=0.94, label="reach,", size=3, hjust=0) +
+  annotate("text", x=1, y=0.935, label="p=0.021", size=3, hjust=0)
 
 p.P2H <- ggplot(data=reach, aes(x=season, y=P2H, fill=reach)) + 
   geom_boxplot() + 
@@ -731,7 +739,12 @@ p.P2H <- ggplot(data=reach, aes(x=season, y=P2H, fill=reach)) +
         axis.title.x = element_text(size = 8), 
         axis.text.x = element_text(size = 8),
         legend.position = "none") +
-  annotate("text", x=0.8, y=0.95, label="C", size=6)
+  annotate("text", x=3, y=0.95, label="C", size=6) +
+  annotate("text", x=1, y=0.9, label="a", size=3) +
+  annotate("text", x=2, y=0.8, label="a", size=3) +
+  annotate("text", x=3, y=0.15, label="b", size=3) +
+  annotate("text", x=1, y=0.3, label="reach,", size=3, hjust=0) +
+  annotate("text", x=1, y=0.25, label="p=0.0002", size=3, hjust=0)
 
 p.BIX <- ggplot(data=reach,aes(x=season, y=BIX, fill=reach)) + 
   geom_boxplot() + 
@@ -747,16 +760,19 @@ p.BIX <- ggplot(data=reach,aes(x=season, y=BIX, fill=reach)) +
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         legend.position ="none") +
-  annotate("text", x=3, y=0.73, label="B", size=6)
+  annotate("text", x=3, y=0.73, label="B", size=6) +
+  annotate("text", x=1, y=0.8, label="a", size=3) +
+  annotate("text", x=2, y=0.8, label="a", size=3) +
+  annotate("text", x=3, y=0.15, label="b", size=3)
 
 p.FI <- ggplot(data=reach,aes(x=season, y=FI, fill=reach)) + 
-  scale_y_log10(breaks = c(0.5, 1), # specify where to have ticks
-                labels = c(0.5,1)) + # specify tick labels
+  #scale_y_log10(breaks = c(0.5, 1), # specify where to have ticks
+  #             labels = c(0.5,1)) + # specify tick labels
   geom_boxplot() +
   scale_fill_manual(values=c("black", "white")) +
   xlab("Season") +
   ylab("FI") +
-  #ylim(0, 1.5) + # this was overriding the log scale
+  ylim(0, 1.5) + # this was overriding the log scale
   theme_bw() +
   theme(panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),
@@ -764,7 +780,10 @@ p.FI <- ggplot(data=reach,aes(x=season, y=FI, fill=reach)) +
         axis.title.x=element_text(size=8),
         axis.text.x=element_text(size=8),
         legend.position = "none") +
-  annotate("text", x=3, y=1.4, label="D", size=6)
+  annotate("text", x=3, y=1.4, label="D", size=6) +
+  annotate("text", x=1, y=1.4, label="a", size=3) +
+  annotate("text", x=2, y=1.4, label="a", size=3) +
+  annotate("text", x=3, y=0.55, label="b", size=3)
 
 #make 4 panel 
 gA <- ggplotGrob(p.HIX)  # set up figure
@@ -811,7 +830,9 @@ p.POX <- ggplot(data=reach, aes(x=season, y=POX/1000, fill=reach)) + # assign to
         axis.title.x=element_blank(),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank()) +
-  annotate("text", x=3.2, y=1500, label="A", size=6)
+  annotate("text", x=3, y=1500, label="A", size=6) +
+  annotate("text", x=2.65, y=1300, label="reach,", size=3, hjust=0) +
+  annotate("text", x=2.65, y=1200, label="p=0.004", size=3, hjust=0)
 
 p.NACE <- ggplot(data=reach, aes(x=season, y=NACE.DM, fill=reach)) + 
   geom_boxplot() + 
@@ -825,7 +846,10 @@ p.NACE <- ggplot(data=reach, aes(x=season, y=NACE.DM, fill=reach)) +
         axis.title.x=element_text(size=8),
         axis.text.x=element_text(size=8),
         legend.position ="none") +
-  annotate("text", x=0.8, y=1900, label="B", size=6)
+  annotate("text", x=0.8, y=1900, label="B", size=6) +
+  annotate("text", x=1, y=1200, label="a", size=3) +
+  annotate("text", x=2, y=1600, label="b", size=3) +
+  annotate("text", x=3, y=1800, label="c", size=3)
 
 ############Two panel plot of DOPA and POX
 # Stacked two panel graph.  This make sure left and right edges of plots are aligned.
@@ -847,10 +871,11 @@ grid.arrange(gA, gB, ncol=1)  # push plot to device
 dev.off()  # close device
 
 ########################################################################
-#New two panel figure with POX and NACE (dropping DOPAH2)   20-Jun-17
+#New LCI figure...called LCI in the data table, but heading is CQI
+#CQI in data table is not correct     20-Jun-17
 ########################################################################
 
-ggplot(data=reach, aes(x=season, y=CQI, fill=reach)) + 
+ggplot(data=reach, aes(x=season, y=LCI, fill=reach)) + 
   geom_boxplot() + 
   scale_fill_manual(values=c("black","white")) +  # consider adopting pure black and white, or a greyscale.  "snow" will likely trigger additiona publication charges
   xlab("Season")+
@@ -862,7 +887,7 @@ ggplot(data=reach, aes(x=season, y=CQI, fill=reach)) +
         panel.grid.minor = element_blank(),  # Eliminate minor gridlines
         legend.title = element_text(size = 6),  # Eliminate legend title
         legend.key = element_blank(),  # Eliminate boxes around legend elements
-        legend.position = c(0.5, 0.95),  # Specify legend position
+        legend.position = c(0.5, 0.10),  # Specify legend position
         legend.text=element_text(size=8),  # Specify legend text size.  also see legend.title
         legend.background = element_blank(),  # Eliminate white fill in legend.
         legend.direction = "horizontal", # horizontal legend, default is vertical
@@ -870,7 +895,12 @@ ggplot(data=reach, aes(x=season, y=CQI, fill=reach)) +
         axis.title.y = element_text(size = 8), # y axis label text size
         axis.text.y = element_text(size = 8), # y axis tick label text size
         axis.title.x = element_text(size = 8), # x axis label text size
-        axis.text.x = element_text(size = 8)) # x axis tick label text size
+        axis.text.x = element_text(size = 8)) +
+  annotate("text", x=1, y=1.025, label="ab", size=3) +
+  annotate("text", x=2, y=1.025, label="b", size=3) +
+  annotate("text", x=3, y=1.025, label="a", size=3) +
+  annotate("text", x=2.5, y=0.35, label="reach,", size=3, hjust=0) +
+  annotate("text", x=2.5, y=0.25, label="p=0.001", size=3, hjust=0)# x axis tick label text size
 
 ggsave('output/figures/cqiByReachSeason.tiff',  # export as .tif
        units="in",  # specify units for dimensions
