@@ -146,7 +146,7 @@ ggplot(nrr.cbom, aes(x=cbom, y=nrr)) +
   geom_errorbar(data=nrr.cbom, mapping=aes(ymin=nrr- nrr.se, ymax=nrr+nrr.se), width=0.2) +
   geom_point(size=2, pch=21, aes(fill=carbon)) +
   scale_fill_manual(name="Carbon", values=c("white", "gray", "black")) +
-  xlab(expression(CBOM~gDM^{-2})) +
+  xlab(expression(CBOM~gDM~m^{-2})) +
   ylab("NRR (treatment:control)") +
   stat_smooth(method="lm", se=F, col="black") +
   theme_bw() +
